@@ -1,3 +1,4 @@
+#!iRule
 # F5 BIG-IP iRule: GeoLocation and IP Reputation Query
 # (CC0) No Rights Reserved
 # Artiom Lichtenstein
