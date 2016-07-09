@@ -2,21 +2,20 @@
 
 A repository for F5 related code.
 
-### iApps
-### /iapps
-iApps
+### [/iapps](/iapps)
+iApps is a system framework for deploying services-based, template-driven configurations.
 
-#### /icontrol
-iControl
+### /icontrol
+iControl is an open, web services-based API that allows complete, dynamic, and programmatic control.
 
-###### /irules
-iRules
+### /irules
+iRules is a highly customized scripting language allowing complete programmatic access to application traffic in real time.
 
-## /iruleslx
-iRules LX
+### [/iruleslx](/iruleslx)
+iRules LX is the next generation of iRules programmatically extending the functionality with Node.js and npm.
 
-## /monitors
+### /monitors
 Monitors
 
-## /shell
+### /shell
 Shell Scripts
