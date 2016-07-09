@@ -4,11 +4,7 @@ A repository for F5 related code.
 
 ## [/iapps](/iapps)
 iApps is a system framework for deploying services-based, template-driven configurations.
-
-
-
-
-
+<br><br>
 ## [/icontrol](/icontrol)
 iControl is an open, web services-based API that allows complete, dynamic, and programmatic control.
 
