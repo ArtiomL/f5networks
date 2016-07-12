@@ -1,10 +1,10 @@
 
 # GeoLocation and IP Reputation Query
 
-## Usage:
+## Usage
 http://VS_IP/geo?{IPv4_TO_TEST | IPv6_TO_TEST}
 
-## Examples:
+## Examples
 http://<i></i>10.100.89.100/geo?8.8.8.8
 
 http://<i></i>10.100.89.100/geo?199.19.105.220
