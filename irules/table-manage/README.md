@@ -28,5 +28,5 @@ https://github.com/ArtiomL/adct/blob/master/style.css
 
 You can host it on the pool member, or create an additional HTTP_REQUEST condition, and serve it using the ifile command.
 
-**_.tabCounters_** is the only selector you'll need
+**_.tabCounters_** is the only selector you'll need.
 
