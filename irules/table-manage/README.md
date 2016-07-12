@@ -15,7 +15,9 @@ The name of this inventory subtable is stored in the static::invtab variable.
 
 It has the following structure:
 
+```
 Key Name = Active Table Name, Key Value = That Active Table's Current Key Count, Timeout = That Table's Max Timeout
+```
 
 The referenced style.css file can be downloaded here: https://gist.github.com/ArtiomL/e40f76235e024038b129
 You can host it on the pool member, or create an additional HTTP_REQUEST condition, and serve it using the ifile command
