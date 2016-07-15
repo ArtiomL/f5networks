@@ -13,5 +13,5 @@ tmsh modify ilx plugin ilxpi_DEMO extensions { ilxex_DEMO { concurrency-mode sin
 # Find the debugging port assigned to the Node.js process
 tmsh show ilx plugin ilxpi_DEMO extensions | grep Debug
 
-# Start the Node Inpector for that port number
+# Start the Node Inspector for that port number
 /usr/lib/node_modules/.bin/node-inspector --web-host 10.100.113.50 --no-inject --debug-port 1038
