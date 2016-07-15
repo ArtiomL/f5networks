@@ -1,2 +1,2 @@
-# Display information about the Traffic Management Microkernel (tmm) daemon
+# Display information about the Traffic Management Microkernel (TMM) daemon
 tmsh show /sys tmm-info
