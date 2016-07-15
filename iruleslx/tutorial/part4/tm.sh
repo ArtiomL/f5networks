@@ -1,7 +1,7 @@
 # Display the number of restarts for the extension
 tmsh show ilx plugin ilxpi_DEMO extensions | grep Restart
 
-# Display the PID for the Node.js process running the extension
+# Display the PID of the Node.js process running the extension
 tmsh show ilx plugin ilxpi_DEMO extensions | grep PID
 
 # Turn on verbose logging for SDMD and all the Node.js processes
