@@ -1,5 +1,6 @@
 # <img align="center" src="f5.png" height="64">&nbsp;&nbsp;F5 Networks
 [![Releases](https://img.shields.io/github/release/ArtiomL/f5networks.svg)](https://github.com/ArtiomL/f5networks/releases)
+[![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)](https://github.com/ArtiomL/f5networks/graphs/code-frequency)
 [![Commits](https://img.shields.io/github/commits-since/ArtiomL/f5networks/v1.0.svg)](https://github.com/ArtiomL/f5networks/graphs/commit-activity)
 [![Issues](https://img.shields.io/github/issues/ArtiomL/f5networks.svg)](https://github.com/ArtiomL/f5networks/issues)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
