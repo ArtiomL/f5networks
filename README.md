@@ -1,4 +1,5 @@
 # <img align="center" src="f5.png" height="64">&nbsp;&nbsp;F5 Networks
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 A repository for F5 related code.
 <br><br>
