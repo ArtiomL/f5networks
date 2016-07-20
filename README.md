@@ -5,7 +5,7 @@
 [![Issues](https://img.shields.io/github/issues/ArtiomL/f5networks.svg)](https://github.com/ArtiomL/f5networks/issues)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-A repository for F5 related code.
+This project is dedicated to developing and sharing useful code related to various F5 products and solutions.
 <br><br>
 ## [/iapps](/iapps)
 **iApps** is a system framework for deploying services-based, template-driven configurations.
