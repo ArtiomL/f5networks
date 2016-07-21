@@ -3,15 +3,14 @@
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
 # v1.7, 21/07/2016
-
+#
 # Usage:
 # http://VS_IP/geo?{IPv4_TO_TEST | IPv6_TO_TEST}
-
+#
 # Examples:
 # http://10.100.89.100/geo?8.8.8.8
 # http://10.100.89.100/geo?199.19.105.220
 # http://10.100.89.100/geo?2a02:DB8::45
-
 
 when HTTP_REQUEST {
 	if { [HTTP::uri] starts_with "/geo" } {
