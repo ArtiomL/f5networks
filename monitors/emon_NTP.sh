@@ -1,5 +1,6 @@
 #!/bin/bash
-# External Monitor - NTP
+# F5 Networks - External Monitor: NTP
+# https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
 # v1.3, 17/07/2016
 
