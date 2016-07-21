@@ -20,7 +20,6 @@
 # You can host it on the pool member, or create an additional HTTP_REQUEST condition, and serve it using the ifile command
 # .tabCounters is the only selector you'll need
 
-
 when RULE_INIT {
 	#Using static variables to set constants
 	#The name of the inventory subtable:
