@@ -8,7 +8,7 @@
 This project is dedicated to developing and sharing useful code related to various F5 products and solutions.
 <br><br>
 ## [/azure](/azure)
-Code related to Microsoft's cloud computing IaaS.
+Code related to Microsoft's cloud computing **IaaS**.
 <br><br>
 ## [/iapps](/iapps)
 **iApps** is a system framework for deploying services-based, template-driven configurations.
