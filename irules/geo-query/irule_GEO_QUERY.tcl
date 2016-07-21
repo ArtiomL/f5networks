@@ -1,7 +1,8 @@
 #!iRule
-# F5 BIG-IP iRule: GeoLocation and IP Reputation Query
+# F5 Networks - iRule: GeoLocation and IP Reputation Query
+# https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v1.6, 09/07/2016
+# v1.7, 21/07/2016
 
 # Usage:
 # http://VS_IP/geo?{IPv4_TO_TEST | IPv6_TO_TEST}
