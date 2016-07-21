@@ -1,7 +1,8 @@
 #!iRule
-# F5 BIG-IP iRule: Show, Export and Delete Session Tables
+# F5 Networks - iRule: Show, Export and Delete Session Tables
+# https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v1.6, 10/07/2016
+# v1.7, 21/07/2016
 #
 # Usage:
 # http|s://<VS_IP>/tables?
