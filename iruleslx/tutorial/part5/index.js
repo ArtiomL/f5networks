@@ -15,7 +15,7 @@ objILX.addMethod('ilxmet_IPREP', function(objArgs, objResponse) {
 	funHTTP('http://10.100.115.102/geo?' + objArgs.params()[0], { timeout : 2000 }, function (objError, objHResp, strHBody) {
 		if (objError) {
 			console.error("HTTP Connection Failed:", JSON.stringify(objError));
-			objResponse.reply([intErrCode,"Connection Failed!"]);
+			objResponse.reply([intErrCode, "Connection Failed!"]);
 			return;
 		}
 		if (objHResp.statusCode == 200) {
