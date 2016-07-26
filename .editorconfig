@@ -1,0 +1,11 @@
+# Top-most editorconfig file
+root = true
+
+[*]
+# Unix-style newlines
+end_of_line = lf
+# Set default charset
+charset = utf-8
+# Tab indentation
+indent_style = tab
+indent_size = 4
