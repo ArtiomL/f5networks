@@ -1,3 +1,4 @@
+#!/bin/bash
 # F5 Networks - Monitor: ICAP
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
