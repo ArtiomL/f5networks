@@ -1,5 +1,5 @@
 #!/bin/bash
-# F5 Networks - Auto-Restart NTPD
+# F5 Networks - Auto-Restart ntpd
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
 # v1.2, 30/07/2016
