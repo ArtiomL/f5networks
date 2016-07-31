@@ -1,7 +1,8 @@
 #!/usr/bin/python
-# External Monitor - Azure HA
+# F5 Networks - External Monitor: Azure HA
+# https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.1, 31/07/2016
+# v0.1, 01/08/2016
 
 import os, signal, sys, requests
 
