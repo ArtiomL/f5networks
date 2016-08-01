@@ -4,7 +4,9 @@
 # Artiom Lichtenstein
 # v1.1, 21/07/2016
 
-tmsh list /ltm monitor http mon_ICAP
+tmsh
+load /sys config from-terminal merge
+# Enter configuration. Press CTRL-D to submit or CTRL-C to cancel.
 ltm monitor http mon_ICAP {
 	adaptive disabled
 	defaults-from http
