@@ -51,7 +51,7 @@ file(strPFile, 'w').write(str(os.getpid()))
 try:
 	objResp = requests.head(''.join(['https://', strIP, ':', strPort]), verify = False)
 except requests.exceptions.RequestException as e:
-	#log e
+	funLog(1, str(e))
 	sys.exit(3)
 
 if objResp.status_code == 200:
