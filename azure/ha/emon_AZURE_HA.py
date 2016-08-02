@@ -24,8 +24,11 @@ def funLog(intMesLevel, strMessage):
 class clsExCodes:
 	args = 4
 
+def funCurState():
+	funLog(1, 'Current local state: ')
+
 def funFailover():
-	funLog(1, 'Azure Failover...')
+	funLog(1, 'Azure failover...')
 
 def main():
 	if len(sys.argv) < 4:
