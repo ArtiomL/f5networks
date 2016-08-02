@@ -24,6 +24,9 @@ def funLog(intMesLevel, strMessage):
 class clsExCodes:
 	args = 4
 
+def funFailover():
+	funLog(1, 'Azure Failover...')
+
 def main():
 	if len(sys.argv) < 4:
 		funLog(1, 'Not enough arguments, ILX / Node.js VS IP is missing?')
@@ -54,21 +57,16 @@ def main():
 	
 	try:
 		objResp = requests.head(''.join(['https://', strIP, ':', strPort]), verify = False)
+		if objResp.status_code == 200:
+			os.unlink(strPFile)
+			# Any standard output stops the script from running. Clean up any temporary files before the standard output operation
+			funLog(2, 'Peer: ' + strIP + ' is up.' )
+			print 'UP'
+			sys.exit()
 	except requests.exceptions.RequestException as e:
 		funLog(1, str(e))
-		sys.exit(3)
 	
-	if objResp.status_code == 200:
-		os.unlink(strPFile)
-		# Any standard output stops the script from running. Clean up any temporary files before the standard output operation
-		print 'UP'
-		sys.exit()
-	else:
-		try:
-			objResp = requests.head('http://' + strIPNjs)
-		except requests.exceptions.RequestException as e:
-			# log e
-			sys.exit(2)
+	funFailover()
 	
 	os.unlink(strPFile)
 	sys.exit(1)
