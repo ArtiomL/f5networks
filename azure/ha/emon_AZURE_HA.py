@@ -2,17 +2,17 @@
 # F5 Networks - External Monitor: Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.2, 02/08/2016
+# v0.3, 02/08/2016
 
 import os
 import requests
-import signal
+from signal import SIGKILL
 from subprocess import call
 import sys
 
 # Log level to /var/log/ltm
 intLogLevel = 2
-strLogID = '[-v0.2.160802-] emon_AZURE_HA.py - '
+strLogID = '[-v0.3.160802-] emon_AZURE_HA.py - '
 
 # Logger command
 strLogger = 'logger -p local0.error '
@@ -21,9 +21,12 @@ def funLog(intMesLevel, strMessage):
 	if intLogLevel >= intMesLevel:
 		call((strLogger + strLogID + strMessage).split(' '))
 
+class clsExCodes:
+	args = 4
+
 if len(sys.argv) < 4:
 	funLog(1, 'Not enough arguments, ILX / Node.js VS IP is missing?')
-	sys.exit(4)
+	sys.exit(clsExCodes.args)
 
 # Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
 strIP = sys.argv[1].strip(':f')
@@ -40,7 +43,7 @@ funLog(2, strPFile + ' ' + strPID)
 # Kill the last instance of this monitor if hung
 if os.path.isfile(strPFile):
 	try:
-		os.kill(int(file(strPFile, 'r').read()), signal.SIGKILL)
+		os.kill(int(file(strPFile, 'r').read()), SIGKILL)
 		funLog(1, 'Killed the last hung instance of this monitor.')
 	except OSError:
 		pass
