@@ -4,6 +4,7 @@
 # Artiom Lichtenstein
 # v0.3, 02/08/2016
 
+import json
 import os
 import requests
 from signal import SIGKILL
@@ -14,15 +15,35 @@ import sys
 intLogLevel = 2
 strLogID = '[-v0.3.160802-] emon_AZURE_HA.py - '
 
+# Azure RM Auth
+strSubs = ''
+strTenantID = ''
+strAppID = ''
+strPass = ''
+strTokenEP = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
+strMgmtURI = 'https://management.azure.com/'
+strBearer = ''
+
 # Logger command
 strLogger = 'logger -p local0.error '
+
+class clsExCodes:
+	args = 4
 
 def funLog(intMesLevel, strMessage):
 	if intLogLevel >= intMesLevel:
 		call((strLogger + strLogID + strMessage).split(' '))
 
-class clsExCodes:
-	args = 4
+def funARMAuth():
+	objPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': strMgmtURI }
+	try:
+		objAuthResp = requests.post(url=strTokenEP, data=objPayload)
+		dicAJSON = json.loads(objAuthResp.content)
+		if 'access_token' in dicAJSON.keys():
+			return dicAJSON['access_token']
+	except requests.exceptions.RequestException as e:
+		funLog(1, str(e))
+	return 'BearERROR'
 
 def funCurState():
 	funLog(1, 'Current local state: ')
@@ -31,15 +52,12 @@ def funFailover():
 	funLog(1, 'Azure failover...')
 
 def main():
-	if len(sys.argv) < 4:
-		funLog(1, 'Not enough arguments, ILX / Node.js VS IP is missing?')
-		sys.exit(clsExCodes.args)
-	
+	global strBearer
+	strBearer = funARMAuth()
+	funLog(2, 'ARM Bearer: ' + strBearer)
 	# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
 	strIP = sys.argv[1].strip(':f')
 	strPort = sys.argv[2]
-	# ILX / Node.js VS IP
-	strIPNjs = sys.argv[3]
 	# PID file
 	strPFile = '_'.join(['/var/run/', os.path.basename(sys.argv[0]), strIP, strPort + '.pid'])
 	# PID
