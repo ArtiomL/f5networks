@@ -16,10 +16,10 @@ intLogLevel = 2
 strLogID = '[-v0.4.160804-] emon_AZURE_HA.py - '
 
 # Azure RM Auth
-strSubs = 'a3482899-362e-4121-9257-1c4fa3e14a1c'
-strTenantID = '6d0a408e-6656-494d-bb4d-5320ca02e9a8'
-strAppID = '42a2171d-d35f-48bd-b488-8fc7c8165698'
-strPass = 'XS_9!d9mJFTS+'
+strSubs = ''
+strTenantID = ''
+strAppID = ''
+strPass = ''
 strTokenEP = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
 strMgmtURI = 'https://management.azure.com/'
 strBearer = ''
@@ -55,6 +55,9 @@ def funFailover():
 	funLog(1, 'Azure failover...')
 
 def main():
+	if len(sys.argv) < 3:
+		funLog(1, 'Not enough arguments!')
+		sys.exit(clsExCodes.intArgs)
 
 	# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
 	strIP = sys.argv[1].strip(':f')
