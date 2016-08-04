@@ -35,13 +35,22 @@ def funLog(intMesLevel, strMessage):
 
 def funARMAuth():
 	global clsAA
-	with open(clsAA.strCFile, 'r') as f:
-		diCreds = json.load(f)
-	clsAA.strSubID = diCreds['subID']
-	strTenantID = diCreds['tenantID']
-	strAppID = diCreds['appID']
-	strPass = diCreds['pass']
-	strEndPt = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
+	if not os.path.isfile(clsAA.strCFile):
+		funLog(1, 'Credentials file: %s is missing!' % clsAA.strCFile)
+		return 3
+
+	try:
+		with open(clsAA.strCFile, 'r') as f:
+			diCreds = json.load(f)
+		clsAA.strSubID = diCreds['subID']
+		strTenantID = diCreds['tenantID']
+		strAppID = diCreds['appID']
+		strPass = diCreds['pass']
+		strEndPt = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
+	except Exception as e:
+		funLog(1, 'Invalid credentials file: %s' % clsAA.strCFile)
+		return 2
+
 	objPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': clsAA.strMgmtURI }
 	try:
 		objAuthResp = requests.post(url=strEndPt, data=objPayload)
@@ -49,9 +58,9 @@ def funARMAuth():
 		if 'access_token' in dicAJSON.keys():
 			clsAA.strBearer = dicAJSON['access_token']
 			return 0
+
 	except requests.exceptions.RequestException as e:
 		funLog(2, str(e))
-	clsAA.strBearer = 'BearERROR'
 	return 1
 
 def funCurState():
@@ -95,12 +104,14 @@ def main():
 			funLog(2, 'Peer: %s is up.' % strIP)
 			print 'UP'
 			sys.exit()
+
 	except requests.exceptions.RequestException as e:
 		funLog(2, str(e))
 
 	# Peer down, ARM action needed
 	if funARMAuth() != 0:
 		funLog(1, 'ARM Auth Error!')
+		os.unlink(strPFile)
 		sys.exit(clsExCodes.intArmAuth)
 
 	funLog(2, 'ARM Bearer: %s' % clsAA.strBearer)
