@@ -67,7 +67,7 @@ def main():
 	# PID
 	strPID = str(os.getpid())
 
-	funLog(2, strPFile + ' ' + strPID)
+	funLog(2, 'PIDFile: %s, PID: %s' % (strPFile, strPID))
 
 	# Kill the last instance of this monitor if hung
 	if os.path.isfile(strPFile):
@@ -86,7 +86,7 @@ def main():
 		if objResp.status_code == 200:
 			os.unlink(strPFile)
 			# Any standard output stops the script from running. Clean up any temporary files before the standard output operation
-			funLog(2, 'Peer: ' + strIP + ' is up.' )
+			funLog(2, 'Peer: %s is up.' % strIP)
 			print 'UP'
 			sys.exit()
 	except requests.exceptions.RequestException as e:
@@ -95,7 +95,7 @@ def main():
 	# Peer down, ARM action needed
 	global strBearer
 	strBearer = funARMAuth()
-	funLog(2, 'ARM Bearer: ' + strBearer)
+	funLog(2, 'ARM Bearer: %s' % strBearer)
 	if strBearer == 'BearERROR':
 		funLog(1, 'ARM Auth Error!')
 		sys.exit(clsExCodes.intArmAuth)
