@@ -16,10 +16,10 @@ intLogLevel = 2
 strLogID = '[-v0.4.160804-] emon_AZURE_HA.py - '
 
 # Azure RM Auth
-strSubs = ''
-strTenantID = ''
-strAppID = ''
-strPass = ''
+strSubs = 'a3482899-362e-4121-9257-1c4fa3e14a1c'
+strTenantID = '6d0a408e-6656-494d-bb4d-5320ca02e9a8'
+strAppID = '42a2171d-d35f-48bd-b488-8fc7c8165698'
+strPass = 'XS_9!d9mJFTS+'
 strTokenEP = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
 strMgmtURI = 'https://management.azure.com/'
 strBearer = ''
@@ -28,11 +28,14 @@ strBearer = ''
 strLogger = 'logger -p local0.error '
 
 class clsExCodes:
+	intArgs = 8
 	intArmAuth = 4
 
 def funLog(intMesLevel, strMessage):
 	if intLogLevel >= intMesLevel:
-		call((strLogger + strLogID + strMessage).split(' '))
+		lstCmd = strLogger.split(' ')
+		lstCmd.append(strLogID + strMessage)
+		call(lstCmd)
 
 def funARMAuth():
 	objPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': strMgmtURI }
@@ -42,7 +45,7 @@ def funARMAuth():
 		if 'access_token' in dicAJSON.keys():
 			return dicAJSON['access_token']
 	except requests.exceptions.RequestException as e:
-		funLog(1, str(e))
+		funLog(2, str(e))
 	return 'BearERROR'
 
 def funCurState():
@@ -52,6 +55,7 @@ def funFailover():
 	funLog(1, 'Azure failover...')
 
 def main():
+
 	# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
 	strIP = sys.argv[1].strip(':f')
 	strPort = sys.argv[2]
@@ -83,7 +87,7 @@ def main():
 			print 'UP'
 			sys.exit()
 	except requests.exceptions.RequestException as e:
-		funLog(1, str(e))
+		funLog(2, str(e))
 
 	# Peer down, ARM action needed
 	global strBearer
