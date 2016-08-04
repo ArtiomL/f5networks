@@ -15,7 +15,7 @@ import sys
 intLogLevel = 2
 strLogID = '[-v0.4.160804-] emon_AZURE_HA.py - '
 
-# Azure RM Auth
+# Azure RM REST Auth
 strSubs = '<Subscription ID>'
 strTenantID = '<Tenant ID>'
 strAppID = '<App ID>'
