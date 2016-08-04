@@ -2,7 +2,7 @@
 # F5 Networks - External Monitor: Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.4, 04/08/2016
+# v0.5, 05/08/2016
 
 import json
 import os
@@ -13,16 +13,12 @@ import sys
 
 # Log level to /var/log/ltm
 intLogLevel = 2
-strLogID = '[-v0.4.160804-] emon_AZURE_HA.py - '
+strLogID = '[-v0.5.160805-] emon_AZURE_HA.py - '
 
 # Azure RM REST Auth
-strSubs = '<Subscription ID>'
-strTenantID = '<Tenant ID>'
-strAppID = '<App ID>'
-strPass = '<Password>'
-strTokenEP = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
-strMgmtURI = 'https://management.azure.com/'
-strBearer = ''
+class clsAA:
+	strCFile = '/shared/tmp/azure/azure_ha.json'
+	strMgmtURI = 'https://management.azure.com/'
 
 # Logger command
 strLogger = 'logger -p local0.error '
@@ -38,15 +34,25 @@ def funLog(intMesLevel, strMessage):
 		call(lstCmd)
 
 def funARMAuth():
-	objPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': strMgmtURI }
+	global clsAA
+	with open(clsAA.strCFile, 'r') as f:
+		diCreds = json.load(f)
+	clsAA.strSubID = diCreds['subID']
+	strTenantID = diCreds['tenantID']
+	strAppID = diCreds['appID']
+	strPass = diCreds['pass']
+	strEndPt = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
+	objPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': clsAA.strMgmtURI }
 	try:
-		objAuthResp = requests.post(url=strTokenEP, data=objPayload)
+		objAuthResp = requests.post(url=strEndPt, data=objPayload)
 		dicAJSON = json.loads(objAuthResp.content)
 		if 'access_token' in dicAJSON.keys():
-			return dicAJSON['access_token']
+			clsAA.strBearer = dicAJSON['access_token']
+			return 0
 	except requests.exceptions.RequestException as e:
 		funLog(2, str(e))
-	return 'BearERROR'
+	clsAA.strBearer = 'BearERROR'
+	return 1
 
 def funCurState():
 	funLog(1, 'Current local state: ')
@@ -93,12 +99,11 @@ def main():
 		funLog(2, str(e))
 
 	# Peer down, ARM action needed
-	global strBearer
-	strBearer = funARMAuth()
-	funLog(2, 'ARM Bearer: %s' % strBearer)
-	if strBearer == 'BearERROR':
+	if funARMAuth() != 0:
 		funLog(1, 'ARM Auth Error!')
 		sys.exit(clsExCodes.intArmAuth)
+
+	funLog(2, 'ARM Bearer: %s' % clsAA.strBearer)
 
 	funCurState()
 	funFailover()
