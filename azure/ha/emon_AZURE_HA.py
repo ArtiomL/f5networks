@@ -17,7 +17,7 @@ strLogID = '[-v0.4.160804-] emon_AZURE_HA.py - '
 
 # Azure RM Auth
 strSubs = '<Subscription ID>'
-strTenantID = '<TenantID>'
+strTenantID = '<Tenant ID>'
 strAppID = '<App ID>'
 strPass = '<Password>'
 strTokenEP = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
