@@ -114,6 +114,7 @@ def main():
 		os.unlink(strPFile)
 		sys.exit(clsExCodes.intArmAuth)
 
+	# ARM Auth OK
 	funLog(2, 'ARM Bearer: %s' % clsAA.strBearer)
 
 	funCurState()
