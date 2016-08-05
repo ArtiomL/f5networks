@@ -1,0 +1,6 @@
+{
+	"appID": "<ApplicationId>",
+	"tenantID": "<TenantId>",
+	"pass": "<Password>",
+	"subID": "<SubscriptionId>"
+}
