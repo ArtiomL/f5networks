@@ -25,12 +25,12 @@ class clsAREA:
 objAREA = clsAREA()
 
 # Logger command
-strLogger = 'logger -p local0.error '
+strLogger = 'logger -p local0.info '
 
 class clsExCodes:
 	def __init__(self):
-		intArgs = 8
-		intArmAuth = 4
+		self.intArgs = 8
+		self.intArmAuth = 4
 
 objExCodes = clsExCodes()
 
@@ -43,6 +43,7 @@ def funLog(intMesLevel, strMessage):
 
 
 def funARMAuth():
+	# Azure RM OAuth2
 	global objAREA
 	if not os.path.isfile(objAREA.strCFile):
 		funLog(1, 'Credentials file: %s is missing!' % objAREA.strCFile)
@@ -52,6 +53,7 @@ def funARMAuth():
 		with open(objAREA.strCFile, 'r') as f:
 			diCreds = json.load(f)
 		objAREA.strSubID = diCreds['subID']
+		objAREA.strRGName = diCreds['rgName']
 		strTenantID = diCreds['tenantID']
 		strAppID = diCreds['appID']
 		strPass = diCreds['pass']
@@ -60,6 +62,7 @@ def funARMAuth():
 		funLog(1, 'Invalid credentials file: %s' % objAREA.strCFile)
 		return 2
 
+	# Bearer token
 	objPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': objAREA.strMgmtURI }
 	try:
 		objAuthResp = requests.post(url=strEndPt, data=objPayload)
@@ -73,14 +76,15 @@ def funARMAuth():
 	return 1
 
 
-def funLocIP(strIP, intPort):
+def funLocIP(strRemIP):
+	# Get local private IP
 	objUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	objUDP.connect((strIP, intPort))
+	objUDP.connect((strRemIP, 0))
 	return objUDP.getsockname()[0]
 
 
-def funCurState():
-	funLog(1, 'Current local state: ')
+def funCurState(strLocIP):
+	funLog(2, 'Current local Private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
 
 
 def funFailover():
@@ -93,10 +97,10 @@ def main():
 		sys.exit(objExCodes.intArgs)
 
 	# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
-	strIP = sys.argv[1].strip(':f')
-	strPort = sys.argv[2]
+	strRIP = sys.argv[1].strip(':f')
+	strRPort = sys.argv[2]
 	# PID file
-	strPFile = '_'.join(['/var/run/', os.path.basename(sys.argv[0]), strIP, strPort + '.pid'])
+	strPFile = '_'.join(['/var/run/', os.path.basename(sys.argv[0]), strRIP, strRPort + '.pid'])
 	# PID
 	strPID = str(os.getpid())
 
@@ -113,13 +117,13 @@ def main():
 	# Record current PID
 	file(strPFile, 'w').write(str(os.getpid()))
 
-	# Health Monitor
+	# Health monitor
 	try:
-		objResp = requests.head(''.join(['https://', strIP, ':', strPort]), verify = False)
+		objResp = requests.head(''.join(['https://', strRIP, ':', strRPort]), verify = False)
 		if objResp.status_code == 200:
 			os.unlink(strPFile)
 			# Any standard output stops the script from running. Clean up any temporary files before the standard output operation
-			funLog(2, 'Peer: %s is up.' % strIP)
+			funLog(2, 'Peer: %s is up.' % strRIP)
 			print 'UP'
 			sys.exit()
 
@@ -135,7 +139,7 @@ def main():
 	# ARM Auth OK
 	funLog(2, 'ARM Bearer: %s' % objAREA.strBearer)
 
-	funCurState()
+	funCurState(funLocIP(strRIP))
 	funFailover()
 
 	os.unlink(strPFile)
