@@ -95,7 +95,7 @@ def funLocIP(strRemIP):
 
 
 def funCurState(strLocIP):
-	funLog(2, 'Current local Private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
+	funLog(2, 'Current local private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
 	# Construct loadBalancers URL
 	strURL = '%ssubscriptions/%s/resourceGroups/%s/providers/Microsoft.Network/loadBalancers%s' % objAREA.funAbsURL()
 	try:
@@ -107,6 +107,7 @@ def funCurState(strLocIP):
 		objStatResp = requests.get(objAREA.funURI(strBEIPURI), headers = objAREA.funBear())
 		# Extract private IP address
 		strARMIP = json.loads(objStatResp.content)['properties']['privateIPAddress']
+		funLog(2, 'Current private IP in Azure RM: %s' % strARMIP)
 		if strARMIP == strLocIP:
 			funLog(1, 'Current state: Active')
 			return 'Active'
