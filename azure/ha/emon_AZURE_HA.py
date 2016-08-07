@@ -2,7 +2,7 @@
 # F5 Networks - External Monitor: Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.7, 07/08/2016
+# v0.8, 07/08/2016
 
 import json
 import os
@@ -14,13 +14,21 @@ import sys
 
 # Log level to /var/log/ltm
 intLogLevel = 2
-strLogID = '[-v0.7.160807-] emon_AZURE_HA.py - '
+strLogID = '[-v0.8.160807-] emon_AZURE_HA.py - '
 
 # Azure RM REST API
 class clsAREA:
 	def __init__(self):
 		self.strCFile = '/shared/tmp/azure/azure_ha.json'
 		self.strMgmtURI = 'https://management.azure.com/'
+		self.strAPIVer = '?api-version=2016-03-30'
+
+	def funAbsURL(self):
+		return self.strMgmtURI, self.strSubID, self.strRGName, self.strAPIVer
+
+	def funURI(self):
+		return self.strMgmtURI, self.strAPIVer
+
 
 objAREA = clsAREA()
 
@@ -85,6 +93,18 @@ def funLocIP(strRemIP):
 
 def funCurState(strLocIP):
 	funLog(2, 'Current local Private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
+	# Construct loadBalancers URL
+	strURL = '%ssubscriptions/%s/resourceGroups/%s/providers/Microsoft.Network/loadBalancers%s' % objAREA.funAbsURL()
+	try:
+		# Get LBAZ JSON
+		objStatResp = requests.get(strURL, headers = { 'Authorization': 'Bearer %s' % objAREA.strBearer }) 
+		dicSJSON = json.loads(objStatResp.content)
+		# Extract backend IP ID ([1:] at the end removes the first "/" char)
+		strBEIPURI = dicSJSON['value'][0]['properties']['backendAddressPools'][0]['properties']['backendIPConfigurations'][0]['id'][1:]
+		objStatResp = requests.get('%sstrBEIPURI%s' % objAREA.funURI(), headers = { 'Authorization': 'Bearer %s' % objAREA.strBearer })
+		print objStatResp.content
+	except Exception as e:
+		funLog(2, str(e))
 
 
 def funFailover():
