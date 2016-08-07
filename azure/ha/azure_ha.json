@@ -1,6 +1,7 @@
 {
-	"appID": "<ApplicationId>",
-	"tenantID": "<TenantId>",
-	"pass": "<Password>",
-	"subID": "<SubscriptionId>"
+	"appID":  "<ApplicationId>",
+	"tenantID":  "<TenantId>",
+	"pass":  "<Password>",
+	"rgName":  "<ResourceGroupName>",
+	"subID":  "<SubscriptionId>"
 }
