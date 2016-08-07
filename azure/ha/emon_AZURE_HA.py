@@ -26,8 +26,8 @@ class clsAREA:
 	def funAbsURL(self):
 		return self.strMgmtURI, self.strSubID, self.strRGName, self.strAPIVer
 
-	def funURI(self):
-		return self.strMgmtURI, self.strAPIVer
+	def funURI(self, strMidURI):
+		return self.strMgmtURI + strMidURI + self.strAPIVer
 
 
 objAREA = clsAREA()
@@ -97,12 +97,12 @@ def funCurState(strLocIP):
 	strURL = '%ssubscriptions/%s/resourceGroups/%s/providers/Microsoft.Network/loadBalancers%s' % objAREA.funAbsURL()
 	try:
 		# Get LBAZ JSON
-		objStatResp = requests.get(strURL, headers = { 'Authorization': 'Bearer %s' % objAREA.strBearer }) 
-		dicSJSON = json.loads(objStatResp.content)
+		objStatResp = requests.get(strURL, headers = { 'Authorization': 'Bearer %s' % objAREA.strBearer })
 		# Extract backend IP ID ([1:] at the end removes the first "/" char)
-		strBEIPURI = dicSJSON['value'][0]['properties']['backendAddressPools'][0]['properties']['backendIPConfigurations'][0]['id'][1:]
-		objStatResp = requests.get('%sstrBEIPURI%s' % objAREA.funURI(), headers = { 'Authorization': 'Bearer %s' % objAREA.strBearer })
-		print objStatResp.content
+		strBEIPURI = json.loads(objStatResp.content)['value'][0]['properties']['backendAddressPools'][0]['properties']['backendIPConfigurations'][0]['id'][1:]
+		objStatResp = requests.get(objAREA.funURI(strBEIPURI), headers = { 'Authorization': 'Bearer %s' % objAREA.strBearer })
+		strActIP = json.loads(objStatResp.content)['properties']['privateIPAddress']
+		print strActIP
 	except Exception as e:
 		funLog(2, str(e))
 
