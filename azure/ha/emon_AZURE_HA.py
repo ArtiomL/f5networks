@@ -29,6 +29,9 @@ class clsAREA:
 	def funURI(self, strMidURI):
 		return self.strMgmtURI + strMidURI + self.strAPIVer
 
+	def funBear(self):
+		return { 'Authorization': 'Bearer %s' % self.strBearer }
+
 
 objAREA = clsAREA()
 
@@ -97,14 +100,23 @@ def funCurState(strLocIP):
 	strURL = '%ssubscriptions/%s/resourceGroups/%s/providers/Microsoft.Network/loadBalancers%s' % objAREA.funAbsURL()
 	try:
 		# Get LBAZ JSON
-		objStatResp = requests.get(strURL, headers = { 'Authorization': 'Bearer %s' % objAREA.strBearer })
+		objStatResp = requests.get(strURL, headers = objAREA.funBear())
 		# Extract backend IP ID ([1:] at the end removes the first "/" char)
 		strBEIPURI = json.loads(objStatResp.content)['value'][0]['properties']['backendAddressPools'][0]['properties']['backendIPConfigurations'][0]['id'][1:]
-		objStatResp = requests.get(objAREA.funURI(strBEIPURI), headers = { 'Authorization': 'Bearer %s' % objAREA.strBearer })
-		strActIP = json.loads(objStatResp.content)['properties']['privateIPAddress']
-		print strActIP
+		# Get backend IP JSON
+		objStatResp = requests.get(objAREA.funURI(strBEIPURI), headers = objAREA.funBear())
+		# Extract private IP address
+		strARMIP = json.loads(objStatResp.content)['properties']['privateIPAddress']
+		if strARMIP == strLocIP:
+			funLog(1, 'Current state: Active')
+			return 'Active'
+		else:
+			return 'Standby'
+
 	except Exception as e:
 		funLog(2, str(e))
+		funLog(1, 'Current state: Unknown')
+		return 'Unknown'
 
 
 def funFailover():
@@ -150,7 +162,8 @@ def main():
 	except requests.exceptions.RequestException as e:
 		funLog(2, str(e))
 
-	# Peer down, ARM action needed
+	# Peer down, ARM action required
+	funLog(1, 'Peer down, ARM action required.')
 	if funARMAuth() != 0:
 		funLog(1, 'ARM Auth Error!')
 		os.unlink(strPFile)
@@ -159,8 +172,9 @@ def main():
 	# ARM Auth OK
 	funLog(2, 'ARM Bearer: %s' % objAREA.strBearer)
 
-	funCurState(funLocIP(strRIP))
-	funFailover()
+	if funCurState(funLocIP(strRIP)) == 'Standby':
+		funLog(1, 'We\'re Standby in ARM, Active peer down. Trying to failover...')
+		funFailover()
 
 	os.unlink(strPFile)
 	sys.exit(1)
