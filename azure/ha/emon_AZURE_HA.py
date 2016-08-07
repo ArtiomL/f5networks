@@ -32,7 +32,6 @@ class clsAREA:
 	def funBear(self):
 		return { 'Authorization': 'Bearer %s' % self.strBearer }
 
-
 objAREA = clsAREA()
 
 # Logger command
