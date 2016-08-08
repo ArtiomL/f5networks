@@ -114,7 +114,7 @@ def funCurState(strLocIP, strPeerIP):
 			funLog(1, 'Current state: Active')
 			return 'Active'
 
-		elif strARMIP == strPeerIP
+		elif strARMIP == strPeerIP:
 			return 'Standby'
 
 	except Exception as e:
@@ -128,6 +128,7 @@ def funFailover():
 
 
 def main():
+	funLog(1, '==============================================================')
 	if len(sys.argv) < 3:
 		funLog(1, 'Not enough arguments!')
 		sys.exit(objExCodes.intArgs)
