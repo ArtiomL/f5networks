@@ -96,7 +96,7 @@ def funLocIP(strRemIP):
 	return objUDP.getsockname()[0]
 
 
-def funCurState(strLocIP):
+def funCurState(strLocIP, strPeerIP):
 	funLog(2, 'Current local private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
 	# Construct loadBalancers URL
 	strURL = '%ssubscriptions/%s/resourceGroups/%s/providers/Microsoft.Network/loadBalancers%s' % objAREA.funAbsURL()
@@ -113,13 +113,14 @@ def funCurState(strLocIP):
 		if strARMIP == strLocIP:
 			funLog(1, 'Current state: Active')
 			return 'Active'
-		else:
+
+		elif strARMIP == strPeerIP
 			return 'Standby'
 
 	except Exception as e:
 		funLog(2, str(e))
-		funLog(1, 'Current state: Unknown')
-		return 'Unknown'
+	funLog(1, 'Current state: Unknown')
+	return 'Unknown'
 
 
 def funFailover():
@@ -175,7 +176,7 @@ def main():
 	# ARM Auth OK
 	funLog(2, 'ARM Bearer: %s' % objAREA.strBearer)
 
-	if funCurState(funLocIP(strRIP)) == 'Standby':
+	if funCurState(funLocIP(strRIP), strRIP) == 'Standby':
 		funLog(1, 'We\'re Standby in ARM, Active peer down. Trying to failover...')
 		funFailover()
 
