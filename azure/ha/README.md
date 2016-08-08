@@ -54,4 +54,4 @@ $rgName = "rgPAPERSTSOAP"
 <br>
 ## [emon_AZURE_HA.py](emon_AZURE_HA.py)
 
-This external monitor is the actual HA / failover logic
+This external monitor is the actual HA / failover logic. It's under heavy development and isn't fully functional yet.
