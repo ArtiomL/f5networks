@@ -7,7 +7,7 @@ However, in Azure this is implemented by making RESTful API calls to Azure Resou
 <br>
 ## [azure_ad_app.ps1](azure_ad_app.ps1)
 
-To be able to automatically make these API calls, the two HA members must be provided with Azure Active Directory credentials ([`azure_ha.json`](azure_ha.json) using the Azure Role-Based Access Control (RBAC).<br>
+To be able to automatically make these API calls, the two HA members must be provided with Azure Active Directory credentials ([`azure_ha.json`](azure_ha.json)) using the Azure Role-Based Access Control (RBAC).<br>
 This PowerShell code (`azure_ad_app.ps1`) automates this one-time process, while some user input is still required:
 
 ```powershell
