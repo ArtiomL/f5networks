@@ -6,4 +6,4 @@ However, in Azure this is implemented by making RESTful API calls to Azure Resou
 
 ## azure_ad_app.ps1
 
-To be able to automatically make these API calls, the two members must be provided with Azure Active Directory credentials using the Azure Role-Based Access Control (RBAC).
+To be able to automatically make these API calls, the two members must be provided with Azure Active Directory credentials `azure_ha.json` using the Azure Role-Based Access Control (RBAC).
