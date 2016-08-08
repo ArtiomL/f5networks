@@ -2,7 +2,7 @@
 # F5 Networks - External Monitor: Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.8, 07/08/2016
+# v0.9, 09/08/2016
 
 import json
 import os
@@ -14,7 +14,7 @@ import sys
 
 # Log level to /var/log/ltm
 intLogLevel = 2
-strLogID = '[-v0.8.160807-] emon_AZURE_HA.py - '
+strLogID = '[-v0.9.160809-] emon_AZURE_HA.py - '
 
 # Azure RM REST API
 class clsAREA:
@@ -37,6 +37,7 @@ objAREA = clsAREA()
 # Logger command
 strLogger = 'logger -p local0.info '
 
+# Exit codes
 class clsExCodes:
 	def __init__(self):
 		self.intArgs = 8
@@ -55,6 +56,7 @@ def funLog(intMesLevel, strMessage):
 def funARMAuth():
 	# Azure RM OAuth2
 	global objAREA
+	# Read external config file
 	if not os.path.isfile(objAREA.strCFile):
 		funLog(1, 'Credentials file: %s is missing!' % objAREA.strCFile)
 		return 3
@@ -89,6 +91,7 @@ def funARMAuth():
 def funLocIP(strRemIP):
 	# Get local private IP
 	objUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	# The .connect method doesn't generate any real network traffic for UDP (socket.SOCK_DGRAM)
 	objUDP.connect((strRemIP, 0))
 	return objUDP.getsockname()[0]
 
