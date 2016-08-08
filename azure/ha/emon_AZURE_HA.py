@@ -64,6 +64,7 @@ def funARMAuth():
 	try:
 		with open(objAREA.strCFile, 'r') as f:
 			diCreds = json.load(f)
+		# Read config parameters
 		objAREA.strSubID = diCreds['subID']
 		objAREA.strRGName = diCreds['rgName']
 		strTenantID = diCreds['tenantID']
@@ -97,6 +98,7 @@ def funLocIP(strRemIP):
 
 
 def funCurState(strLocIP, strPeerIP):
+	# Get current ARM state for the local machine
 	funLog(2, 'Current local private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
 	# Construct loadBalancers URL
 	strURL = '%ssubscriptions/%s/resourceGroups/%s/providers/Microsoft.Network/loadBalancers%s' % objAREA.funAbsURL()
@@ -111,10 +113,12 @@ def funCurState(strLocIP, strPeerIP):
 		strARMIP = json.loads(objStatResp.content)['properties']['privateIPAddress']
 		funLog(2, 'Current private IP in Azure RM: %s' % strARMIP)
 		if strARMIP == strLocIP:
+			# This machine is already Active
 			funLog(1, 'Current state: Active')
 			return 'Active'
 
 		elif strARMIP == strPeerIP:
+			# The dead peer is listed as Active - failover required
 			return 'Standby'
 
 	except Exception as e:
