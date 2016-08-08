@@ -4,6 +4,10 @@ In a regular F5 Device Service Clustering working in High Availability mode, clu
 
 However, in Azure this is implemented by making RESTful API calls to Azure Resource Manager.
 
+
 ## azure_ad_app.ps1
 
 To be able to automatically make these API calls, the two members must be provided with Azure Active Directory credentials (`azure_ha.json`) using the Azure Role-Based Access Control (RBAC).
+
+
+## emon_AZURE_HA.py
