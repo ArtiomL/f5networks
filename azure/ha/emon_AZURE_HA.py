@@ -132,7 +132,7 @@ def funFailover():
 
 
 def main():
-	funLog(1, '==============================================================')
+	funLog(1, '=' * 62)
 	if len(sys.argv) < 3:
 		funLog(1, 'Not enough arguments!')
 		sys.exit(objExCodes.intArgs)
