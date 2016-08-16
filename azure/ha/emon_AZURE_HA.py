@@ -2,7 +2,7 @@
 # F5 Networks - External Monitor: Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.9, 16/08/2016
+# v0.9.1, 16/08/2016
 
 from datetime import timedelta
 import json
@@ -16,7 +16,7 @@ from time import time
 
 # Log level to /var/log/ltm
 intLogLevel = 2
-strLogID = '[-v0.9.160816-] emon_AZURE_HA.py - '
+strLogID = '[-v0.9.1-160816-] emon_AZURE_HA.py - '
 
 # Azure RM REST API
 class clsAREA:
