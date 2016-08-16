@@ -2,8 +2,9 @@
 # F5 Networks - External Monitor: Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.9, 09/08/2016
+# v0.9, 16/08/2016
 
+from datetime import timedelta
 import json
 import os
 import requests
@@ -11,15 +12,16 @@ from signal import SIGKILL
 import socket
 from subprocess import call
 import sys
+from time import time
 
 # Log level to /var/log/ltm
 intLogLevel = 2
-strLogID = '[-v0.9.160809-] emon_AZURE_HA.py - '
+strLogID = '[-v0.9.160816-] emon_AZURE_HA.py - '
 
 # Azure RM REST API
 class clsAREA:
 	def __init__(self):
-		self.strCFile = '/shared/tmp/azure/azure_ha.json'
+		self.strCFile = '/shared/tmp/scripts/azure/azure_ha.json'
 		self.strMgmtURI = 'https://management.azure.com/'
 		self.strAPIVer = '?api-version=2016-03-30'
 
@@ -40,8 +42,8 @@ strLogger = 'logger -p local0.info '
 # Exit codes
 class clsExCodes:
 	def __init__(self):
-		self.intArgs = 8
-		self.intArmAuth = 4
+		self.args = 8
+		self.armAuth = 4
 
 objExCodes = clsExCodes()
 
@@ -62,26 +64,40 @@ def funARMAuth():
 		return 3
 
 	try:
+		# Open credentials file
 		with open(objAREA.strCFile, 'r') as f:
 			diCreds = json.load(f)
-		# Read config parameters
+		# Read subscription and resource group
 		objAREA.strSubID = diCreds['subID']
 		objAREA.strRGName = diCreds['rgName']
+		# Current epoch time
+		intEpNow = int(time())
+		# Check if Bearer token exists and can be reused
+		if (set(('bearer', 'expiresOn')) <= set(diCreds) and int(diCreds['expiresOn']) - 60 > intEpNow):
+			objAREA.strBearer = diCreds['bearer'].decode('base64')
+			funLog(2, 'Reusing existing Bearer, it expires in %s' % str(timedelta(seconds=int(diCreds['expiresOn']) - intEpNow)))
+			return 0
+
+		# Read additional config parameters
 		strTenantID = diCreds['tenantID']
 		strAppID = diCreds['appID']
-		strPass = diCreds['pass']
+		strPass = diCreds['pass'].decode('base64')
 		strEndPt = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
 	except Exception as e:
 		funLog(1, 'Invalid credentials file: %s' % objAREA.strCFile)
 		return 2
 
-	# Bearer token
+	# Generate Bearer token
 	objPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': objAREA.strMgmtURI }
 	try:
 		objAuthResp = requests.post(url=strEndPt, data=objPayload)
 		dicAJSON = json.loads(objAuthResp.content)
 		if 'access_token' in dicAJSON.keys():
 			objAREA.strBearer = dicAJSON['access_token']
+			diCreds['bearer'] = dicAJSON['access_token'].encode('base64')
+			diCreds['expiresOn'] = dicAJSON['expires_on']
+			with open(objAREA.strCFile, 'w') as f:
+				f.write(json.dumps(diCreds, sort_keys=True, indent=4, separators=(',', ': ')))
 			return 0
 
 	except requests.exceptions.RequestException as e:
@@ -135,7 +151,7 @@ def main():
 	funLog(1, '=' * 62)
 	if len(sys.argv) < 3:
 		funLog(1, 'Not enough arguments!')
-		sys.exit(objExCodes.intArgs)
+		sys.exit(objExCodes.args)
 
 	# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
 	strRIP = sys.argv[1].strip(':f')
@@ -176,7 +192,7 @@ def main():
 	if funARMAuth() != 0:
 		funLog(1, 'ARM Auth Error!')
 		os.unlink(strPFile)
-		sys.exit(objExCodes.intArmAuth)
+		sys.exit(objExCodes.armAuth)
 
 	# ARM Auth OK
 	funLog(2, 'ARM Bearer: %s' % objAREA.strBearer)
