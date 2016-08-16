@@ -55,6 +55,7 @@ $adaPass = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetByte
 @{ "subID" = $subsID; "tenantID" = $tenantID; "appID" = $appID; "pass" = $adaPass; "rgName" = $rgName } | ConvertTo-Json
 ```
 
+<br>
 This will result in a [`JSON`](azure_ha.json) file, similar to the following:
 ```json
 {
@@ -65,6 +66,9 @@ This will result in a [`JSON`](azure_ha.json) file, similar to the following:
 	"subID": "b3481899-362a-4121-9355-1c4fa3e14b3d"
 }
 ```
+
+The file should be placed at the following location on both HA BIG-IPs: `/shared/tmp/scripts/azure/azure_ha.json`. This is controlled by the `strCFile` attribute of the `clsAREA` class.
+
 <br>
 ## [emon_AZURE_HA.py](emon_AZURE_HA.py)
 
