@@ -64,7 +64,7 @@ def funARMAuth():
 		return 3
 
 	try:
-		# Open credentials file
+		# Open the credentials file
 		with open(objAREA.strCFile, 'r') as f:
 			diCreds = json.load(f)
 		# Read subscription and resource group
@@ -72,7 +72,7 @@ def funARMAuth():
 		objAREA.strRGName = diCreds['rgName']
 		# Current epoch time
 		intEpNow = int(time())
-		# Check if Bearer token exists and can be reused
+		# Check if Bearer token exists (in credentials file) and whether it can be reused (expiration with 1 minute time skew)
 		if (set(('bearer', 'expiresOn')) <= set(diCreds) and int(diCreds['expiresOn']) - 60 > intEpNow):
 			objAREA.strBearer = diCreds['bearer'].decode('base64')
 			funLog(2, 'Reusing existing Bearer, it expires in %s' % str(timedelta(seconds=int(diCreds['expiresOn']) - intEpNow)))
@@ -87,14 +87,16 @@ def funARMAuth():
 		funLog(1, 'Invalid credentials file: %s' % objAREA.strCFile)
 		return 2
 
-	# Generate Bearer token
+	# Generate new Bearer token
 	objPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': objAREA.strMgmtURI }
 	try:
 		objAuthResp = requests.post(url=strEndPt, data=objPayload)
 		dicAJSON = json.loads(objAuthResp.content)
 		if 'access_token' in dicAJSON.keys():
+			# Successfully received new token
 			objAREA.strBearer = dicAJSON['access_token']
-			diCreds['bearer'] = dicAJSON['access_token'].encode('base64')
+			# Write the new token and its expiration epoch into the credentials file
+			diCreds['bearer'] = objAREA.strBearer.encode('base64')
 			diCreds['expiresOn'] = dicAJSON['expires_on']
 			with open(objAREA.strCFile, 'w') as f:
 				f.write(json.dumps(diCreds, sort_keys=True, indent=4, separators=(',', ': ')))
