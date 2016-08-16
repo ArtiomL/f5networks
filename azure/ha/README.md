@@ -67,7 +67,9 @@ This will result in a [`JSON`](azure_ha.json) file, similar to the following:
 }
 ```
 
-The file should be placed at the following location on both HA BIG-IPs: `/shared/tmp/scripts/azure/azure_ha.json`. This is controlled by the `strCFile` attribute of the `clsAREA` class.
+<br>
+This file should be placed at the following location on both HA BIG-IPs: `/shared/tmp/scripts/azure/azure_ha.json`
+Alternatively, the location is controlled by the `strCFile` attribute of the `clsAREA` class.
 
 <br>
 ## [emon_AZURE_HA.py](emon_AZURE_HA.py)
