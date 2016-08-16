@@ -27,7 +27,8 @@ $subsID = $adSub.SubscriptionId
 $tenantID = $adSub.TenantId
 
 # AD application password
-$adaPass = "<Password>"
+$adaPass = Read-Host 'Azure AD App Password:' -AsSecureString
+$adaPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($adaPass))
 
 # Create a new AAD application
 $armADApp = New-AzureRmADApplication -DisplayName "adappREST" -HomePage "https://paperstsoap.com/adapprest" -IdentifierUris "https://paperstsoap.com/adapprest" -Password $adaPass
@@ -46,6 +47,9 @@ Get-AzureRmResourceGroup
 
 # Select the resource group where the Azure Load Balancer (LBAZ) resides
 $rgName = "rgPAPERSTSOAP"
+
+# Encode the password
+$adaPass = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($adaPass))
 
 # JSON IDs
 @{ "subID" = $subsID; "tenantID" = $tenantID; "appID" = $appID; "pass" = $adaPass; "rgName" = $rgName } | ConvertTo-Json
