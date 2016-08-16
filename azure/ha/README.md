@@ -55,7 +55,7 @@ $adaPass = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetByte
 @{ "subID" = $subsID; "tenantID" = $tenantID; "appID" = $appID; "pass" = $adaPass; "rgName" = $rgName } | ConvertTo-Json
 ```
 
-This will result in a ([`json`](azure_ha.json)) file, similar to the following:
+This will result in a [`json`](azure_ha.json) file, similar to the following:
 ```json
 {
 	"appID": "a3e3cf25-2db0-432e-a122-8224cd46215a",
