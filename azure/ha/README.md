@@ -55,6 +55,16 @@ $adaPass = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetByte
 @{ "subID" = $subsID; "tenantID" = $tenantID; "appID" = $appID; "pass" = $adaPass; "rgName" = $rgName } | ConvertTo-Json
 ```
 
+This will result in a ([`json`](azure_ha.json)) file, similar to the following:
+```json
+{
+	"appID": "a3e3cf25-2db0-432e-a122-8224cd46215a",
+	"tenantID": "6a0a327e-6612-424d-bb4d-5420ca02b9a7",
+	"pass": "U2ViYXN0aWFu",
+	"rgName": "rgPAPERSTSOAP",
+	"subID": "b3481899-362a-4121-9355-1c4fa3e14b3d"
+}
+```
 <br>
 ## [emon_AZURE_HA.py](emon_AZURE_HA.py)
 
