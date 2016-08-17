@@ -2,7 +2,7 @@
 # F5 Networks - External Monitor: Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.9.1, 16/08/2016
+# v0.9.2, 18/08/2016
 
 from datetime import timedelta
 import json
@@ -16,7 +16,7 @@ from time import time
 
 # Log level to /var/log/ltm
 intLogLevel = 2
-strLogID = '[-v0.9.1-160816-] emon_AZURE_HA.py - '
+strLogID = '[-v0.9.2-160818-] emon_AZURE_HA.py - '
 
 # Azure RM REST API
 class clsAREA:
@@ -117,8 +117,8 @@ def funLocIP(strRemIP):
 
 def funCurState(strLocIP, strPeerIP):
 	# Get current ARM state for the local machine
-	funLog(2, 'Current local private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
 	global objAREA
+	funLog(2, 'Current local private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
 	# Construct loadBalancers URL
 	strLBURL = '%ssubscriptions/%s/resourceGroups/%s/providers/Microsoft.Network/loadBalancers%s' % objAREA.funAbsURL()
 	diHeaders = objAREA.funBear()
@@ -150,13 +150,21 @@ def funCurState(strLocIP, strPeerIP):
 
 
 def funFailover():
-	funLog(1, 'Trying to Failover...')
 	diHeaders = objAREA.funBear()
-	strNICURL = objAREA.funURI(objAREA.strCurNICURI)
+	# Remove old NIC from the backend pool
+	try:
+		strNICURL = objAREA.funURI(objAREA.strCurNICURI)
+	except AttributeError as e:
+		funLog(2, 'No NICs currently in the Backend Pool. Nothing to remove.')
+		return 0
+
 	try:
 		# Get the JSON of the NIC currently in the backend pool
 		objHResp = requests.get(strNICURL, headers = diHeaders)
 		diOldNIC = json.loads(objHResp.content)
+		test=diOldNIC['properties']['ipConfigurations'][0]['properties']['loadBalancerBackendAddressPools']
+		print type(test)
+		print test
 		# Remove the LB backend address pool from the JSON
 		diOldNIC['properties']['ipConfigurations'][0]['properties']['loadBalancerBackendAddressPools'] = []
 		# Add Content-Type to HTTP headers
