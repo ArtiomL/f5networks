@@ -2,7 +2,7 @@
 # F5 Networks - External Monitor: Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.9.2, 18/08/2016
+# v0.9.3, 18/08/2016
 
 from datetime import timedelta
 import json
@@ -16,7 +16,7 @@ from time import time
 
 # Log level to /var/log/ltm
 intLogLevel = 2
-strLogID = '[-v0.9.2-160818-] emon_AZURE_HA.py - '
+strLogID = '[-v0.9.3-160818-] emon_AZURE_HA.py - '
 
 # Azure RM REST API
 class clsAREA:
@@ -155,15 +155,15 @@ def funFailover():
 	diHeaders = objAREA.funBear()
 	try:
 		strOldNICURL = objAREA.funURI(objAREA.strCurNICURI)
-		if objAREA.strCurNICURI.endswith('B/'):
-			strChar = 'A/' 
-		else:
-			strChar = 'B/'
-		strNewNICURL = objAREA.funURI(objAREA.strCurNICURI[:-2] + strChar)
 	except AttributeError as e:
 		funLog(2, 'No NICs currently in the Backend Pool!')
 		return 3
 
+	if objAREA.strCurNICURI.endswith('B/'):
+		strChar = 'A/' 
+	else:
+		strChar = 'B/'
+	strNewNICURL = objAREA.funURI(objAREA.strCurNICURI[:-2] + strChar)
 	try:
 		# Get the JSON of the NIC currently in the backend pool
 		objHResp = requests.get(strOldNICURL, headers = diHeaders)
@@ -237,7 +237,7 @@ def main():
 		sys.exit(objExCodes.armAuth)
 
 	# ARM Auth OK
-	funLog(3, 'ARM Bearer: %s' % objAREA.strBearer)
+	funLog(2, 'ARM Bearer: %s' % objAREA.strBearer)
 
 	if funCurState(funLocIP(strRIP), strRIP) == 'Standby':
 		funLog(1, 'We\'re Standby in ARM, Active peer down. Trying to failover...')
