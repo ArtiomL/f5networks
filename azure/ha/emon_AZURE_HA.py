@@ -88,16 +88,16 @@ def funARMAuth():
 		return 2
 
 	# Generate new Bearer token
-	objPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': objAREA.strMgmtURI }
+	diPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': objAREA.strMgmtURI }
 	try:
-		objHResp = requests.post(url=strEndPt, data=objPayload)
-		dicAJSON = json.loads(objHResp.content)
-		if 'access_token' in dicAJSON.keys():
+		objHResp = requests.post(url=strEndPt, data=diPayload)
+		diAuth = json.loads(objHResp.content)
+		if 'access_token' in diAuth.keys():
 			# Successfully received new token
-			objAREA.strBearer = dicAJSON['access_token']
+			objAREA.strBearer = diAuth['access_token']
 			# Write the new token and its expiration epoch into the credentials file
 			diCreds['bearer'] = objAREA.strBearer.encode('base64')
-			diCreds['expiresOn'] = dicAJSON['expires_on']
+			diCreds['expiresOn'] = diAuth['expires_on']
 			with open(objAREA.strCFile, 'w') as f:
 				f.write(json.dumps(diCreds, sort_keys=True, indent=4, separators=(',', ': ')))
 			return 0
@@ -118,18 +118,19 @@ def funLocIP(strRemIP):
 def funCurState(strLocIP, strPeerIP):
 	# Get current ARM state for the local machine
 	funLog(2, 'Current local private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
+	global objAREA
 	# Construct loadBalancers URL
 	strLBURL = '%ssubscriptions/%s/resourceGroups/%s/providers/Microsoft.Network/loadBalancers%s' % objAREA.funAbsURL()
+	diHeaders = objAREA.funBear()
 	try:
-		dicHeaders = objAREA.funBear()
 		# Get LBAZ JSON
-		objHResp = requests.get(strLBURL, headers = dicHeaders)
+		objHResp = requests.get(strLBURL, headers = diHeaders)
 		# Extract backend IP ID ([1:] at the end removes the first "/" char)
 		strBEIPURI = json.loads(objHResp.content)['value'][0]['properties']['backendAddressPools'][0]['properties']['backendIPConfigurations'][0]['id'][1:]
 		# Store the URI for NIC currently in the backend pool
 		objAREA.strCurNICURI = strBEIPURI.split('ipConfiguration')[0]
 		# Get backend IP JSON
-		objHResp = requests.get(objAREA.funURI(strBEIPURI), headers = dicHeaders)
+		objHResp = requests.get(objAREA.funURI(strBEIPURI), headers = diHeaders)
 		# Extract private IP address
 		strARMIP = json.loads(objHResp.content)['properties']['privateIPAddress']
 		funLog(2, 'Current private IP in Azure RM: %s' % strARMIP)
@@ -149,18 +150,22 @@ def funCurState(strLocIP, strPeerIP):
 
 
 def funFailover():
-	funLog(1, 'Azure failover...')
+	funLog(1, 'Trying to Failover...')
+	diHeaders = objAREA.funBear()
+	strNICURL = objAREA.funURI(objAREA.strCurNICURI)
 	try:
-		strNICURL = objAREA.funURI(objAREA.strCurNICURI)
-		dicHeaders = objAREA.funBear()
-		objHResp = requests.get(strNICURL, headers = dicHeaders)
-		dicOldNIC = json.loads(objHResp.content)
-		dicOldNIC['properties']['ipConfigurations'][0]['properties']['loadBalancerBackendAddressPools'] = []
-		dicHeaders['Content-Type'] = 'application/json'
-		objHResp = requests.put(strURL, headers = dicHeaders, data = json.dumps(dicOldNIC))
-		print objHResp.headers['']
+		# Get the JSON of the NIC currently in the backend pool
+		objHResp = requests.get(strNICURL, headers = diHeaders)
+		diOldNIC = json.loads(objHResp.content)
+		# Remove the LB backend address pool from the JSON
+		diOldNIC['properties']['ipConfigurations'][0]['properties']['loadBalancerBackendAddressPools'] = []
+		# Add Content-Type to HTTP headers
+		diHeaders['Content-Type'] = 'application/json'
+		# Update the NIC (remove it from the backend pool)
+		objHResp = requests.put(strNICURL, headers = diHeaders, data = json.dumps(diOldNIC))
+		funLog(1, str(requests.get(objHResp.headers['Azure-AsyncOperation'], headers = objAREA.funBear()).content))
 	except Exception as e:
-		funLog(1, 'something')
+		funLog(2, str(e))
 
 
 def main():
@@ -211,7 +216,7 @@ def main():
 		sys.exit(objExCodes.armAuth)
 
 	# ARM Auth OK
-	funLog(2, 'ARM Bearer: %s' % objAREA.strBearer)
+	funLog(3, 'ARM Bearer: %s' % objAREA.strBearer)
 
 	if funCurState(funLocIP(strRIP), strRIP) == 'Standby':
 		funLog(1, 'We\'re Standby in ARM, Active peer down. Trying to failover...')
