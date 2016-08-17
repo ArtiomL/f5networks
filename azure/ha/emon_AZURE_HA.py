@@ -125,9 +125,11 @@ def funCurState(strLocIP, strPeerIP):
 	try:
 		# Get LBAZ JSON
 		objHResp = requests.get(strLBURL, headers = diHeaders)
+		# Store the backend pool JSON (for funFailover)
+		objAREA.diBEPool = json.loads(objHResp.content)['value'][0]['properties']['backendAddressPools']
 		# Extract backend IP ID ([1:] at the end removes the first "/" char)
-		strBEIPURI = json.loads(objHResp.content)['value'][0]['properties']['backendAddressPools'][0]['properties']['backendIPConfigurations'][0]['id'][1:]
-		# Store the URI for NIC currently in the backend pool
+		strBEIPURI = objAREA.diBEPool[0]['properties']['backendIPConfigurations'][0]['id'][1:]
+		# Store the URI for NIC currently in the backend pool (for funFailover)
 		objAREA.strCurNICURI = strBEIPURI.split('ipConfiguration')[0]
 		# Get backend IP JSON
 		objHResp = requests.get(objAREA.funURI(strBEIPURI), headers = diHeaders)
@@ -151,27 +153,38 @@ def funCurState(strLocIP, strPeerIP):
 
 def funFailover():
 	diHeaders = objAREA.funBear()
-	# Remove old NIC from the backend pool
 	try:
-		strNICURL = objAREA.funURI(objAREA.strCurNICURI)
+		strOldNICURL = objAREA.funURI(objAREA.strCurNICURI)
+		if objAREA.strCurNICURI.endswith('B/'):
+			strChar = 'A/' 
+		else:
+			strChar = 'B/'
+		strNewNICURL = objAREA.funURI(objAREA.strCurNICURI[:-2] + strChar)
 	except AttributeError as e:
-		funLog(2, 'No NICs currently in the Backend Pool. Nothing to remove.')
-		return 0
+		funLog(2, 'No NICs currently in the Backend Pool!')
+		return 3
 
 	try:
 		# Get the JSON of the NIC currently in the backend pool
-		objHResp = requests.get(strNICURL, headers = diHeaders)
+		objHResp = requests.get(strOldNICURL, headers = diHeaders)
 		diOldNIC = json.loads(objHResp.content)
-		test=diOldNIC['properties']['ipConfigurations'][0]['properties']['loadBalancerBackendAddressPools']
-		print type(test)
-		print test
-		# Remove the LB backend address pool from the JSON
+		# Remove the LB backend pool from that JSON
 		diOldNIC['properties']['ipConfigurations'][0]['properties']['loadBalancerBackendAddressPools'] = []
+		# Get the JSON of the new NIC to be added to the backend pool
+		objHResp = requests.get(strNewNICURL, headers = diHeaders)
+		diNewNIC = json.loads(objHResp.content)
+		# Remove the existing backend IP ID from the LB backend pool JSON (stored in funCurState)
+		objAREA.diBEPool[0]['properties']['backendIPConfigurations'] = []
+		# Add the LB backend pool to the new NIC JSON
+		diNewNIC['properties']['ipConfigurations'][0]['properties']['loadBalancerBackendAddressPools'] = objAREA.diBEPool
 		# Add Content-Type to HTTP headers
 		diHeaders['Content-Type'] = 'application/json'
-		# Update the NIC (remove it from the backend pool)
-		objHResp = requests.put(strNICURL, headers = diHeaders, data = json.dumps(diOldNIC))
-		funLog(1, str(requests.get(objHResp.headers['Azure-AsyncOperation'], headers = objAREA.funBear()).content))
+		# Update the new NIC (add it to the backend pool)
+		objHResp = requests.put(strNewNICURL, headers = diHeaders, data = json.dumps(diNewNIC))
+		funLog(1, 'Adding new NIC to LBAZ BE Pool... %s' % requests.get(objHResp.headers['Azure-AsyncOperation'], headers = objAREA.funBear()).content)
+		# Update the old NIC (remove it from the backend pool)
+		objHResp = requests.put(strOldNICURL, headers = diHeaders, data = json.dumps(diOldNIC))
+		funLog(1, 'Removing old NIC... %s' % requests.get(objHResp.headers['Azure-AsyncOperation'], headers = objAREA.funBear()).content)
 	except Exception as e:
 		funLog(2, str(e))
 
