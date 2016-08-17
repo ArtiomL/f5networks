@@ -149,6 +149,17 @@ def funCurState(strLocIP, strPeerIP):
 
 def funFailover():
 	funLog(1, 'Azure failover...')
+	try:
+		strURL = objAREA.funURI(objAREA.strCurNICURI)
+		dicHeaders = objAREA.funBear()
+		objStatResp = requests.get(strURL, headers = dicHeaders)
+		dicOldNIC = json.loads(objStatResp.content)
+		dicOldNIC['properties']['ipConfigurations'][0]['properties']['loadBalancerBackendAddressPools'] = []
+		dicHeaders['Content-Type'] = 'application/json'
+		objStatResp = requests.put(strURL, headers = dicHeaders, data = json.dumps(dicOldNIC))
+		print objStatResp.headers['']
+	except Exception as e:
+		funLog(1, 'something')
 
 
 def main():
