@@ -125,6 +125,8 @@ def funCurState(strLocIP, strPeerIP):
 		objStatResp = requests.get(strURL, headers = objAREA.funBear())
 		# Extract backend IP ID ([1:] at the end removes the first "/" char)
 		strBEIPURI = json.loads(objStatResp.content)['value'][0]['properties']['backendAddressPools'][0]['properties']['backendIPConfigurations'][0]['id'][1:]
+		# Store the URI for NIC currently in the backend pool
+		objAREA.strCurNICURI = strBEIPURI.split('ipConfiguration')[0]
 		# Get backend IP JSON
 		objStatResp = requests.get(objAREA.funURI(strBEIPURI), headers = objAREA.funBear())
 		# Extract private IP address
