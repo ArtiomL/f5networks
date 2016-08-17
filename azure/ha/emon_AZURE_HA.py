@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # F5 Networks - External Monitor: Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
