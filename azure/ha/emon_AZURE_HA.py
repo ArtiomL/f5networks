@@ -90,8 +90,8 @@ def funARMAuth():
 	# Generate new Bearer token
 	objPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': objAREA.strMgmtURI }
 	try:
-		objAuthResp = requests.post(url=strEndPt, data=objPayload)
-		dicAJSON = json.loads(objAuthResp.content)
+		objHResp = requests.post(url=strEndPt, data=objPayload)
+		dicAJSON = json.loads(objHResp.content)
 		if 'access_token' in dicAJSON.keys():
 			# Successfully received new token
 			objAREA.strBearer = dicAJSON['access_token']
@@ -119,18 +119,19 @@ def funCurState(strLocIP, strPeerIP):
 	# Get current ARM state for the local machine
 	funLog(2, 'Current local private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
 	# Construct loadBalancers URL
-	strURL = '%ssubscriptions/%s/resourceGroups/%s/providers/Microsoft.Network/loadBalancers%s' % objAREA.funAbsURL()
+	strLBURL = '%ssubscriptions/%s/resourceGroups/%s/providers/Microsoft.Network/loadBalancers%s' % objAREA.funAbsURL()
 	try:
+		dicHeaders = objAREA.funBear()
 		# Get LBAZ JSON
-		objStatResp = requests.get(strURL, headers = objAREA.funBear())
+		objHResp = requests.get(strLBURL, headers = dicHeaders)
 		# Extract backend IP ID ([1:] at the end removes the first "/" char)
-		strBEIPURI = json.loads(objStatResp.content)['value'][0]['properties']['backendAddressPools'][0]['properties']['backendIPConfigurations'][0]['id'][1:]
+		strBEIPURI = json.loads(objHResp.content)['value'][0]['properties']['backendAddressPools'][0]['properties']['backendIPConfigurations'][0]['id'][1:]
 		# Store the URI for NIC currently in the backend pool
 		objAREA.strCurNICURI = strBEIPURI.split('ipConfiguration')[0]
 		# Get backend IP JSON
-		objStatResp = requests.get(objAREA.funURI(strBEIPURI), headers = objAREA.funBear())
+		objHResp = requests.get(objAREA.funURI(strBEIPURI), headers = dicHeaders)
 		# Extract private IP address
-		strARMIP = json.loads(objStatResp.content)['properties']['privateIPAddress']
+		strARMIP = json.loads(objHResp.content)['properties']['privateIPAddress']
 		funLog(2, 'Current private IP in Azure RM: %s' % strARMIP)
 		if strARMIP == strLocIP:
 			# This machine is already Active
@@ -150,14 +151,14 @@ def funCurState(strLocIP, strPeerIP):
 def funFailover():
 	funLog(1, 'Azure failover...')
 	try:
-		strURL = objAREA.funURI(objAREA.strCurNICURI)
+		strNICURL = objAREA.funURI(objAREA.strCurNICURI)
 		dicHeaders = objAREA.funBear()
-		objStatResp = requests.get(strURL, headers = dicHeaders)
-		dicOldNIC = json.loads(objStatResp.content)
+		objHResp = requests.get(strNICURL, headers = dicHeaders)
+		dicOldNIC = json.loads(objHResp.content)
 		dicOldNIC['properties']['ipConfigurations'][0]['properties']['loadBalancerBackendAddressPools'] = []
 		dicHeaders['Content-Type'] = 'application/json'
-		objStatResp = requests.put(strURL, headers = dicHeaders, data = json.dumps(dicOldNIC))
-		print objStatResp.headers['']
+		objHResp = requests.put(strURL, headers = dicHeaders, data = json.dumps(dicOldNIC))
+		print objHResp.headers['']
 	except Exception as e:
 		funLog(1, 'something')
 
@@ -191,8 +192,8 @@ def main():
 
 	# Health monitor
 	try:
-		objResp = requests.head(''.join(['https://', strRIP, ':', strRPort]), verify = False)
-		if objResp.status_code == 200:
+		objHResp = requests.head(''.join(['https://', strRIP, ':', strRPort]), verify = False)
+		if objHResp.status_code == 200:
 			os.unlink(strPFile)
 			# Any standard output stops the script from running. Clean up any temporary files before the standard output operation
 			funLog(2, 'Peer: %s is up.' % strRIP)
