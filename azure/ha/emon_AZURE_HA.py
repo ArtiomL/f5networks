@@ -151,6 +151,22 @@ def funCurState(strLocIP, strPeerIP):
 	return 'Unknown'
 
 
+def funOpStatus(objHResp):
+	strStatus = 'InProgress'
+	strOpURL = objHResp.headers['Azure-AsyncOperation']
+	funLog(2, 'ARM Async Operation, x-ms-request-id: %s' % objHResp.headers['x-ms-request-id'])
+	diHeaders = objAREA.funBear()
+	while strStatus == 'InProgress':
+		try:
+			strStatus = json.loads(requests.get(strOpURL, headers = diHeaders).content)['status']
+			funLog(3, 'ARM Async Operation Status: %s' % strStatus)
+		except Exception as e:
+			funLog(2, str(e))
+			break
+	funLog(2, strStatus)
+	return strStatus
+
+
 def funFailover():
 	diHeaders = objAREA.funBear()
 	try:
@@ -160,7 +176,7 @@ def funFailover():
 		return 3
 
 	if objAREA.strCurNICURI.endswith('B/'):
-		strChar = 'A/' 
+		strChar = 'A/'
 	else:
 		strChar = 'B/'
 	strNewNICURL = objAREA.funURI(objAREA.strCurNICURI[:-2] + strChar)
@@ -181,12 +197,19 @@ def funFailover():
 		diHeaders['Content-Type'] = 'application/json'
 		# Update the new NIC (add it to the backend pool)
 		objHResp = requests.put(strNewNICURL, headers = diHeaders, data = json.dumps(diNewNIC))
-		funLog(1, 'Adding new NIC to LBAZ BE Pool... %s' % requests.get(objHResp.headers['Azure-AsyncOperation'], headers = objAREA.funBear()).content)
+		funLog(1, 'Adding new NIC to LBAZ BE Pool...')
+		if funOpStatus(objHResp) != 'Succeeded':
+			return 2
+
 		# Update the old NIC (remove it from the backend pool)
 		objHResp = requests.put(strOldNICURL, headers = diHeaders, data = json.dumps(diOldNIC))
-		funLog(1, 'Removing old NIC... %s' % requests.get(objHResp.headers['Azure-AsyncOperation'], headers = objAREA.funBear()).content)
+		funLog(1, 'Removing old NIC... ')
+		if funOpStatus(objHResp) == 'Succeeded':
+			return 0
+
 	except Exception as e:
 		funLog(2, str(e))
+	return 1
 
 
 def main():
