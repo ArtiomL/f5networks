@@ -15,7 +15,7 @@ import sys
 from time import time
 
 # Log level to /var/log/ltm
-intLogLevel = 2
+intLogLevel = 3
 strLogID = '[-v0.9.3-160818-] emon_AZURE_HA.py - '
 
 # Azure RM REST API
@@ -172,7 +172,7 @@ def funFailover():
 	try:
 		strOldNICURL = objAREA.funURI(objAREA.strCurNICURI)
 	except AttributeError as e:
-		funLog(2, 'No NICs currently in the Backend Pool!')
+		funLog(2, 'No NICs in the Backend Pool!')
 		return 3
 
 	if objAREA.strCurNICURI.endswith('B/'):
@@ -197,13 +197,13 @@ def funFailover():
 		diHeaders['Content-Type'] = 'application/json'
 		# Update the new NIC (add it to the backend pool)
 		objHResp = requests.put(strNewNICURL, headers = diHeaders, data = json.dumps(diNewNIC))
-		funLog(1, 'Adding new NIC to LBAZ BE Pool...')
+		funLog(1, 'Adding the new NIC to LBAZ BE Pool...')
 		if funOpStatus(objHResp) != 'Succeeded':
 			return 2
 
 		# Update the old NIC (remove it from the backend pool)
 		objHResp = requests.put(strOldNICURL, headers = diHeaders, data = json.dumps(diOldNIC))
-		funLog(1, 'Removing old NIC... ')
+		funLog(1, 'Removing the old NIC from LBAZ BE Pool... ')
 		if funOpStatus(objHResp) == 'Succeeded':
 			return 0
 
@@ -260,7 +260,7 @@ def main():
 		sys.exit(objExCodes.armAuth)
 
 	# ARM Auth OK
-	funLog(2, 'ARM Bearer: %s' % objAREA.strBearer)
+	funLog(3, 'ARM Bearer: %s' % objAREA.strBearer)
 
 	if funCurState(funLocIP(strRIP), strRIP) == 'Standby':
 		funLog(1, 'We\'re Standby in ARM, Active peer down. Trying to failover...')
