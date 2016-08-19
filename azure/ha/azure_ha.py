@@ -314,6 +314,7 @@ def main():
 	sys.exit(1)
 
 
+@atexit.register
 def funExit():
 	try:
 		os.remove(strPFile)
@@ -322,7 +323,6 @@ def funExit():
 		pass
 	funLog(1, 'Exiting...')
 
-atexit.register(funExit)
 
 if __name__ == '__main__':
 	main()
