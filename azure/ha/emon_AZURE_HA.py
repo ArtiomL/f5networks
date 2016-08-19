@@ -2,8 +2,9 @@
 # F5 Networks - External Monitor: Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.9.3, 18/08/2016
+# v0.9.4, 19/08/2016
 
+from argparse import ArgumentParser
 from datetime import timedelta
 import json
 import os
@@ -14,9 +15,13 @@ from subprocess import call
 import sys
 from time import time
 
+__author__ = 'Artiom Lichtenstein'
+__license__ = 'MIT'
+__version__ = '0.9.4'
+
 # Log level to /var/log/ltm
-intLogLevel = 3
-strLogID = '[-v0.9.3-160818-] emon_AZURE_HA.py - '
+intLogLevel = 0
+strLogID = '[-v%s-160818-] emon_AZURE_HA.py - ' % __version__
 
 # Azure RM REST API
 class clsAREA:
@@ -37,7 +42,7 @@ class clsAREA:
 objAREA = clsAREA()
 
 # Logger command
-strLogger = 'logger -p local0.info '
+strLogger = 'logger -p local0.'
 
 # Exit codes
 class clsExCodes:
@@ -48,11 +53,14 @@ class clsExCodes:
 objExCodes = clsExCodes()
 
 
-def funLog(intMesLevel, strMessage):
+def funLog(intMesLevel, strMessage, strSeverity='info ', strMethod='log'):
 	if intLogLevel >= intMesLevel:
-		lstCmd = strLogger.split(' ')
-		lstCmd.append(strLogID + strMessage)
-		call(lstCmd)
+		if strMethod == 'stdout':
+			print strMessage
+		else:
+			lstCmd = (strLogger + strSeverity).split(' ')
+			lstCmd.append(strLogID + strMessage)
+			call(lstCmd)
 
 
 def funARMAuth():
@@ -60,7 +68,7 @@ def funARMAuth():
 	global objAREA
 	# Read external config file
 	if not os.path.isfile(objAREA.strCFile):
-		funLog(1, 'Credentials file: %s is missing!' % objAREA.strCFile)
+		funLog(1, 'Credentials file: %s is missing!' % objAREA.strCFile, 'err')
 		return 3
 
 	try:
@@ -84,7 +92,7 @@ def funARMAuth():
 		strPass = diCreds['pass'].decode('base64')
 		strEndPt = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
 	except Exception as e:
-		funLog(1, 'Invalid credentials file: %s' % objAREA.strCFile)
+		funLog(1, 'Invalid credentials file: %s' % objAREA.strCFile, 'err')
 		return 2
 
 	# Generate new Bearer token
@@ -103,7 +111,7 @@ def funARMAuth():
 			return 0
 
 	except requests.exceptions.RequestException as e:
-		funLog(2, str(e))
+		funLog(2, str(e), 'err')
 	return 1
 
 
@@ -146,8 +154,8 @@ def funCurState(strLocIP, strPeerIP):
 			return 'Standby'
 
 	except Exception as e:
-		funLog(2, str(e))
-	funLog(1, 'Current state: Unknown')
+		funLog(2, str(e), 'err')
+	funLog(1, 'Current state: Unknown', 'warning')
 	return 'Unknown'
 
 
@@ -161,7 +169,7 @@ def funOpStatus(objHResp):
 			strStatus = json.loads(requests.get(strOpURL, headers = diHeaders).content)['status']
 			funLog(3, 'ARM Async Operation Status: %s' % strStatus)
 		except Exception as e:
-			funLog(2, str(e))
+			funLog(2, str(e), 'err')
 			break
 	funLog(2, strStatus)
 	return strStatus
@@ -172,13 +180,12 @@ def funFailover():
 	try:
 		strOldNICURL = objAREA.funURI(objAREA.strCurNICURI)
 	except AttributeError as e:
-		funLog(2, 'No NICs in the Backend Pool!')
+		funLog(2, 'No NICs in the Backend Pool!', 'warning')
 		return 3
 
+	strChar = 'B/'
 	if objAREA.strCurNICURI.endswith('B/'):
 		strChar = 'A/'
-	else:
-		strChar = 'B/'
 	strNewNICURL = objAREA.funURI(objAREA.strCurNICURI[:-2] + strChar)
 	try:
 		# Get the JSON of the NIC currently in the backend pool
@@ -208,14 +215,31 @@ def funFailover():
 			return 0
 
 	except Exception as e:
-		funLog(2, str(e))
+		funLog(2, str(e), 'err')
 	return 1
 
 
+def funArgParse():
+	objArgParse = ArgumentParser()
+	objArgParse.add_argument('-l', help='log level (0-3)', action='store', type=int, dest='level')
+	objArgParse.add_argument('-a', help='test Azure RM authentication and exit', action='store_true', dest='auth')
+	objArgParse.add_argument('-v', action='version', version='%(prog)s ' + __version__)
+	return objArgParse.parse_args()
+
+
 def main():
+	print len(sys.argv)
+	intArgNum = 3
+	objArgs = funArgParse()
+	if objArgs.level is not None:
+		global intLogLevel
+		intLogLevel = objArgs.level
+		intArgNum += 2
+	print intLogLevel
+	return
 	funLog(1, '=' * 62)
-	if len(sys.argv) < 3:
-		funLog(1, 'Not enough arguments!')
+	if len(sys.argv) < intArgNum:
+		funLog(1, 'Not enough arguments!', 'err')
 		sys.exit(objExCodes.args)
 
 	# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
@@ -232,7 +256,7 @@ def main():
 	if os.path.isfile(strPFile):
 		try:
 			os.kill(int(file(strPFile, 'r').read()), SIGKILL)
-			funLog(1, 'Killed the last hung instance of this monitor.')
+			funLog(1, 'Killed the last hung instance of this monitor.', 'warning')
 		except OSError:
 			pass
 
@@ -250,12 +274,12 @@ def main():
 			sys.exit()
 
 	except requests.exceptions.RequestException as e:
-		funLog(2, str(e))
+		funLog(2, str(e), 'err')
 
 	# Peer down, ARM action required
-	funLog(1, 'Peer down, ARM action required.')
+	funLog(1, 'Peer down, ARM action required.', 'warning')
 	if funARMAuth() != 0:
-		funLog(1, 'ARM Auth Error!')
+		funLog(1, 'ARM Auth Error!', 'err')
 		os.unlink(strPFile)
 		sys.exit(objExCodes.armAuth)
 
@@ -263,7 +287,7 @@ def main():
 	funLog(3, 'ARM Bearer: %s' % objAREA.strBearer)
 
 	if funCurState(funLocIP(strRIP), strRIP) == 'Standby':
-		funLog(1, 'We\'re Standby in ARM, Active peer down. Trying to failover...')
+		funLog(1, 'We\'re Standby in ARM, Active peer down. Trying to failover...', 'warning')
 		funFailover()
 
 	os.unlink(strPFile)
