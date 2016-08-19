@@ -59,7 +59,7 @@ class clsExCodes:
 objExCodes = clsExCodes()
 
 
-def funLog(intMesLevel, strMessage, strSeverity='info'):
+def funLog(intMesLevel, strMessage, strSeverity = 'info'):
 	if intLogLevel >= intMesLevel:
 		if strLogMethod == 'stdout':
 			print strMessage
@@ -140,7 +140,7 @@ def funLocIP(strRemIP):
 	return objUDP.getsockname()[0]
 
 
-def funCurState(strLocIP, strPeerIP):
+def funCurState(strLocIP = '127.0.0.1', strPeerIP = '127.0.0.1'):
 	# Get current ARM state for the local machine
 	global objAREA
 	funLog(2, 'Current local private IP: %s, Resource Group: %s' % (strLocIP, objAREA.strRGName))
@@ -260,7 +260,7 @@ def main():
 		sys.exit(funRunAuth())
 	if objArgs.fail:
 		funRunAuth()
-		funCurState('127.0.0.1', '127.0.0.1')
+		funCurState()
 		funFailover()
 		sys.exit()
 
