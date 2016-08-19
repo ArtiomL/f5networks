@@ -5,6 +5,7 @@
 # v0.9.4, 19/08/2016
 
 from argparse import ArgumentParser
+import atexit
 from datetime import timedelta
 import json
 import os
@@ -19,10 +20,16 @@ __author__ = 'Artiom Lichtenstein'
 __license__ = 'MIT'
 __version__ = '0.9.4'
 
+# PID file
+strPFile = ''
+
 # Log level to /var/log/ltm
 intLogLevel = 0
 strLogMethod = 'log'
 strLogID = '[-v%s-160818-] %s - ' % (__version__, os.path.basename(sys.argv[0]))
+
+# Logger command
+strLogger = 'logger -p local0.'
 
 # Azure RM REST API
 class clsAREA:
@@ -42,13 +49,11 @@ class clsAREA:
 
 objAREA = clsAREA()
 
-# Logger command
-strLogger = 'logger -p local0.'
-
 # Exit codes
 class clsExCodes:
 	def __init__(self):
 		self.args = 8
+		self.rip = 6
 		self.armAuth = 4
 
 objExCodes = clsExCodes()
@@ -69,7 +74,7 @@ def funARMAuth():
 	global objAREA
 	# Read external config file
 	if not os.path.isfile(objAREA.strCFile):
-		funLog(1, 'Credentials file: %s is missing!' % objAREA.strCFile, 'err')
+		funLog(1, 'Credentials file: %s is missing. (use azure_ad_app.ps1?)' % objAREA.strCFile, 'err')
 		return 3
 
 	try:
@@ -114,6 +119,16 @@ def funARMAuth():
 	except requests.exceptions.RequestException as e:
 		funLog(2, str(e), 'err')
 	return 1
+
+
+def funRunAuth():
+	# Run and check funARMAuth() exit code
+	if funARMAuth() != 0:
+		funLog(1, 'ARM Auth Error!', 'err')
+		sys.exit(objExCodes.armAuth)
+
+	# ARM Auth OK
+	funLog(3, 'ARM Bearer: %s' % objAREA.strBearer)
 
 
 def funLocIP(strRemIP):
@@ -161,7 +176,9 @@ def funCurState(strLocIP, strPeerIP):
 
 
 def funOpStatus(objHResp):
+	# Check Azure Async Operation Status
 	strStatus = 'InProgress'
+	# The Azure-AsyncOperation header has the full operation URL
 	strOpURL = objHResp.headers['Azure-AsyncOperation']
 	funLog(2, 'ARM Async Operation, x-ms-request-id: %s' % objHResp.headers['x-ms-request-id'])
 	diHeaders = objAREA.funBear()
@@ -221,34 +238,40 @@ def funFailover():
 
 
 def funArgParse():
-	objArgParse = ArgumentParser()
+	objArgParse = ArgumentParser(description='F5 High Availability in Microsoft Azure', )
 	objArgParse.add_argument('-a', help='test Azure RM authentication and exit', action='store_true', dest='auth')
 	objArgParse.add_argument('-l', help='set log level (0-3)', action='store', type=int, dest='level')
 	objArgParse.add_argument('-s', help='log to stdout (instead of /var/log/ltm)', action='store_true', dest='sout')
-	objArgParse.add_argument('-v', action='version', version='%(prog)s ' + __version__)
-	objArgs, unknown = objArgParse.parse_known_args()
-	return objArgs
+	objArgParse.add_argument('-v', action='version', version='%(prog)s v' + __version__)
+	return objArgParse.parse_known_args()
 
 
 def main():
-	global strLogMethod, intLogLevel
-	objArgs = funArgParse()
+	global strLogMethod, intLogLevel, strPFile
+	objArgs, lstUnArgs = funArgParse()
 	if objArgs.sout:
 		strLogMethod = 'stdout'
 	if objArgs.level > 0:
 		intLogLevel = objArgs.level
 	if objArgs.auth:
 		strLogMethod = 'stdout'
-		sys.exit(funARMAuth())
+		funRunAuth()
+		sys.exit()
 
 	funLog(1, '=' * 62)
-	if len(sys.argv) < 3:
+	if len(lstUnArgs) < 2:
 		funLog(1, 'Not enough arguments!', 'err')
 		sys.exit(objExCodes.args)
 
 	# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
-	strRIP = sys.argv[1].strip(':f')
-	strRPort = sys.argv[2]
+	strRIP = lstUnArgs[0].strip(':f')
+	try:
+		socket.inet_pton(socket.AF_INET, strRIP)
+	except socket.error as e:
+		funLog(1, 'No Peer IP!', 'err')
+		sys.exit(objExCodes.rip)
+
+	strRPort = lstUnArgs[1]
 	# PID file
 	strPFile = '_'.join(['/var/run/', os.path.basename(sys.argv[0]), strRIP, strRPort + '.pid'])
 	# PID
@@ -271,7 +294,7 @@ def main():
 	try:
 		objHResp = requests.head(''.join(['https://', strRIP, ':', strRPort]), verify = False)
 		if objHResp.status_code == 200:
-			os.unlink(strPFile)
+			os.remove(strPFile)
 			# Any standard output stops the script from running. Clean up any temporary files before the standard output operation
 			funLog(2, 'Peer: %s is up.' % strRIP)
 			print 'UP'
@@ -282,20 +305,24 @@ def main():
 
 	# Peer down, ARM action required
 	funLog(1, 'Peer down, ARM action required.', 'warning')
-	if funARMAuth() != 0:
-		funLog(1, 'ARM Auth Error!', 'err')
-		os.unlink(strPFile)
-		sys.exit(objExCodes.armAuth)
-
-	# ARM Auth OK
-	funLog(3, 'ARM Bearer: %s' % objAREA.strBearer)
+	funRunAuth()
 
 	if funCurState(funLocIP(strRIP), strRIP) == 'Standby':
 		funLog(1, 'We\'re Standby in ARM, Active peer down. Trying to failover...', 'warning')
 		funFailover()
 
-	os.unlink(strPFile)
 	sys.exit(1)
+
+
+def funExit():
+	try:
+		os.remove(strPFile)
+		funLog(2, 'PIDFile: %s removed on exit.' % strPFile)
+	except OSError:
+		pass
+	funLog(1, 'Exiting...')
+
+atexit.register(funExit)
 
 if __name__ == '__main__':
 	main()
