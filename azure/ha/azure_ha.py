@@ -129,6 +129,7 @@ def funRunAuth():
 
 	# ARM Auth OK
 	funLog(3, 'ARM Bearer: %s' % objAREA.strBearer)
+	return 0
 
 
 def funLocIP(strRemIP):
@@ -240,6 +241,7 @@ def funFailover():
 def funArgParse():
 	objArgParse = ArgumentParser(description='F5 High Availability in Microsoft Azure', )
 	objArgParse.add_argument('-a', help='test Azure RM authentication and exit', action='store_true', dest='auth')
+	objArgParse.add_argument('-f', help='force failover', action='store_true', dest='fail')
 	objArgParse.add_argument('-l', help='set log level (0-3)', action='store', type=int, dest='level')
 	objArgParse.add_argument('-s', help='log to stdout (instead of /var/log/ltm)', action='store_true', dest='sout')
 	objArgParse.add_argument('-v', action='version', version='%(prog)s v' + __version__)
@@ -255,7 +257,11 @@ def main():
 		intLogLevel = objArgs.level
 	if objArgs.auth:
 		strLogMethod = 'stdout'
+		sys.exit(funRunAuth())
+	if objArgs.fail:
 		funRunAuth()
+		funCurState('127.0.0.1', '127.0.0.1')
+		funFailover()
 		sys.exit()
 
 	funLog(1, '=' * 62)
