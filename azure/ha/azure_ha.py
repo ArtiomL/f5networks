@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# F5 Networks - External Monitor: Azure HA
+# F5 Networks - Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
 # v0.9.4, 19/08/2016
@@ -21,7 +21,8 @@ __version__ = '0.9.4'
 
 # Log level to /var/log/ltm
 intLogLevel = 0
-strLogID = '[-v%s-160818-] emon_AZURE_HA.py - ' % __version__
+strLogMethod = 'log'
+strLogID = '[-v%s-160818-] %s - ' % (__version__, os.path.basename(sys.argv[0]))
 
 # Azure RM REST API
 class clsAREA:
@@ -53,9 +54,9 @@ class clsExCodes:
 objExCodes = clsExCodes()
 
 
-def funLog(intMesLevel, strMessage, strSeverity='info ', strMethod='log'):
+def funLog(intMesLevel, strMessage, strSeverity='info'):
 	if intLogLevel >= intMesLevel:
-		if strMethod == 'stdout':
+		if strLogMethod == 'stdout':
 			print strMessage
 		else:
 			lstCmd = (strLogger + strSeverity).split(' ')
@@ -221,22 +222,27 @@ def funFailover():
 
 def funArgParse():
 	objArgParse = ArgumentParser()
-	objArgParse.add_argument('-l', help='log level (0-3)', action='store', type=int, dest='level')
 	objArgParse.add_argument('-a', help='test Azure RM authentication and exit', action='store_true', dest='auth')
+	objArgParse.add_argument('-l', help='set log level (0-3)', action='store', type=int, dest='level')
+	objArgParse.add_argument('-s', help='log to stdout (instead of /var/log/ltm)', action='store_true', dest='sout')
 	objArgParse.add_argument('-v', action='version', version='%(prog)s ' + __version__)
 	objArgs, unknown = objArgParse.parse_known_args()
 	return objArgs
 
 
 def main():
-	intArgNum = 3
+	global strLogMethod, intLogLevel
 	objArgs = funArgParse()
-	if objArgs.level is not None:
-		global intLogLevel
+	if objArgs.sout:
+		strLogMethod = 'stdout'
+	if objArgs.level > 0:
 		intLogLevel = objArgs.level
-		intArgNum += 2
+	if objArgs.auth:
+		strLogMethod = 'stdout'
+		sys.exit(funARMAuth())
+
 	funLog(1, '=' * 62)
-	if len(sys.argv) < intArgNum:
+	if len(sys.argv) < 3:
 		funLog(1, 'Not enough arguments!', 'err')
 		sys.exit(objExCodes.args)
 
