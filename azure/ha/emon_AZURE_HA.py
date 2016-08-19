@@ -224,19 +224,17 @@ def funArgParse():
 	objArgParse.add_argument('-l', help='log level (0-3)', action='store', type=int, dest='level')
 	objArgParse.add_argument('-a', help='test Azure RM authentication and exit', action='store_true', dest='auth')
 	objArgParse.add_argument('-v', action='version', version='%(prog)s ' + __version__)
-	return objArgParse.parse_args()
+	objArgs, unknown = objArgParse.parse_known_args()
+	return objArgs
 
 
 def main():
-	print len(sys.argv)
 	intArgNum = 3
 	objArgs = funArgParse()
 	if objArgs.level is not None:
 		global intLogLevel
 		intLogLevel = objArgs.level
 		intArgNum += 2
-	print intLogLevel
-	return
 	funLog(1, '=' * 62)
 	if len(sys.argv) < intArgNum:
 		funLog(1, 'Not enough arguments!', 'err')
