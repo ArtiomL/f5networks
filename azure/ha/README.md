@@ -2,7 +2,10 @@
 
 In a regular F5 Device Service Clustering working in High Availability mode, cluster members use Gratuitous ARP or MAC Masquerade during normal operation and when cluster failover occurs.
 
-However, in Azure this is implemented by making RESTful API calls to Azure Resource Manager.
+In Azure this is implemented by making RESTful API calls to Azure Resource Manager.
+
+However, this isn't currently supported by F5:
+> The two BIG-IP VEs are synchronizing their configurations to one another; they are not communicating for the purpose of failover. The BIG-IP VE high availability feature does not work in Azure, and you cannot create an active-standby pair.
 
 <br>
 ## [azure_ad_app.ps1](azure_ad_app.ps1)
