@@ -4,7 +4,7 @@ In a regular F5 Device Service Clustering working in High Availability mode, clu
 
 In Azure this is implemented by making RESTful API calls to Azure Resource Manager.
 
-However, this isn't currently supported by F5:
+However, this isn't currently supported by F5 (from [Manual Chapter](https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-ve-setup-msft-azure-12-0-0/3.html)
 > The two BIG-IP VEs are synchronizing their configurations to one another; they are not communicating for the purpose of failover. The BIG-IP VE high availability feature does not work in Azure, and you cannot create an active-standby pair.
 
 <br>
