@@ -182,15 +182,16 @@ def funOpStatus(objHResp):
 	# The Azure-AsyncOperation header has the full operation URL
 	strOpURL = objHResp.headers['Azure-AsyncOperation']
 	funLog(2, 'ARM Async Operation, x-ms-request-id: %s' % objHResp.headers['x-ms-request-id'])
+	funLog(3, 'Op URL: %s' % strOpURL)
 	diHeaders = objAREA.funBear()
+	funLog(2, 'ARM Async Operation Status: %s' % strStatus)
 	while strStatus == 'InProgress':
 		try:
 			strStatus = json.loads(requests.get(strOpURL, headers = diHeaders).content)['status']
-			funLog(3, 'ARM Async Operation Status: %s' % strStatus)
 		except Exception as e:
 			funLog(2, str(e), 'err')
 			break
-	funLog(2, strStatus)
+	funLog(1, strStatus)
 	return strStatus
 
 
