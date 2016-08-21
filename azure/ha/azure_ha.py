@@ -110,6 +110,7 @@ def funARMAuth():
 		strEndPt = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
 	except Exception as e:
 		funLog(1, 'Invalid credentials file: %s' % objAREA.strCFile, 'err')
+		funLog(2, str(e), 'err')
 		return 2
 
 	# Generate new Bearer token
@@ -211,7 +212,8 @@ def funFailover():
 	try:
 		strOldNICURL = objAREA.funURI(objAREA.strCurNICURI)
 	except AttributeError as e:
-		funLog(2, 'No NICs in the Backend Pool!', 'warning')
+		funLog(1, 'No NICs in the Backend Pool!', 'warning')
+		funLog(2, str(e), 'err')
 		return 3
 
 	strNewNICURL = objAREA.funSwapNICs()
