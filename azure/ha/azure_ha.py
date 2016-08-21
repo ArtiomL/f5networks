@@ -35,14 +35,14 @@ strLogger = 'logger -p local0.'
 class clsAREA:
 	def __init__(self):
 		self.strCFile = '/shared/tmp/scripts/azure/azure_ha.json'
-		self.strMgmtURI = 'https://management.azure.com/'
+		self.strMgmtHost = 'https://management.azure.com/'
 		self.strAPIVer = '?api-version=2016-03-30'
 
 	def funAbsURL(self):
-		return self.strMgmtURI, self.strSubID, self.strRGName, self.strAPIVer
+		return self.strMgmtHost, self.strSubID, self.strRGName, self.strAPIVer
 
 	def funURI(self, strMidURI):
-		return self.strMgmtURI + strMidURI + self.strAPIVer
+		return self.strMgmtHost + strMidURI + self.strAPIVer
 
 	def funBear(self):
 		return { 'Authorization': 'Bearer %s' % self.strBearer }
@@ -102,7 +102,7 @@ def funARMAuth():
 		return 2
 
 	# Generate new Bearer token
-	diPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': objAREA.strMgmtURI }
+	diPayload = { 'grant_type': 'client_credentials', 'client_id': strAppID, 'client_secret': strPass, 'resource': objAREA.strMgmtHost }
 	try:
 		objHResp = requests.post(url=strEndPt, data=diPayload)
 		diAuth = json.loads(objHResp.content)
