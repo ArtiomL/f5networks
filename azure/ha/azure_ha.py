@@ -110,7 +110,7 @@ def funARMAuth():
 		strEndPt = 'https://login.microsoftonline.com/%s/oauth2/token' % strTenantID
 	except Exception as e:
 		funLog(1, 'Invalid credentials file: %s' % objAREA.strCFile, 'err')
-		funLog(2, str(e), 'err')
+		funLog(2, repr(e), 'err')
 		return 2
 
 	# Generate new Bearer token
@@ -129,7 +129,7 @@ def funARMAuth():
 			return 0
 
 	except requests.exceptions.RequestException as e:
-		funLog(2, str(e), 'err')
+		funLog(2, repr(e), 'err')
 	return 1
 
 
@@ -183,7 +183,7 @@ def funCurState(strLocIP = '127.0.0.1', strPeerIP = '127.0.0.1'):
 			return 'Standby'
 
 	except Exception as e:
-		funLog(2, str(e), 'err')
+		funLog(2, repr(e), 'err')
 	funLog(1, 'Current state: Unknown', 'warning')
 	return 'Unknown'
 
@@ -201,7 +201,7 @@ def funOpStatus(objHResp):
 		try:
 			strStatus = json.loads(requests.get(strOpURL, headers = diHeaders).content)['status']
 		except Exception as e:
-			funLog(2, str(e), 'err')
+			funLog(2, repr(e), 'err')
 			break
 	funLog(1, strStatus)
 	return strStatus
@@ -213,7 +213,7 @@ def funFailover():
 		strOldNICURL = objAREA.funURI(objAREA.strCurNICURI)
 	except AttributeError as e:
 		funLog(1, 'No NICs in the Backend Pool!', 'warning')
-		funLog(2, str(e), 'err')
+		funLog(2, repr(e), 'err')
 		return 3
 
 	strNewNICURL = objAREA.funSwapNICs()
@@ -245,7 +245,7 @@ def funFailover():
 			return 0
 
 	except Exception as e:
-		funLog(2, str(e), 'err')
+		funLog(2, repr(e), 'err')
 	return 1
 
 
@@ -326,7 +326,7 @@ def main():
 			sys.exit()
 
 	except requests.exceptions.RequestException as e:
-		funLog(2, str(e), 'err')
+		funLog(2, repr(e), 'err')
 
 	# Peer down, ARM action required
 	funLog(1, 'Peer down, ARM action required.', 'warning')
