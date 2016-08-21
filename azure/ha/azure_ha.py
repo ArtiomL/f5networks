@@ -81,9 +81,12 @@ def funARMAuth():
 		# Open the credentials file
 		with open(objAREA.strCFile, 'r') as f:
 			diCreds = json.load(f)
-		# Read subscription and resource group
+		# Read and store subscription and resource group
 		objAREA.strSubID = diCreds['subID']
 		objAREA.strRGName = diCreds['rgName']
+		# Read and store NICs of F5 VMs
+		objAREA.strNICF5A = diCreds['nicF5A']
+		objAREA.strNICF5B = diCreds['nicF5B']
 		# Current epoch time
 		intEpNow = int(time())
 		# Check if Bearer token exists (in credentials file) and whether it can be reused (expiration with 1 minute time skew)
@@ -177,7 +180,7 @@ def funCurState(strLocIP = '127.0.0.1', strPeerIP = '127.0.0.1'):
 
 
 def funOpStatus(objHResp):
-	# Check Azure Async Operation Status
+	# Check Azure Async Operation status
 	strStatus = 'InProgress'
 	# The Azure-AsyncOperation header has the full operation URL
 	strOpURL = objHResp.headers['Azure-AsyncOperation']
@@ -203,10 +206,10 @@ def funFailover():
 		funLog(2, 'No NICs in the Backend Pool!', 'warning')
 		return 3
 
-	strChar = 'B/'
-	if objAREA.strCurNICURI.endswith('B/'):
-		strChar = 'A/'
-	strNewNICURL = objAREA.funURI(objAREA.strCurNICURI[:-2] + strChar)
+	if objAREA.strCurNICURI.endswith(objAREA.strNICF5A + '/'):
+		strNewNICURL = objAREA.funURI(objAREA.strCurNICURI.replace(objAREA.strNICF5A, objAREA.strNICF5B))
+	else:
+		strNewNICURL = objAREA.funURI(objAREA.strCurNICURI.replace(objAREA.strNICF5B, objAREA.strNICF5A))
 	try:
 		# Get the JSON of the NIC currently in the backend pool
 		objHResp = requests.get(strOldNICURL, headers = diHeaders)
