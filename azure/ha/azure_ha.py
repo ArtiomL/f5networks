@@ -275,7 +275,7 @@ def main():
 	try:
 		socket.inet_pton(socket.AF_INET, strRIP)
 	except socket.error as e:
-		funLog(1, 'No peer IP!', 'err')
+		funLog(1, 'No valid peer IP!', 'err')
 		sys.exit(objExCodes.rip)
 
 	# Verify second "undefined" argument is a valid TCP port, set to 443 if missing
