@@ -265,19 +265,28 @@ def main():
 		sys.exit()
 
 	funLog(1, '=' * 62)
-	if len(lstUnArgs) < 2:
+	if len(lstUnArgs) < 1:
 		funLog(1, 'Not enough arguments!', 'err')
 		sys.exit(objExCodes.args)
 
 	# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
 	strRIP = lstUnArgs[0].strip(':f')
+	# Verify first "undefined" argument is a valid (peer) IP address
 	try:
 		socket.inet_pton(socket.AF_INET, strRIP)
 	except socket.error as e:
-		funLog(1, 'No Peer IP!', 'err')
+		funLog(1, 'No peer IP!', 'err')
 		sys.exit(objExCodes.rip)
 
-	strRPort = lstUnArgs[1]
+	# Verify second "undefined" argument is a valid TCP port, set to 443 if missing
+	try:
+		strRPort = lstUnArgs[1]
+		if not 0 < int(strRPort) <= 65535:
+			raise IndexError
+	except IndexError:
+		funLog(1, 'No valid peer TCP port, using 443', 'warning')
+		strRPort = '443'
+
 	# PID file
 	strPFile = '_'.join(['/var/run/', os.path.basename(sys.argv[0]), strRIP, strRPort + '.pid'])
 	# PID
