@@ -2,7 +2,7 @@
 # F5 Networks - Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.9.4, 19/08/2016
+# v0.9.5, 21/08/2016
 
 from argparse import ArgumentParser
 import atexit
@@ -18,7 +18,7 @@ from time import time
 
 __author__ = 'Artiom Lichtenstein'
 __license__ = 'MIT'
-__version__ = '0.9.4'
+__version__ = '0.9.5'
 
 # PID file
 strPFile = ''
@@ -26,7 +26,7 @@ strPFile = ''
 # Log level to /var/log/ltm
 intLogLevel = 0
 strLogMethod = 'log'
-strLogID = '[-v%s-160818-] %s - ' % (__version__, os.path.basename(sys.argv[0]))
+strLogID = '[-v%s-160821-] %s - ' % (__version__, os.path.basename(sys.argv[0]))
 
 # Logger command
 strLogger = 'logger -p local0.'
@@ -252,12 +252,11 @@ def funArgParse():
 def main():
 	global strLogMethod, intLogLevel, strPFile
 	objArgs, lstUnArgs = funArgParse()
-	if objArgs.sout:
+	if objArgs.sout or objArgs.auth:
 		strLogMethod = 'stdout'
 	if objArgs.level > 0:
 		intLogLevel = objArgs.level
 	if objArgs.auth:
-		strLogMethod = 'stdout'
 		sys.exit(funRunAuth())
 	if objArgs.fail:
 		funRunAuth()
