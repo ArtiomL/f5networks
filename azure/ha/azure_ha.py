@@ -32,7 +32,7 @@ strLogID = '[-v%s-160821-] %s - ' % (__version__, os.path.basename(sys.argv[0]))
 strLogger = 'logger -p local0.'
 
 # Azure RM REST API
-class clsAREA:
+class clsAREA(object):
 	def __init__(self):
 		self.strCFile = '/shared/tmp/scripts/azure/azure_ha.json'
 		self.strMgmtHost = 'https://management.azure.com/'
@@ -47,10 +47,19 @@ class clsAREA:
 	def funBear(self):
 		return { 'Authorization': 'Bearer %s' % self.strBearer }
 
+	def funSwapNICs(self):
+		# Use temp (short name) list (lst[0] = nicF5A, lst[1] = nicF5B)
+		lst = self.lstF5NICs
+		# If old NIC ends with B, reverse the list to replace B with A. Otherwise replace A with B
+		if self.strCurNICURI.endswith(lst[1]):
+			lst.reverse()
+		funLog(2, 'Old NIC: %s, New NIC: %s' % (lst[0], lst[1]))
+		return self.funURI(self.strCurNICURI.replace(lst[0], lst[1]))
+
 objAREA = clsAREA()
 
 # Exit codes
-class clsExCodes:
+class clsExCodes(object):
 	def __init__(self):
 		self.args = 8
 		self.rip = 6
@@ -84,9 +93,8 @@ def funARMAuth():
 		# Read and store subscription and resource group
 		objAREA.strSubID = diCreds['subID']
 		objAREA.strRGName = diCreds['rgName']
-		# Read and store NICs of F5 VMs
-		objAREA.strNICF5A = diCreds['nicF5A']
-		objAREA.strNICF5B = diCreds['nicF5B']
+		# Read and store F5 VMs' NICs
+		objAREA.lstF5NICs = [diCreds['nicF5A'], diCreds['nicF5B']]
 		# Current epoch time
 		intEpNow = int(time())
 		# Check if Bearer token exists (in credentials file) and whether it can be reused (expiration with 1 minute time skew)
@@ -158,7 +166,7 @@ def funCurState(strLocIP = '127.0.0.1', strPeerIP = '127.0.0.1'):
 		# Extract backend IP ID ([1:] at the end removes the first "/" char)
 		strBEIPURI = objAREA.diBEPool[0]['properties']['backendIPConfigurations'][0]['id'][1:]
 		# Store the URI for NIC currently in the backend pool (for funFailover)
-		objAREA.strCurNICURI = strBEIPURI.split('ipConfiguration')[0]
+		objAREA.strCurNICURI = strBEIPURI.split('/ipConfigurations')[0]
 		# Get backend IP JSON
 		objHResp = requests.get(objAREA.funURI(strBEIPURI), headers = diHeaders)
 		# Extract private IP address
@@ -206,10 +214,7 @@ def funFailover():
 		funLog(2, 'No NICs in the Backend Pool!', 'warning')
 		return 3
 
-	if objAREA.strCurNICURI.endswith(objAREA.strNICF5A + '/'):
-		strNewNICURL = objAREA.funURI(objAREA.strCurNICURI.replace(objAREA.strNICF5A, objAREA.strNICF5B))
-	else:
-		strNewNICURL = objAREA.funURI(objAREA.strCurNICURI.replace(objAREA.strNICF5B, objAREA.strNICF5A))
+	strNewNICURL = objAREA.funSwapNICs()
 	try:
 		# Get the JSON of the NIC currently in the backend pool
 		objHResp = requests.get(strOldNICURL, headers = diHeaders)
