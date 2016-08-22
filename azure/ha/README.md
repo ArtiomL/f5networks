@@ -72,6 +72,8 @@ This will result in a [`JSON`](azure_ha.json) file, similar to the following:
 	"tenantID": "6a0a327e-6612-424d-bb4d-5420ca02b9a7",
 	"pass": "U2ViYXN0aWFu",
 	"rgName": "rgPAPERSTSOAP",
+	"nicF5A": "vmf5a402",
+	"nicF5B": "vmf5b513",
 	"subID": "b3481899-362a-4121-9355-1c4fa3e14b3d"
 }
 ```
