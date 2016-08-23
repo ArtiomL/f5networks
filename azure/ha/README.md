@@ -87,6 +87,7 @@ Alternatively, this path is controlled by the `strCFile` attribute of the `clsAR
 
 This is the actual HA / failover logic.
 
+### --help
 ```
 ./azure_ha.py --help
 
