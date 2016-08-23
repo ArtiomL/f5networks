@@ -278,27 +278,20 @@ def main():
 		funCurState()
 		sys.exit(funFailover())
 
-	if not objArgs.IP:
-		funLog(1, 'Not enough arguments!', 'err')
-		sys.exit(objExCodes.args)
-
 	funLog(1, '=' * 62)
 
-	# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
-	strRIP = lstUnArgs[0].strip(':f')
-	# Verify first "positional" argument is a valid (peer) IP address
 	try:
+		# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
+		strRIP = objArgs.IP.strip(':f')
+		# Verify first positional argument is a valid (peer) IP address
 		socket.inet_pton(socket.AF_INET, strRIP)
-	except socket.error as e:
-		funLog(1, 'No valid peer IP!', 'err')
+	except (AttributeError, socket.error) as e:
+		funLog(0, 'No valid peer IP!', 'err')
+		funLog(2, repr(e), 'err')
 		sys.exit(objExCodes.rip)
 
-	# Verify second "positional" argument is a valid TCP port, set to 443 if missing
-	try:
-		strRPort = lstUnArgs[1]
-		if not 0 < int(strRPort) <= 65535:
-			raise IndexError
-	except IndexError:
+	# Verify second positional argument is a valid TCP port, set to 443 if missing
+	if not 0 < strRPort <= 65535:
 		funLog(1, 'No valid peer TCP port, using 443', 'warning')
 		strRPort = '443'
 
