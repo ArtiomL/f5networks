@@ -254,6 +254,7 @@ def funArgParser():
 		description = 'F5 High Availability in Microsoft Azure',
 		epilog = 'https://github.com/ArtiomL/f5networks/tree/master/azure/ha')
 	objArgParser.add_argument('-a', help ='test Azure RM authentication and exit', action = 'store_true', dest = 'auth')
+	objArgParser.add_argument('-c', help ='check current HA state and exit', action = 'store_true', dest = 'cur')
 	objArgParser.add_argument('-f', help ='force failover', action = 'store_true', dest = 'fail')
 	objArgParser.add_argument('-l', help ='set log level (default: 0)', choices = [0, 1, 2, 3], type = int, dest = 'log')
 	objArgParser.add_argument('-v', action ='version', version = '%(prog)s v' + __version__)
@@ -273,9 +274,12 @@ def main():
 	if objArgs.auth:
 		sys.exit(funRunAuth())
 
-	if objArgs.fail:
+	if objArgs.cur or objArgs.fail:
 		funRunAuth()
 		funCurState()
+		if not objArgs.fail:
+			sys.exit()
+
 		sys.exit(funFailover())
 
 	funLog(1, '=' * 62)
