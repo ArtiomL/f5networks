@@ -99,7 +99,7 @@ Alternatively, this is controlled by the global `intLogLevel` variable:
 # Log level
 intLogLevel = 0
 ```
-If run interactively, *stdout* is used for log messages, otherwise /var/log/ltm will be used.
+If run interactively, **_stdout_** is used for log messages, otherwise /var/log/ltm will be used.
 
 ### --help
 ```
