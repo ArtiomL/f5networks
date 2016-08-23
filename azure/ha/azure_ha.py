@@ -295,7 +295,7 @@ def main():
 		funLog(2, repr(e), 'err')
 		sys.exit(objExCodes.rip)
 
-	# Verify second positional argument is a valid TCP port, set to 443 if missing
+	# Verify second positional argument is a valid TCP port, set to 443 if not
 	strRPort = str(objArgs.PORT)
 	if not 0 < objArgs.PORT <= 65535:
 		funLog(1, 'No valid peer TCP port, using 443.', 'warning')
