@@ -104,8 +104,7 @@ If run interactively, **_stdout_** is used for log messages, otherwise `/var/log
 ### --help
 ```
 ./azure_ha.py --help
-
-usage: azure_ha.py [-h] [-a] [-f] [-l {0,1,2,3}] [-v] [IP] [PORT]
+usage: azure_ha.py [-h] [-a] [-c] [-f] [-l {0,1,2,3}] [-v] [IP] [PORT]
 
 F5 High Availability in Microsoft Azure
 
@@ -116,6 +115,7 @@ positional arguments:
 optional arguments:
   -h, --help    show this help message and exit
   -a            test Azure RM authentication and exit
+  -c            check current HA state and exit
   -f            force failover
   -l {0,1,2,3}  set log level (default: 0)
   -v            show program's version number and exit
