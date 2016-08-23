@@ -2,7 +2,7 @@
 # F5 Networks - Azure HA
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v0.9.5, 21/08/2016
+# v0.9.6, 23/08/2016
 
 from argparse import ArgumentParser
 import atexit
@@ -18,7 +18,7 @@ from time import time
 
 __author__ = 'Artiom Lichtenstein'
 __license__ = 'MIT'
-__version__ = '0.9.5'
+__version__ = '0.9.6'
 
 # PID file
 strPFile = ''
@@ -26,7 +26,7 @@ strPFile = ''
 # Log level to /var/log/ltm
 intLogLevel = 0
 strLogMethod = 'log'
-strLogID = '[-v%s-160821-] %s - ' % (__version__, os.path.basename(sys.argv[0]))
+strLogID = '[-v%s-160823-] %s - ' % (__version__, os.path.basename(sys.argv[0]))
 
 # Logger command
 strLogger = 'logger -p local0.'
@@ -250,10 +250,10 @@ def funFailover():
 
 
 def funArgParse():
-	objArgParse = ArgumentParser(description='F5 High Availability in Microsoft Azure', )
+	objArgParse = ArgumentParser(description='F5 High Availability in Microsoft Azure', epilog='https://github.com/ArtiomL/f5networks/tree/master/azure/ha')
 	objArgParse.add_argument('-a', help='test Azure RM authentication and exit', action='store_true', dest='auth')
 	objArgParse.add_argument('-f', help='force failover', action='store_true', dest='fail')
-	objArgParse.add_argument('-l', help='set log level (0-3)', action='store', type=int, dest='level')
+	objArgParse.add_argument('-l', help='set log level', action='store', choices=[0, 1, 2, 3], type=int, dest='log')
 	objArgParse.add_argument('-s', help='log to stdout (instead of /var/log/ltm)', action='store_true', dest='sout')
 	objArgParse.add_argument('-v', action='version', version='%(prog)s v' + __version__)
 	return objArgParse.parse_known_args()
@@ -264,15 +264,14 @@ def main():
 	objArgs, lstUnArgs = funArgParse()
 	if objArgs.sout or objArgs.auth:
 		strLogMethod = 'stdout'
-	if objArgs.level > 0:
-		intLogLevel = objArgs.level
+	if objArgs.log > 0:
+		intLogLevel = objArgs.log
 	if objArgs.auth:
 		sys.exit(funRunAuth())
 	if objArgs.fail:
 		funRunAuth()
 		funCurState()
-		funFailover()
-		sys.exit()
+		sys.exit(funFailover())
 
 	funLog(1, '=' * 62)
 	if len(lstUnArgs) < 1:
