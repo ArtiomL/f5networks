@@ -80,7 +80,12 @@ This will result in a [`JSON`](azure_ha.json) file, similar to the following:
 
 <br>
 This file should be placed at the following location on both HA BIG-IPs: `/shared/tmp/scripts/azure/azure_ha.json`
-Alternatively, this path is controlled by the `strCFile` attribute of the `clsAREA` class (in [azure_ha.py](azure_ha.py))
+Alternatively, this path is controlled by the `strCFile` attribute of the `clsAREA` class (in [azure_ha.py](azure_ha.py)):
+```python
+class clsAREA(object):
+	def __init__(self):
+		self.strCFile = '/shared/tmp/scripts/azure/azure_ha.json'
+```
 
 <br>
 ## [azure_ha.py](azure_ha.py)
