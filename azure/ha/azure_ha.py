@@ -139,7 +139,7 @@ def funRunAuth():
 		sys.exit(objExCodes.armAuth)
 
 	# ARM Auth OK
-	funLog(1, 'ARM Auth OK.', 'info')
+	funLog(1, 'ARM Auth OK.')
 	funLog(3, 'ARM Bearer: %s' % objAREA.strBearer)
 	return 0
 
