@@ -139,6 +139,7 @@ def funRunAuth():
 		sys.exit(objExCodes.armAuth)
 
 	# ARM Auth OK
+	funLog(1, 'ARM Auth OK.', 'info')
 	funLog(3, 'ARM Bearer: %s' % objAREA.strBearer)
 	return 0
 
@@ -248,22 +249,23 @@ def funFailover():
 	return 1
 
 
-def funArgParse():
-	objArgParse = ArgumentParser(
+def funArgParser():
+	objArgParser = ArgumentParser(
 		description = 'F5 High Availability in Microsoft Azure',
 		epilog = 'https://github.com/ArtiomL/f5networks/tree/master/azure/ha')
-	objArgParse.add_argument('-a', help ='test Azure RM authentication and exit', action = 'store_true', dest = 'auth')
-	objArgParse.add_argument('-f', help ='force failover', action = 'store_true', dest = 'fail')
-	objArgParse.add_argument('-l', help ='set log level (default: 0)', choices = [0, 1, 2, 3], type = int, dest = 'log')
-	objArgParse.add_argument('-v', action ='version', version = '%(prog)s v' + __version__)
-	objArgParse.add_argument('IP', help = 'peer IP address (required in monitor mode)', nargs = '?')
-	objArgParse.add_argument('PORT', help = 'peer HTTPS port (default: 443)', type = int, nargs = '?', default = 443)
-	return objArgParse.parse_args()
+	objArgParser.add_argument('-a', help ='test Azure RM authentication and exit', action = 'store_true', dest = 'auth')
+	objArgParser.add_argument('-f', help ='force failover', action = 'store_true', dest = 'fail')
+	objArgParser.add_argument('-l', help ='set log level (default: 0)', choices = [0, 1, 2, 3], type = int, dest = 'log')
+	objArgParser.add_argument('-v', action ='version', version = '%(prog)s v' + __version__)
+	objArgParser.add_argument('IP', help = 'peer IP address (required in monitor mode)', nargs = '?')
+	objArgParser.add_argument('PORT', help = 'peer HTTPS port (default: 443)', type = int, nargs = '?', default = 443)
+	return objArgParser
 
 
 def main():
 	global strLogMethod, intLogLevel, strPFile
-	objArgs = funArgParse()
+	objArgParser = funArgParser()
+	objArgs = objArgParser.parse_args()
 	if sys.stdout.isatty():
 		strLogMethod = 'stdout'
 	if objArgs.log > 0:
@@ -285,13 +287,14 @@ def main():
 		socket.inet_pton(socket.AF_INET, strRIP)
 	except (AttributeError, socket.error) as e:
 		funLog(0, 'No valid peer IP!', 'err')
+		objArgParser.print_help()
 		funLog(2, repr(e), 'err')
 		sys.exit(objExCodes.rip)
 
 	# Verify second positional argument is a valid TCP port, set to 443 if missing
-	strRPort = objArgs.PORT
-	if not 0 < strRPort <= 65535:
-		funLog(1, 'No valid peer TCP port, using 443', 'warning')
+	strRPort = str(objArgs.PORT)
+	if not 0 < objArgs.PORT <= 65535:
+		funLog(1, 'No valid peer TCP port, using 443.', 'warning')
 		strRPort = '443'
 
 	# PID file
