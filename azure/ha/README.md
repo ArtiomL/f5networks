@@ -85,4 +85,25 @@ Alternatively, this path is controlled by the `strCFile` attribute of the `clsAR
 <br>
 ## [azure_ha.py](azure_ha.py)
 
-This is the actual HA / failover logic. It's under heavy development and isn't fully functional yet.
+This is the actual HA / failover logic.
+
+```
+./azure_ha.py --help
+
+usage: azure_ha.py [-h] [-a] [-f] [-l {0,1,2,3}] [-v] [IP] [PORT]
+
+F5 High Availability in Microsoft Azure
+
+positional arguments:
+  IP            peer IP address (required in monitor mode)
+  PORT          peer HTTPS port (default: 443)
+
+optional arguments:
+  -h, --help    show this help message and exit
+  -a            test Azure RM authentication and exit
+  -f            force failover
+  -l {0,1,2,3}  set log level (default: 0)
+  -v            show program's version number and exit
+
+https://github.com/ArtiomL/f5networks/tree/master/azure/ha
+```
