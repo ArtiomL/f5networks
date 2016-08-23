@@ -255,7 +255,6 @@ def funArgParse():
 	objArgParse.add_argument('-a', help ='test Azure RM authentication and exit', action = 'store_true', dest = 'auth')
 	objArgParse.add_argument('-f', help ='force failover', action = 'store_true', dest = 'fail')
 	objArgParse.add_argument('-l', help ='set log level (default: 0)', choices = [0, 1, 2, 3], type = int, dest = 'log')
-	objArgParse.add_argument('-s', help ='log to stdout (instead of /var/log/ltm)', action = 'store_true', dest = 'sout')
 	objArgParse.add_argument('-v', action ='version', version = '%(prog)s v' + __version__)
 	objArgParse.add_argument('IP', help = 'peer IP address (required in monitor mode)', nargs = '?')
 	objArgParse.add_argument('PORT', help = 'peer HTTPS port (default: 443)', type = int, nargs = '?', default = 443)
@@ -265,7 +264,7 @@ def funArgParse():
 def main():
 	global strLogMethod, intLogLevel, strPFile
 	objArgs = funArgParse()
-	if objArgs.sout or objArgs.auth:
+	if sys.stdout.isatty():
 		strLogMethod = 'stdout'
 	if objArgs.log > 0:
 		intLogLevel = objArgs.log
