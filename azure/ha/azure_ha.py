@@ -258,40 +258,42 @@ def funArgParse():
 	objArgParse.add_argument('-l', help ='set log level (default: 0)', action = 'store', choices = [0, 1, 2, 3], type = int, dest = 'log')
 	objArgParse.add_argument('-s', help ='log to stdout (instead of /var/log/ltm)', action = 'store_true', dest = 'sout')
 	objArgParse.add_argument('-v', action ='version', version = '%(prog)s v' + __version__)
-	objArgParse.add_argument('IP', help = 'peer IP address')
+	objArgParse.add_argument('IP', help = 'peer IP address', nargs = '?')
 	objArgParse.add_argument('PORT', help = 'peer HTTPS port (default: 443)', type = int, nargs = '?', default = 443)
-	return objArgParse.parse_known_args()
+	return objArgParse.parse_args()
 
 
 def main():
 	global strLogMethod, intLogLevel, strPFile
-	objArgs, lstUnArgs = funArgParse()
+	objArgs = funArgParse()
 	if objArgs.sout or objArgs.auth:
 		strLogMethod = 'stdout'
 	if objArgs.log > 0:
 		intLogLevel = objArgs.log
 	if objArgs.auth:
 		sys.exit(funRunAuth())
+
 	if objArgs.fail:
 		funRunAuth()
 		funCurState()
 		sys.exit(funFailover())
 
-	funLog(1, '=' * 62)
-	if len(lstUnArgs) < 1:
+	if not objArgs.IP:
 		funLog(1, 'Not enough arguments!', 'err')
 		sys.exit(objExCodes.args)
 
+	funLog(1, '=' * 62)
+
 	# Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
 	strRIP = lstUnArgs[0].strip(':f')
-	# Verify first "undefined" argument is a valid (peer) IP address
+	# Verify first "positional" argument is a valid (peer) IP address
 	try:
 		socket.inet_pton(socket.AF_INET, strRIP)
 	except socket.error as e:
 		funLog(1, 'No valid peer IP!', 'err')
 		sys.exit(objExCodes.rip)
 
-	# Verify second "undefined" argument is a valid TCP port, set to 443 if missing
+	# Verify second "positional" argument is a valid TCP port, set to 443 if missing
 	try:
 		strRPort = lstUnArgs[1]
 		if not 0 < int(strRPort) <= 65535:
