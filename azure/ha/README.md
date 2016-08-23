@@ -93,13 +93,13 @@ class clsAREA(object):
 This is the actual HA / failover logic.
 
 ### Logging
-All logging is disabled by default. Please use the -l argument to set the required verbosity.<br>
+All logging is _disabled_ by default. Please use the -l argument to set the required verbosity.<br>
 Alternatively, this is controlled by the global `intLogLevel` variable:
 ```python
 # Log level
 intLogLevel = 0
 ```
-If run interactively, stdout is used for log messages, otherwise /var/log/ltm will be used.
+If run interactively, *stdout* is used for log messages, otherwise /var/log/ltm will be used.
 
 ### --help
 ```
