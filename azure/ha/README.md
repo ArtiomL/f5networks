@@ -93,7 +93,7 @@ class clsAREA(object):
 This is the actual HA / failover logic.
 
 ### Logging
-All logging is disabled by default. Please use the -l argument to set the necessary verbosity.<br>
+All logging is disabled by default. Please use the -l argument to set the required verbosity.<br>
 Alternatively, this is controlled by the global `intLogLevel` variable:
 ```python
 # Log level
