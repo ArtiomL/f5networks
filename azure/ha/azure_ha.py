@@ -61,7 +61,6 @@ objAREA = clsAREA()
 # Exit codes
 class clsExCodes(object):
 	def __init__(self):
-		self.args = 8
 		self.rip = 6
 		self.armAuth = 4
 
@@ -255,10 +254,10 @@ def funArgParse():
 		epilog = 'https://github.com/ArtiomL/f5networks/tree/master/azure/ha')
 	objArgParse.add_argument('-a', help ='test Azure RM authentication and exit', action = 'store_true', dest = 'auth')
 	objArgParse.add_argument('-f', help ='force failover', action = 'store_true', dest = 'fail')
-	objArgParse.add_argument('-l', help ='set log level (default: 0)', action = 'store', choices = [0, 1, 2, 3], type = int, dest = 'log')
+	objArgParse.add_argument('-l', help ='set log level (default: 0)', choices = [0, 1, 2, 3], type = int, dest = 'log')
 	objArgParse.add_argument('-s', help ='log to stdout (instead of /var/log/ltm)', action = 'store_true', dest = 'sout')
 	objArgParse.add_argument('-v', action ='version', version = '%(prog)s v' + __version__)
-	objArgParse.add_argument('IP', help = 'peer IP address', nargs = '?')
+	objArgParse.add_argument('IP', help = 'peer IP address (required in monitor mode)', nargs = '?')
 	objArgParse.add_argument('PORT', help = 'peer HTTPS port (default: 443)', type = int, nargs = '?', default = 443)
 	return objArgParse.parse_args()
 
@@ -291,6 +290,7 @@ def main():
 		sys.exit(objExCodes.rip)
 
 	# Verify second positional argument is a valid TCP port, set to 443 if missing
+	strRPort = objArgs.PORT
 	if not 0 < strRPort <= 65535:
 		funLog(1, 'No valid peer TCP port, using 443', 'warning')
 		strRPort = '443'
