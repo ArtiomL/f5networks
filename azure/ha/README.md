@@ -88,8 +88,8 @@ Alternatively, this path is controlled by the `strCFile` attribute of the `clsAR
 This is the actual HA / failover logic.
 
 ### Logging
-All logging is disabled by default. Please use the -l argument to set the verbosity.
-Alternatively, this is controlled by the global `intLogLevel` variable.
+All logging is disabled by default. Please use the -l argument to set the verbosity.<br>
+Alternatively, this is controlled by the global `intLogLevel` variable.<br>
 If run interactively, stdout is used for log messages, otherwise /var/log/ltm will be used.
 
 ### --help
