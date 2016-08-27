@@ -5,7 +5,7 @@
 [![Issues](https://img.shields.io/github/issues/ArtiomL/f5networks.svg)](https://github.com/ArtiomL/f5networks/issues)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-This project is dedicated to developing and sharing useful code related to various F5 products and solutions.
+This project is dedicated to developing and sharing useful code for various F5 products and solutions.
 <br><br>
 ## [/azure](/azure)
 Code related to Microsoft's cloud computing **IaaS**.
