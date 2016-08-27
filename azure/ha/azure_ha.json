@@ -1,9 +1,0 @@
-{
-	"appID": "<ApplicationId>",
-	"nicF5A": "<vmF5A-NIC>",
-	"nicF5B": "<vmF5B-NIC>",
-	"pass": "<Password>",
-	"rgName": "<ResourceGroupName>",
-	"subID": "<SubscriptionId>",
-	"tenantID": "<TenantId>"
-}
