@@ -6,26 +6,27 @@
 # Login to Azure RM
 Login-AzureRmAccount
 
-# Select resource group and location
+# Select resource group name, location and load balancer name
 $rgName = "rgPAPERSTSOAP"
 $reLocation = "West Europe"
+$lbName = "lbazEXTERNAL"
 
-# Create additional static public IP addresses
+# Create new static public IP addresses
 New-AzureRmPublicIpAddress -Name "pipLBAZEXT1" -ResourceGroupName $rgName -Location $reLocation –AllocationMethod Static
 New-AzureRmPublicIpAddress -Name "pipLBAZEXT2" -ResourceGroupName $rgName -Location $reLocation –AllocationMethod Static
 New-AzureRmPublicIpAddress -Name "pipLBAZEXT3" -ResourceGroupName $rgName -Location $reLocation –AllocationMethod Static
 
 # Add PIP1 to the LB
 $pip1 = Get-AzureRmPublicIpAddress -Name "pipLBAZEXT1" -ResourceGroupName $rgName
-Get-AzureRMLoadBalancer -ResourceGroupName $rgName -Name "lbazEXTERNAL" | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT1" -PublicIpAddress $pip1 | Set-AzureRmLoadBalancer
+Get-AzureRMLoadBalancer -ResourceGroupName $rgName -Name $lbName | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT1" -PublicIpAddress $pip1 | Set-AzureRmLoadBalancer
 
 # Add PIP2 to the LB
 $pip2 = Get-AzureRmPublicIpAddress -Name "pipLBAZEXT2" -ResourceGroupName $rgName
-Get-AzureRMLoadBalancer -ResourceGroupName $rgName -Name "lbazEXTERNAL" | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT2" -PublicIpAddress $pip2 | Set-AzureRmLoadBalancer
+Get-AzureRMLoadBalancer -ResourceGroupName $rgName -Name $lbName | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT2" -PublicIpAddress $pip2 | Set-AzureRmLoadBalancer
 
 # Add PIP3 to the LB
 $pip3 = Get-AzureRmPublicIpAddress -Name "pipLBAZEXT3" -ResourceGroupName $rgName
-Get-AzureRMLoadBalancer -ResourceGroupName $rgName -Name "lbazEXTERNAL" | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT3" -PublicIpAddress $pip3 | Set-AzureRmLoadBalancer
+Get-AzureRMLoadBalancer -ResourceGroupName $rgName -Name $lbName | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT3" -PublicIpAddress $pip3 | Set-AzureRmLoadBalancer
 
 # Add LB rule for PIP1
 $lb = Get-AzureRmLoadBalancer -ResourceGroupName $rgName
