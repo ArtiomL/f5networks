@@ -6,6 +6,13 @@
 # Login to Azure RM
 Login-AzureRmAccount
 
+# Show all subscriptions
+Get-AzureRmSubscription
+
+# Select the relevant subscription
+$subName = Get-AzureRmSubscription -SubscriptionName "Paper Street Soap"
+$subName | Select-AzureRmSubscription
+
 # Select resource group name, location and load balancer name
 $rgName = "rgPAPERSTSOAP"
 $reLocation = "West Europe"
@@ -16,15 +23,15 @@ New-AzureRmPublicIpAddress -Name "pipLBAZEXT1" -ResourceGroupName $rgName -Locat
 New-AzureRmPublicIpAddress -Name "pipLBAZEXT2" -ResourceGroupName $rgName -Location $reLocation –AllocationMethod Static
 New-AzureRmPublicIpAddress -Name "pipLBAZEXT3" -ResourceGroupName $rgName -Location $reLocation –AllocationMethod Static
 
-# Add PIP1 to the LB
+# Add PIP1 to LBAZ
 $pip1 = Get-AzureRmPublicIpAddress -Name "pipLBAZEXT1" -ResourceGroupName $rgName
 Get-AzureRMLoadBalancer -ResourceGroupName $rgName -Name $lbName | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT1" -PublicIpAddress $pip1 | Set-AzureRmLoadBalancer
 
-# Add PIP2 to the LB
+# Add PIP2 to LBAZ
 $pip2 = Get-AzureRmPublicIpAddress -Name "pipLBAZEXT2" -ResourceGroupName $rgName
 Get-AzureRMLoadBalancer -ResourceGroupName $rgName -Name $lbName | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT2" -PublicIpAddress $pip2 | Set-AzureRmLoadBalancer
 
-# Add PIP3 to the LB
+# Add PIP3 to LBAZ
 $pip3 = Get-AzureRmPublicIpAddress -Name "pipLBAZEXT3" -ResourceGroupName $rgName
 Get-AzureRMLoadBalancer -ResourceGroupName $rgName -Name $lbName | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT3" -PublicIpAddress $pip3 | Set-AzureRmLoadBalancer
 
