@@ -1,4 +1,4 @@
-F5 iRules LX Tutorial
+F5 iRules LX - Tutorial
 ================
 
 TCL, JavaScript and tmsh code used in the F5 iRules LX tutorial video series:
