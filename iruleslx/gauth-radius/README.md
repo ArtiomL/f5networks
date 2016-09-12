@@ -6,7 +6,7 @@ TCL and JavaScript code used in the F5 iRules LX tutorial video:
 https://www.youtube.com/watch?v=7yRP2fPCxIs
 
 ## Flow Topology
-<img src="https://devcentral.f5.com/Portals/0/userfiles/11/g2fa.png">
+<img src="flow.png">
 
 ## DevCentral Article
 https://devcentral.f5.com/articles/radius-proxy-with-google-authenticator-20898
