@@ -51,8 +51,8 @@ var obj2FA = require('speakeasy');
 var objILX = new objF5.ILXServer();
 
 // Add a method that expects the RADIUS payload as an argument, and returns the RADIUS response
-objILX.addMethod('ilxmet_RADIUS', function(objArgs, objResponse) {
-	funLog(2, 'ilxmet_RADIUS Method Invoked with Arguments:', 'info', objArgs.params());
+objILX.addMethod('ilxmet_GRADIUS', function(objArgs, objResponse) {
+	funLog(2, 'ilxmet_GRADIUS Method Invoked with Arguments:', 'info', objArgs.params());
 	// RADIUS
 	var objBuffer = new Buffer(objArgs.params()[0], 'hex');
 	var objRadDecoded = objRadius.decode({ packet: objBuffer, secret: strRadSecret });
