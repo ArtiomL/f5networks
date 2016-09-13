@@ -41,7 +41,10 @@ $bepool = New-AzureRmLoadBalancerBackendAddressPoolConfig -Name $bpName
 $lb = New-AzureRmLoadBalancer -Name $lbName -ResourceGroupName $rgName -Location $reLocation -FrontendIpConfiguration $fip1, $fip2, $fip3 -Probe $probe4, $probe5, $probe6 -BackendAddressPool $bepool
 
 # Add LBAZ rules for public IPs
-$lb | Add-AzureRmLoadBalancerRuleConfig -Name "lbrSERVICE1" -FrontendIpConfiguration $fip1 -BackendAddressPool $bepool -Probe $probe4 -Protocol Tcp -FrontendPort 443 -BackendPort 444
-$lb | Add-AzureRmLoadBalancerRuleConfig -Name "lbrSERVICE2" -FrontendIpConfiguration $fip2 -BackendAddressPool $bepool -Probe $probe5 -Protocol Tcp -FrontendPort 443 -BackendPort 445
-$lb | Add-AzureRmLoadBalancerRuleConfig -Name "lbrSERVICE3" -FrontendIpConfiguration $fip3 -BackendAddressPool $bepool -Probe $probe6 -Protocol Tcp -FrontendPort 443 -BackendPort 446
+$fip = Get-AzureRmLoadBalancerFrontendIpConfig -LoadBalancer $lb -Name "feipLBAZEXT1"
+$lb | Add-AzureRmLoadBalancerRuleConfig -Name "lbrSERVICE1" -FrontendIpConfiguration $fip -BackendAddressPool $bepool -Probe $probe4 -Protocol Tcp -FrontendPort 443 -BackendPort 444
+$fip = Get-AzureRmLoadBalancerFrontendIpConfig -LoadBalancer $lb -Name "feipLBAZEXT2"
+$lb | Add-AzureRmLoadBalancerRuleConfig -Name "lbrSERVICE2" -FrontendIpConfiguration $fip -BackendAddressPool $bepool -Probe $probe5 -Protocol Tcp -FrontendPort 443 -BackendPort 445
+$fip = Get-AzureRmLoadBalancerFrontendIpConfig -LoadBalancer $lb -Name "feipLBAZEXT3"
+$lb | Add-AzureRmLoadBalancerRuleConfig -Name "lbrSERVICE3" -FrontendIpConfiguration $fip -BackendAddressPool $bepool -Probe $probe6 -Protocol Tcp -FrontendPort 443 -BackendPort 446
 $lb | Set-AzureRmLoadBalancer
