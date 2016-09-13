@@ -24,16 +24,18 @@ $pip1 = New-AzureRmPublicIpAddress -Name "pipLBAZEXT1" -ResourceGroupName $rgNam
 $pip2 = New-AzureRmPublicIpAddress -Name "pipLBAZEXT2" -ResourceGroupName $rgName -Location $reLocation –AllocationMethod Static
 $pip3 = New-AzureRmPublicIpAddress -Name "pipLBAZEXT3" -ResourceGroupName $rgName -Location $reLocation –AllocationMethod Static
 
-# Create new backend pool
-$bepool = New-AzureRmLoadBalancerBackendAddressPoolConfig -name $bpName
-
 # Create new LBAZ
 $lb = New-AzureRmLoadBalancer -Name $lbName -ResourceGroupName $rgName -Location $reLocation
 
 # Add public IPs to LBAZ
-$lb | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT1" -PublicIpAddress $pip1 | Set-AzureRmLoadBalancer
-$lb | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT2" -PublicIpAddress $pip2 | Set-AzureRmLoadBalancer
-$lb | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT3" -PublicIpAddress $pip3 | Set-AzureRmLoadBalancer
+$lb | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT1" -PublicIpAddress $pip1
+$lb | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT2" -PublicIpAddress $pip2
+$lb | Add-AzureRmLoadBalancerFrontendIpConfig -name "feipLBAZEXT3" -PublicIpAddress $pip3
+# Add new backend pool
+$lb | Add-AzureRmLoadBalancerBackendAddressPoolConfig -Name $bpName
+$lb | Set-AzureRmLoadBalancer
+
+# Create LBAZ probes
 
 # Add LBAZ rule for PIP1
 $fip = Get-AzureRmLoadBalancerFrontendIpConfig -LoadBalancer $lb -Name "feipLBAZEXT1"
