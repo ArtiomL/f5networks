@@ -1,7 +1,7 @@
 # F5 Networks - Load Balancing Rules with Multiple Public IPs
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v1.1, 06/09/2016
+# v1.2, 13/09/2016
 
 # Login to Azure RM
 Login-AzureRmAccount
