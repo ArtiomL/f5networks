@@ -44,7 +44,7 @@ $bepool = New-AzureRmLoadBalancerBackendAddressPoolConfig -Name $bpName
 # Create new LBAZ with public IPs, probes and backend pool
 $lb = New-AzureRmLoadBalancer -Name $lbName -ResourceGroupName $rgName -Location $reLocation -FrontendIpConfiguration $fip1, $fip2, $fip3 -Probe $probe4, $probe5, $probe6 -BackendAddressPool $bepool
 
-# Get updated objects
+# Get updated objects (they change after LBAZ creation)
 $fip1, $fip2, $fip3 = Get-AzureRmLoadBalancerFrontendIpConfig -LoadBalancer $lb
 $probe4, $probe5, $probe6 = Get-AzureRmLoadBalancerProbeConfig -LoadBalancer $lb
 $bepool = Get-AzureRmLoadBalancerBackendAddressPoolConfig -LoadBalancer $lb -Name $bpName
