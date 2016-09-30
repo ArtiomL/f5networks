@@ -1,7 +1,7 @@
 # F5 Networks - Load Balancing Rules with Multiple Public IPs
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v1.3, 15/09/2016
+# v1.3, 30/09/2016
 
 # Login to Azure RM
 Login-AzureRmAccount
@@ -12,9 +12,10 @@ Get-AzureRmSubscription
 # Select the relevant subscription
 Get-AzureRmSubscription -SubscriptionName "Paper Street Soap" | Select-AzureRmSubscription
 
-# Select resource group name, location, load balancer and backend pool names
+# Select existing resource group name and location
 $rgName = "rgPAPERSTSOAP"
 $reLocation = "West Europe"
+# Set load balancer and backend pool names
 $lbName = "lbazEXTERNAL"
 $bpName = "bepoolF5"
 # Set public IP, frontend IP, LBAZ probe and rule naming patterns
