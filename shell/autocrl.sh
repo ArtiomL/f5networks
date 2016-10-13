@@ -1,8 +1,10 @@
 #!/bin/bash
-# autocrl - CRL Auto-Update Script
-# Add to cron and /config/failover/active on both systems in DSC
+# F5 Networks - CRL Auto-Update
+# https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v3.1, 21/04/2016
+# v3.2, 13/10/2016
+
+# Add to cron and /config/failover/active on both systems in DSC
 
 str_HA_STATUS=$(tmsh show /sys failover | cut -d" " -f2)
 if [ "$str_HA_STATUS" == "standby" ] ; then
