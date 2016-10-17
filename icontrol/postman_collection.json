@@ -1,7 +1,7 @@
 {
 	"variables": [],
 	"info": {
-		"name": "F5 iControl",
+		"name": "F5 iControl REST",
 		"_postman_id": "e5a23394-6354-11de-70c3-7731c1af9c92",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
