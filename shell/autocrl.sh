@@ -41,11 +41,11 @@ sha1_CUR=$(tmsh list /sys file ssl-crl "$str_SSL_CRL.crl" | grep SHA1 | cut -d":
 sha1_NEW=$(sha1sum new.crl | cut -d" " -f1)
 
 if [ "$sha1_CUR" != "$sha1_NEW" ] ; then
-	str_CS_STATUS=$(tmsh show /cm sync-status | grep "^Status")
+	str_CS_STATUS=$(tmsh show /cm sync-status | grep "^Status" | awk '{print $2$3}')
 	tmsh modify /sys file ssl-crl "$str_SSL_CRL.crl" source-path file:new.crl
 	tmsh save /sys config partitions all >> logs/autocrl.log
 	str_LOG_LINE="autocrl.sh - New CRL version detected. The CRL file was updated."
-	if [ "$str_CS_STATUS" == "In Sync" ] ; then
+	if [ "$str_CS_STATUS" == "InSync" ] ; then
 		ip_MGMT=$(tmsh list /sys management-ip one-line | awk -F'[ /]' '{print $3}')
 		int_MGMT_CONS=$(netstat -np | grep "sshd\|httpd" | grep $ip_MGMT | wc -l)
 		if [ $int_MGMT_CONS -eq 0 ]; then
