@@ -2,7 +2,7 @@
 # F5 Networks - CRL Auto-Update
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v3.2, 13/10/2016
+# v3.3, 09/11/2016
 
 # Add to cron and /config/failover/active on both systems in DSC
 
@@ -41,14 +41,17 @@ sha1_CUR=$(tmsh list /sys file ssl-crl "$str_SSL_CRL.crl" | grep SHA1 | cut -d":
 sha1_NEW=$(sha1sum new.crl | cut -d" " -f1)
 
 if [ "$sha1_CUR" != "$sha1_NEW" ] ; then
+	str_CS_STATUS=$(tmsh show /cm sync-status | grep "^Status")
 	tmsh modify /sys file ssl-crl "$str_SSL_CRL.crl" source-path file:new.crl
 	tmsh save /sys config partitions all >> logs/autocrl.log
 	str_LOG_LINE="autocrl.sh - New CRL version detected. The CRL file was updated."
-	ip_MGMT=$(tmsh list /sys management-ip one-line | awk -F'[ /]' '{print $3}')
-	int_MGMT_CONS=$(netstat -np | grep "sshd\|httpd" | grep $ip_MGMT | wc -l)
-	if [ $int_MGMT_CONS -eq 0 ]; then
-		tmsh run /cm config-sync to-group $str_DSC_DG
-		str_LOG_LINE="$str_LOG_LINE Config Synced."
+	if [ "$str_CS_STATUS" == "In Sync" ] ; then
+		ip_MGMT=$(tmsh list /sys management-ip one-line | awk -F'[ /]' '{print $3}')
+		int_MGMT_CONS=$(netstat -np | grep "sshd\|httpd" | grep $ip_MGMT | wc -l)
+		if [ $int_MGMT_CONS -eq 0 ]; then
+			tmsh run /cm config-sync to-group $str_DSC_DG
+			str_LOG_LINE="$str_LOG_LINE Config Synced."
+		fi
 	fi
 else
 	str_LOG_LINE="autocrl.sh - The CRL version has not changed."
