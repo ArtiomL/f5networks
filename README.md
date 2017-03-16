@@ -6,15 +6,10 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 This project is dedicated to developing and sharing useful code for various F5 products and solutions.
-&nbsp;&nbsp;
-
-&nbsp;&nbsp;
-
+<br><br>
 ## [/azure](/azure)
 Code related to Microsoft's cloud computing **IaaS**.
-&nbsp;&nbsp;
-&nbsp;&nbsp;
-
+<br><br>
 ## [/iapps](/iapps)
 **iApps** is a system framework for deploying services-based, template-driven configurations.
 <br><br>
