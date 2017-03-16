@@ -6,24 +6,45 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 This project is dedicated to developing and sharing useful code for various F5 products and solutions.
-<br><br>
+&nbsp;&nbsp;
+
+&nbsp;&nbsp;
+
 ## [/azure](/azure)
 Code related to Microsoft's cloud computing **IaaS**.
-<br><br>
+&nbsp;&nbsp;
+
+&nbsp;&nbsp;
+
 ## [/iapps](/iapps)
 **iApps** is a system framework for deploying services-based, template-driven configurations.
-<br><br>
+&nbsp;&nbsp;
+
+&nbsp;&nbsp;
+
 ## [/icontrol](/icontrol)
 **iControl** is an open, web services-based API that allows complete, dynamic, and programmatic control.
-<br><br>
+&nbsp;&nbsp;
+
+&nbsp;&nbsp;
+
 ## [/irules](/irules)
 **iRules** is a highly customized scripting language allowing complete programmatic access to application traffic in real time.
-<br><br>
+&nbsp;&nbsp;
+
+&nbsp;&nbsp;
+
 ## [/iruleslx](/iruleslx)
 **iRules LX** is the next generation of iRules extending the functionality with Node.js and npm.
-<br><br>
+&nbsp;&nbsp;
+
+&nbsp;&nbsp;
+
 ## [/monitors](/monitors)
 The ability to effectively monitor the health of any application by writing custom scripts to interact with the servers.
-<br><br>
+&nbsp;&nbsp;
+
+&nbsp;&nbsp;
+
 ## [/shell](/shell)
 Shell scripts for various tasks.
