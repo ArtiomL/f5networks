@@ -5,10 +5,12 @@ F5 iRules LX - Google Authenticator OTP over RADIUS
 
 https://www.youtube.com/watch?v=7yRP2fPCxIs
 
-<br>
+&nbsp;&nbsp;
+
 ## Flow Topology
 <img src="flow.png">
 
-<br>
+&nbsp;&nbsp;
+
 ## DevCentral Article
 https://devcentral.f5.com/articles/radius-proxy-with-google-authenticator-20898
