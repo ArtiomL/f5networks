@@ -46,5 +46,5 @@ The ability to effectively monitor the health of any application by writing cust
 
 &nbsp;&nbsp;
 
-## [/shell](/shell)
-Shell scripts for various tasks.
+## [/scripts](/scripts)
+Scripts for various tasks.
