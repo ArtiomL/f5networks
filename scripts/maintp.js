@@ -88,14 +88,44 @@ function funArgParser() {
 
 
 var objArgs = funArgParser();
+
+// Load SSL certificate and key
 var objHSOpt = {
 	key: objFS.readFileSync(objArgs.key),
 	cert: objFS.readFileSync(objArgs.cert)
 };
 
-// Create a new HTTPS server
+// iControl REST HTTP/S options
+var objiCOpt = {
+	'auth': {
+		'user': objArgs.user,
+		'pass': objArgs.pass,
+		'sendImmediately': true
+	},
+	baseUrl: 'https://' + objArgs.ip + '/mgmt/tm/ltm/',
+	'headers': {
+		accept: 'application/json'
+	},
+	rejectUnauthorized: false,
+};
+
+// Create new HTTPS server
 var objHSrv = objHTTPS.createServer(objHSOpt);
 
+objHSrv.on('request', function(objReq, objRes) {
+	objRes.statusCode = 200;
+	objRes.setHeader('Content-Type','text/html; charset=utf-8');
+	objRes.write('<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>F5 BIG-IP Maintenance Portal</title>');
+	objRes.write('<link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">');
+	objRes.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">');
+	objRes.write('<link rel="shortcut icon" href="img/favicon.ico"></head><body><div class="container"><div class="docs-section" style="margin-top: 10%"><p>');
+	funHTTPC.get('pool/?$select=name', objiCOpt, function (objError, objiCRes, striCBody) {
+		JSON.parse(striCBody)['items'].forEach(function(objItem) {
+			objRes.write(objItem.name + '<br>');
+		});
+		objRes.end('</p></div></div></body></html>');
+	});
+});
 
 objHSrv.listen(objArgs.port);
 funLog(2, 'HTTP server started on port ' + objArgs.port.toString(), 'error');
