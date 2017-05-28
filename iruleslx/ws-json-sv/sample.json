@@ -1,0 +1,16 @@
+{
+	"id": 1,
+	"firstName": "Tyler",
+	"lastName": "Durden",
+	"isAlive": true,
+	"age": 30,
+	"projects": [
+		"insomnia",
+		"Mayhem"
+	],
+	"attributes": {
+		"isReal": false,
+		"episodes": 3,
+		"aliases": ["The Narrator", "Sebastian", "Jack"]
+	}
+}
