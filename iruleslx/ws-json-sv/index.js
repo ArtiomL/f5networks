@@ -48,10 +48,11 @@ objILX.addMethod('ilxmet_WS_JSON_SV', function(objArgs, objResponse) {
 		var objBuffer = new Buffer(strPayload, 'ascii');
 		try {
 			strPayload = objZLib.inflateSync(objBuffer).toString();
+			funLog(2, 'Decompressed Payload:', 'info', strPayload);
 		}
 		catch(e) {
 			objResponse.reply([objErrorCodes.intZLib, e.message]);
-			funLog(1, 'ZLib Error: ' + e.message, 'error');
+			funLog(1, 'ZLib Error:', 'error', e.message);
 			return;
 		}
 	}
@@ -60,7 +61,7 @@ objILX.addMethod('ilxmet_WS_JSON_SV', function(objArgs, objResponse) {
 	}
 	catch(e) {
 		objResponse.reply([objErrorCodes.intInputVal, e.message]);
-		funLog(1, 'Invalid JSON: ' + e.message, 'error');
+		funLog(1, 'Invalid JSON:', 'error', e.message);
 		return;
 	}
 	if (funValidate(objJSON)) {
@@ -68,7 +69,7 @@ objILX.addMethod('ilxmet_WS_JSON_SV', function(objArgs, objResponse) {
 	}
 	else {
 		objResponse.reply([objErrorCodes.intJSONVal, funValidate.errors]);
-		funLog(1, 'Schema Validation Failed: ' + JSON.stringify(funValidate.errors), 'error');
+		funLog(1, 'Schema Validation Failed:', 'error', funValidate.errors);
 	}
 });	//.addMethod
 
