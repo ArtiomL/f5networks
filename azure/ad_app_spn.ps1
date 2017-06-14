@@ -1,7 +1,7 @@
 # F5 Networks - Register Azure RM AD App for OAuth2 API Access
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v1.4, 14/06/2017
+# v1.4, 15/06/2017
 
 # Login to Azure RM
 Login-AzureRmAccount
@@ -33,4 +33,4 @@ New-AzureRmADServicePrincipal -ApplicationId $appID
 New-AzureRmRoleAssignment -RoleDefinitionName Contributor -ServicePrincipalName $appID
 
 # Show values
-@{ "tenantID" = $tenantID; "clientID" = $appID; "servicePrincipalSecret" = $adaPass; }
+@{ "tenantID" = $tenantID; "clientID" = $appID; "servicePrincipalSecret" = "***** (App password you previously typed)"; }
