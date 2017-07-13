@@ -2,14 +2,14 @@
 	F5 Networks - Node.js: WebSocket JSON Schema Validation
 	https://github.com/ArtiomL/f5networks
 	Artiom Lichtenstein
-	v1.0.1, 02/06/2017
+	v1.0.2, 13/07/2017
 */
 
 'use strict';
 
 // Log level to /var/log/ltm
 var intLogLevel = 0;
-var strLogID = '[-v1.0.1-170602-]';
+var strLogID = '[-v1.0.2-170713-]';
 
 function funLog(intMesLevel, strMessage, strMethod, objError) {
 	if (intLogLevel >= intMesLevel) {
@@ -39,6 +39,15 @@ var objAJV = new funAJV();
 var objSchema = JSON.parse(objFS.readFileSync('schema.json', 'utf8'));
 var funValidate = objAJV.compile(objSchema);
 
+// v8 performance workaround: define functions outside the try / catch statements
+function funZInflate(objCBuffer) {
+	return objZLib.inflateSync(objCBuffer).toString();
+}
+
+function funJParse(strJPayload) {
+	return JSON.parse(strJPayload);
+}
+
 // Add a method that expects JSON payload and type as arguments, and returns the validation result
 objILX.addMethod('ilxmet_WS_JSON_SV', function(objArgs, objResponse) {
 	funLog(2, 'ilxmet_WS_JSON_SV Method Invoked with Arguments:', 'info', objArgs.params());
@@ -47,7 +56,7 @@ objILX.addMethod('ilxmet_WS_JSON_SV', function(objArgs, objResponse) {
 		// GZIP
 		var objBuffer = new Buffer(strPayload, 'ascii');
 		try {
-			strPayload = objZLib.inflateSync(objBuffer).toString();
+			strPayload = funZInflate(objBuffer);
 			funLog(2, 'Decompressed Payload:', 'info', strPayload);
 		}
 		catch(e) {
@@ -57,7 +66,7 @@ objILX.addMethod('ilxmet_WS_JSON_SV', function(objArgs, objResponse) {
 		}
 	}
 	try {
-		var objJSON = JSON.parse(strPayload);
+		var objJSON = funJParse(strPayload);
 	}
 	catch(e) {
 		objResponse.reply([objErrorCodes.intInputVal, e.message]);
