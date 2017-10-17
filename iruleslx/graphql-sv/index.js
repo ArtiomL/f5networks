@@ -2,14 +2,14 @@
 	F5 Networks - Node.js: GraphQL Schema Validation
 	https://github.com/ArtiomL/f5networks
 	Artiom Lichtenstein
-	v1.0.1, 18/10/2017
+	v1.0.2, 18/10/2017
 */
 
 'use strict';
 
 // Log level to /var/log/ltm
 var intLogLevel = 0;
-var strLogID = '[-v1.0.1-171018-]';
+var strLogID = '[-v1.0.2-171018-]';
 
 function funLog(intMesLevel, strMessage, strMethod, objError) {
 	if (intLogLevel >= intMesLevel) {
