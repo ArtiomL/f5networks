@@ -2,7 +2,7 @@
 # F5 Networks - Node.js: GraphQL Schema Validation
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v1.0.1, 18/10/2017
+# v1.0.2, 18/10/2017
 
 when HTTP_REQUEST {
 	if { [HTTP::method] eq "POST" } {
@@ -27,7 +27,7 @@ when HTTP_REQUEST_DATA {
 	}
 	 #log local0.info "RPC Response: $rpc_resp"
 	if { [lindex $rpc_resp 0] == 0 } {
-		HTTP::respond 200 content [lindex $rpc_resp 1] noserver
+		HTTP::respond 200 content [lindex $rpc_resp 1] noserver "Content-Type" "application/json"
 	}
 	else {
 		reject
