@@ -63,3 +63,4 @@ objRtm.on(objRtmEvents.MESSAGE, function(objMessage) {
 });
 
 objRtm.start();
+funLog(1, 'RTM client started.');
