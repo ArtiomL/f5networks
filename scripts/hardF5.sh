@@ -32,10 +32,14 @@ tmsh modify /sys ntp servers replace-all-with { <\\'addr_NTP1_IP'\\> <\\'addr_NT
 
 # DNS
 tmsh modify /sys dns name-servers replace-all-with { <\\'addr_DNS1_IP'\\> <\\'addr_DNS2_IP'\\> } search replace-all-with { <\\'str_DOMAIN1'\\> <\\'str_DOMAIN2'\\> }
+tmsh modify /sys db dnssec.maxnsec3persec value 10
+tmsh modify /sys db dnssec.signaturecachensec3 value false
 
 
 # AFM
 tmsh create /security firewall rule-list afm_rl_DROP_UDP { rules add { afm_rule_DROP_UDP { action drop ip-protocol udp place-after first } } }
+tmsh create /security dns profile afm_prof_DNS { query-type-inclusion yes query-type-filter replace-all-with { a aaaa cname mx ptr txt } }
+tmsh create /security dos profile afm_dprof_DNS protocol-dns add { afm_dprof_DNS { dns-query-vector add { a aaaa cname mx ptr txt { enforce enabled rate-threshold 3000 rate-limit 5000 } } } }
 
 
 # TCP Profiles
@@ -45,13 +49,6 @@ tmsh modify /ltm global-settings traffic-control reject-unmatched disabled
 tmsh modify /ltm global-settings connection vlan-keyed-conn enabled 	#Default
 
 
-# HTTP Profiles
-tmsh modify /ltm profile http http server-agent-name aws
-tmsh modify /ltm profile http http hsts { mode enabled } 	#Disable for HTTP Virtual Servers (New Child Profile)
-# Designate a Login-Wall with ASM (Sessions and Logins > Login Enforcement) or an iRule:
-# https://devcentral.f5.com/wiki/iRules.Simple-Login-Wall-iRule-Redirect-unauthenticated-users-back-to-login-page.ashx
-
-
 # SSL Profiles
 tmsh create /ltm profile client-ssl clientssl-hard secure-renegotiation require-strict
 tmsh modify /ltm profile client-ssl clientssl-hard max-renegotiations-per-minute 3	#11.6 and on
@@ -59,8 +56,20 @@ tmsh modify /ltm profile client-ssl clientssl-hard ciphers 'NATIVE:!NULL:!LOW:!E
 tmsh modify /ltm profile client-ssl clientssl-hard options { dont-insert-empty-fragments no-dtls no-ssl }
 
 
+# HTTP Profiles
+tmsh modify /ltm profile http http server-agent-name aws
+tmsh modify /ltm profile http http hsts { mode enabled } 	#Disable for HTTP Virtual Servers (New Child Profile)
+
+
 # Persistence Profiles
 tmsh modify /ltm persistence cookie cookie cookie-name "`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 10`"
+
+
+# ASM
+tmsh create /security dos profile asm_dprof_L7DoS { application add { asm_dprof_L7DoS { bot-defense { mode always } bot-signatures { categories add { "Search Engine" { action report } } check enabled } stress-based { mode blocking } } } }
+# https://devcentral.f5.com/wiki/iRules.HTTP-URI-Request-Limiter.ashx
+# Designate a Login-Wall with ASM (Sessions and Logins > Login Enforcement) or an iRule:
+# https://devcentral.f5.com/wiki/iRules.Simple-Login-Wall-iRule-Redirect-unauthenticated-users-back-to-login-page.ashx
 
 
 # Virtual Servers
@@ -164,6 +173,7 @@ tmsh list /sys provision all-properties one-line
 tmsh list /net all-properties
 tmsh list /sys management-ip all-properties one-line
 tmsh show /cm device all
+tmsh show /sys performance all-stats detail
 tmsh show /sys performance all-stats historical
 i #alias
 
