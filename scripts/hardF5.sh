@@ -2,7 +2,7 @@
 # F5 Networks - BIG-IP Hardening Guide
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v2.0, 10/05/2017
+# v2.1.0, 29/10/2017
 
 
 # System Account Passwords
@@ -34,8 +34,12 @@ tmsh modify /sys ntp servers replace-all-with { <\\'addr_NTP1_IP'\\> <\\'addr_NT
 tmsh modify /sys dns name-servers replace-all-with { <\\'addr_DNS1_IP'\\> <\\'addr_DNS2_IP'\\> } search replace-all-with { <\\'str_DOMAIN1'\\> <\\'str_DOMAIN2'\\> }
 
 
+# AFM
+tmsh create /security firewall rule-list afm_rl_DROP_UDP { rules add { afm_rule_DROP_UDP { action drop ip-protocol udp place-after first } } }
+
+
 # TCP Profiles
-tmsh create /ltm profile tcp prof_F5-TCP-WAN-DDOS defaults-from f5-tcp-wan deferred-accept enabled zero-window-timeout 10000 idle-timeout 180 reset-on-timeout disabled
+tmsh create /ltm profile tcp prof_F5_TCP_WAN_DDOS defaults-from f5-tcp-wan deferred-accept enabled syn-cookie-enable enabled zero-window-timeout 10000 idle-timeout 180 reset-on-timeout disabled
 tmsh modify /sys db tm.maxrejectrate value 100
 tmsh modify /ltm global-settings traffic-control reject-unmatched disabled
 tmsh modify /ltm global-settings connection vlan-keyed-conn enabled 	#Default
@@ -44,6 +48,8 @@ tmsh modify /ltm global-settings connection vlan-keyed-conn enabled 	#Default
 # HTTP Profiles
 tmsh modify /ltm profile http http server-agent-name aws
 tmsh modify /ltm profile http http hsts { mode enabled } 	#Disable for HTTP Virtual Servers (New Child Profile)
+# Designate a Login-Wall with ASM (Sessions and Logins > Login Enforcement) or an iRule:
+# https://devcentral.f5.com/wiki/iRules.Simple-Login-Wall-iRule-Redirect-unauthenticated-users-back-to-login-page.ashx
 
 
 # SSL Profiles
