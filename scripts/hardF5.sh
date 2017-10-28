@@ -21,8 +21,8 @@ tmsh modify /sys db ui.system.preferences.recordsperscreen value 100
 
 
 # Naming Conventions and Defaults
-echo "Please choose and use a consistent naming convention across all configuration objects: pool_HTTP_APACHE, mon_HTTP_HEAD, prof_HTTP_XFF, virt_EXAMPLE.COM_80 etc."
-echo "Additionally, please avoid using the default settings (e.g. monitors, profiles, methods, certificates etc.) except where intentionally needed."
+# Please choose and use a consistent naming convention across all configuration objects: pool_HTTP_APACHE, mon_HTTP_HEAD, prof_HTTP_XFF, virt_EXAMPLE.COM_80 etc.
+# Additionally, please avoid using the default settings (e.g. monitors, profiles, methods, certificates etc.) except where intentionally needed.
 mkdir /var/tmp/scripts/ 	#Put all your shell scripts here
 
 
@@ -67,14 +67,14 @@ tmsh modify /ltm persistence cookie cookie cookie-name "`cat /dev/urandom | tr -
 
 # ASM
 tmsh create /security dos profile asm_dprof_L7DoS { application add { asm_dprof_L7DoS { bot-defense { mode always } bot-signatures { categories add { "Search Engine" { action report } } check enabled } stress-based { mode blocking } } } }
-# https://devcentral.f5.com/wiki/iRules.HTTP-URI-Request-Limiter.ashx
+# L7 DDoS alternative: https://devcentral.f5.com/wiki/iRules.HTTP-URI-Request-Limiter.ashx
 # Designate a Login-Wall with ASM (Sessions and Logins > Login Enforcement) or an iRule:
 # https://devcentral.f5.com/wiki/iRules.Simple-Login-Wall-iRule-Redirect-unauthenticated-users-back-to-login-page.ashx
 
 
 # Virtual Servers
-echo "F5 recommends the use of Full Proxy (Standard) Virtual Servers when DDoS is a concern."
-	# profiles: prof_TCP-WAN-OPT-DDOS { context clientside }, tcp-lan-optimized { context serverside }
+# F5 recommends the use of Full Proxy (Standard) Virtual Servers when DDoS is a concern.
+	# profiles: prof_F5_TCP_WAN_DDOS { context clientside }, f5-tcp-lan { context serverside }
 tmsh modify /ltm virtual <\\'vs_NAME'\\> description <\\'vs_DESCRIPTION'\\>
 tmsh modify /ltm virtual <\\'vs_NAME'\\> source-address-translation { type snat pool <\\'pool_SNAT'\\> }	#Use SNAT Pools to avoid Port Exhaustion
 tmsh modify /ltm virtual <\\'vs_NAME'\\> vlans-enabled vlans replace-all-with { <\\'vlan_NAME'\\> }
@@ -165,7 +165,7 @@ echo -e "\n\n\n" >> ~/.bashrc
 
 
 # Documentation
-echo "Please save the output of the following commands for documentation purposes:"
+# Please save the output of the following commands for documentation purposes:
 tmsh show /sys hardware
 tmsh show /sys software
 tmsh show /sys license detail
@@ -181,4 +181,5 @@ i #alias
 # Archive
 cat /var/spool/cron/root > /var/tmp/scripts/cron.txt
 tmsh save /sys ucs `tmsh list /sys global-settings hostname | grep hostname | cut -d" " -f6` passphrase <\\'str_PASSPHRASE'\\>
-echo "Please backup and document any additional scripts, external monitors, cli settings etc." 	#Backup /var/tmp/scripts/
+# Backup /var/tmp/scripts/
+# Please backup and document any additional scripts, external monitors, cli settings etc.
