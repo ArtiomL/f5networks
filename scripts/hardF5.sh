@@ -24,7 +24,7 @@ tmsh modify /sys diags ihealth password <\\'str_iPASS'\\>
 
 # Naming Conventions and Defaults
 # Please choose and use a consistent naming convention across all configuration objects: pool_HTTP_APACHE, mon_HTTP_HEAD, prof_HTTP_XFF, virt_EXAMPLE.COM_80 etc.
-# Additionally, please avoid using the default settings (e.g. monitors, profiles, methods, certificates etc.) except where intentionally needed.
+# Additionally, please avoid using the default settings (e.g. monitors, profiles, methods, certificates etc.) except where intentionally needed
 mkdir /var/tmp/scripts/ 	#Put all your shell scripts here
 
 
@@ -42,6 +42,7 @@ tmsh modify /sys db dnssec.signaturecachensec3 value false
 tmsh create /security firewall rule-list afm_rl_DROP_UDP { rules add { afm_rule_DROP_UDP { action drop ip-protocol udp place-after first } } }
 tmsh create /security dns profile afm_prof_DNS { query-type-inclusion yes query-type-filter replace-all-with { a aaaa cname mx ptr txt } }
 tmsh create /security dos profile afm_dprof_DNS protocol-dns add { afm_dprof_DNS { dns-query-vector add { a aaaa cname mx ptr txt { enforce enabled rate-threshold 3000 rate-limit 5000 } } } }
+tmsh create /security ip-intelligence policy afm_ipol_TIER1 blacklist-categories add { botnets denial_of_service infected_sources phishing proxy scanners spam_sources web_attacks windows_exploits }
 
 
 # TCP Profiles
@@ -75,7 +76,7 @@ tmsh create /security dos profile asm_dprof_L7DoS { application add { asm_dprof_
 
 
 # Virtual Servers
-# F5 recommends the use of Full Proxy (Standard) Virtual Servers when DDoS is a concern.
+# F5 recommends the use of Full Proxy (Standard) Virtual Servers when DDoS is a concern
 	# profiles: prof_F5_TCP_WAN_DDOS { context clientside }, f5-tcp-lan { context serverside }
 tmsh modify /ltm virtual <\\'vs_NAME'\\> description <\\'vs_DESCRIPTION'\\>
 tmsh modify /ltm virtual <\\'vs_NAME'\\> source-address-translation { type snat pool <\\'pool_SNAT'\\> }	#Use SNAT Pools to avoid Port Exhaustion
@@ -84,6 +85,8 @@ tmsh modify /ltm virtual <\\'vs_NAME'\\> vlans-enabled vlans replace-all-with { 
 
 # Network
 tmsh modify /net self all allow-service none
+tmsh modify /net vlan <\\'vlan_NAME'\\> dag-round-robin enabled
+tmsh modify /sys db dag.roundrobin.udp.portlist value 53
 
 
 # Authentication
@@ -136,12 +139,18 @@ tmsh modify /sys log-rotate max-file-size 10240
 tmsh modify /sys daemon-log-settings mcpd audit enabled 	#Default
 tmsh modify /cli global-settings audit enabled 	#Default
 tmsh modify /sys syslog remote-servers replace-all-with { rsrv_SYSLOG { host <\\'addr_SYSLOG_IP'\\> remote-port 514 } }		#Uses the legacy logging system (local-db-publisher)
-#Use the following configuration for off-box logging:
+# Use the following configuration for off-box logging:
 tmsh create /ltm pool pool_HSL members add { <\\'addr_SYSLOG_IP'\\>:514 }
 tmsh create /sys log-config destination remote-high-speed-log logd_HSL { protocol udp pool-name pool_HSL }
 tmsh create /sys log-config destination remote-syslog logd_FORMAT_SYSLOG { format rfc5424 remote-high-speed-log logd_HSL }
 tmsh create /sys log-config publisher logp_HSL { destinations replace-all-with { logd_HSL logd_FORMAT_SYSLOG } }
 tmsh create /sys log-config filter logf_HSL { level info source all publisher logp_HSL }
+
+
+# System Daemons
+bigstart stop big3d gtmd named oauth ovsdb-server rmonsnmpd sflow_agent snmpd stpd vxland zrd zxfrd
+bigstart remove big3d gtmd named oauth ovsdb-server rmonsnmpd sflow_agent snmpd stpd vxland zrd zxfrd
+# Warning! Disables system services! Review https://support.f5.com/csp/article/K05645522 for your own daemon list 
 
 
 # Aliases
