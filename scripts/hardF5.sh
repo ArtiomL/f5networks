@@ -2,7 +2,7 @@
 # F5 Networks - BIG-IP Hardening Guide
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v2.1.0, 29/10/2017
+# v2.1.1, 03/11/2017
 
 
 # System Account Passwords
@@ -15,9 +15,11 @@ tmsh modify /auth password-policy minimum-length 13 required-lowercase 3 require
 tmsh modify /auth password-policy policy-enforcement enabled
 
 
-# System Preferences
+# System
 tmsh modify /sys db ui.system.preferences.advancedselection value advanced
 tmsh modify /sys db ui.system.preferences.recordsperscreen value 100
+tmsh modify /sys diags ihealth user <\\'str_iUSER'\\>
+tmsh modify /sys diags ihealth password <\\'str_iPASS'\\>
 
 
 # Naming Conventions and Defaults
@@ -176,6 +178,7 @@ tmsh show /cm device all
 tmsh show /sys performance all-stats detail
 tmsh show /sys performance all-stats historical
 i #alias
+ihealth -C -x all
 
 
 # Archive
