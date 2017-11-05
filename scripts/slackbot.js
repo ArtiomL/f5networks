@@ -32,7 +32,6 @@ var objRtm = new funRtmClient(strBotToken);
 var strPool = 'pool_HTTPS_Debian';
 var strNode = 'node_ADCT';
 
-
 objRtm.on(objClientEvents.RTM.AUTHENTICATED, function(objStartData) {
 	strChannel = objStartData.channels[0].id;
 	funLog(1, 'Logged in as ' + objStartData.self.name + ', CID: ' + strChannel);
