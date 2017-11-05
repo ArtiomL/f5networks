@@ -2,14 +2,14 @@
 	F5 Networks - Node.js: Slack Bot Client
 	https://github.com/ArtiomL/f5networks
 	Artiom Lichtenstein
-	v1.0.1, 25/10/2017
+	v1.0.2, 05/11/2017
 */
 
 'use strict';
 
 // Log level
 var intLogLevel = 0;
-var strLogID = '[-v1.0.1-171025-]';
+var strLogID = '[-v1.0.2-171105-]';
 
 function funLog(intMesLevel, strMessage, strMethod, objError) {
 	if (intLogLevel >= intMesLevel) {
@@ -22,8 +22,10 @@ var objShell = require('shelljs');
 var funRtmClient = require('@slack/client').RtmClient;
 var objRtmEvents = require('@slack/client').RTM_EVENTS;
 var objClientEvents = require('@slack/client').CLIENT_EVENTS;
+var clsTail = require('tail').Tail;
 
 var strBotToken = process.env.SLACK_BOT_TOKEN || '';
+var strChannel = '';
 var objRtm = new funRtmClient(strBotToken);
 
 // Constants
@@ -32,7 +34,8 @@ var strNode = 'node_ADCT';
 
 
 objRtm.on(objClientEvents.RTM.AUTHENTICATED, function(objStartData) {
-	funLog(1, 'Logged in as ' + objStartData.self.name);
+	strChannel = objStartData.channels[0].id;
+	funLog(1, 'Logged in as ' + objStartData.self.name + ', CID: ' + strChannel);
 });
 
 objRtm.on(objRtmEvents.MESSAGE, function(objMessage) {
@@ -40,6 +43,7 @@ objRtm.on(objRtmEvents.MESSAGE, function(objMessage) {
 	switch(arrMsgText[0]) {
 		case 'hello':
 			objRtm.sendMessage('Hello <@' + objMessage.user + '>!', objMessage.channel);
+			strChannel = objMessage.channel;
 			break;
 		case 'status':
 			var strStdout = objShell.exec('tmsh show /ltm pool ' + strPool + ' members', {silent: true}).grep('State\|Ltm::Pool').stdout;
@@ -64,3 +68,12 @@ objRtm.on(objRtmEvents.MESSAGE, function(objMessage) {
 
 objRtm.start();
 funLog(1, 'RTM client started.');
+
+var objTail = new clsTail('/var/log/ltm');
+
+objTail.on('line', function(strLine) {
+	funLog(2, 'tail: ' + strLine);
+	if (strLine.indexOf('debug') === -1) {
+		objRtm.sendMessage('```' + strLine + '```', strChannel);
+	}
+});
