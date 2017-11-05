@@ -2,7 +2,7 @@
 # F5 Networks - BIG-IP Hardening Guide
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v2.1.1, 03/11/2017
+# v2.1.2, 05/11/2017
 
 
 # System Account Passwords
@@ -18,8 +18,12 @@ tmsh modify /auth password-policy policy-enforcement enabled
 # System
 tmsh modify /sys db ui.system.preferences.advancedselection value advanced
 tmsh modify /sys db ui.system.preferences.recordsperscreen value 100
+tmsh modify /sys db ui.advisory.color value red
+tmsh modify /sys db ui.advisory.text value `tmsh list /sys global-settings hostname | grep hostname | cut -d" " -f6`
+tmsh modify /sys db ui.advisory.enabled value true
 tmsh modify /sys diags ihealth user <\\'str_iUSER'\\>
 tmsh modify /sys diags ihealth password <\\'str_iPASS'\\>
+tmsh create /ltm eviction-policy evpol_REAPER slow-flow { enabled true } strategies { bias-bytes { enabled true delay 10 } low-priority-geographies { countries add { CN EG } enabled true } }
 
 
 # Naming Conventions and Defaults
@@ -36,6 +40,7 @@ tmsh modify /sys ntp servers replace-all-with { <\\'addr_NTP1_IP'\\> <\\'addr_NT
 tmsh modify /sys dns name-servers replace-all-with { <\\'addr_DNS1_IP'\\> <\\'addr_DNS2_IP'\\> } search replace-all-with { <\\'str_DOMAIN1'\\> <\\'str_DOMAIN2'\\> }
 tmsh modify /sys db dnssec.maxnsec3persec value 10
 tmsh modify /sys db dnssec.signaturecachensec3 value false
+tmsh create /ltm profile dns dns_prof_DDoS enable-rapid-response yes rapid-response-last-action drop enable-hardware-query-validation yes enable-hardware-response-cache yes unhandled-query-action drop use-local-bind no
 
 
 # AFM
@@ -46,7 +51,7 @@ tmsh create /security ip-intelligence policy afm_ipol_TIER1 blacklist-categories
 
 
 # TCP Profiles
-tmsh create /ltm profile tcp prof_F5_TCP_WAN_DDOS defaults-from f5-tcp-wan deferred-accept enabled syn-cookie-enable enabled zero-window-timeout 10000 idle-timeout 180 reset-on-timeout disabled
+tmsh create /ltm profile tcp prof_F5_TCP_WAN_DDoS defaults-from f5-tcp-wan deferred-accept enabled syn-cookie-enable enabled zero-window-timeout 10000 idle-timeout 180 reset-on-timeout disabled
 tmsh modify /sys db tm.maxrejectrate value 100
 tmsh modify /ltm global-settings traffic-control reject-unmatched disabled
 tmsh modify /ltm global-settings connection vlan-keyed-conn enabled 	#Default
@@ -77,7 +82,7 @@ tmsh create /security dos profile asm_dprof_L7DoS { application add { asm_dprof_
 
 # Virtual Servers
 # F5 recommends the use of Full Proxy (Standard) Virtual Servers when DDoS is a concern
-	# profiles: prof_F5_TCP_WAN_DDOS { context clientside }, f5-tcp-lan { context serverside }
+	# profiles: prof_F5_TCP_WAN_DDoS { context clientside }, f5-tcp-lan { context serverside }
 tmsh modify /ltm virtual <\\'vs_NAME'\\> description <\\'vs_DESCRIPTION'\\>
 tmsh modify /ltm virtual <\\'vs_NAME'\\> source-address-translation { type snat pool <\\'pool_SNAT'\\> }	#Use SNAT Pools to avoid Port Exhaustion
 tmsh modify /ltm virtual <\\'vs_NAME'\\> vlans-enabled vlans replace-all-with { <\\'vlan_NAME'\\> }
