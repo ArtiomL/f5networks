@@ -66,7 +66,7 @@ tmsh modify /ltm profile client-ssl clientssl-hard options { dont-insert-empty-f
 
 # HTTP Profiles
 tmsh modify /ltm profile http http server-agent-name aws
-tmsh modify /ltm profile http http hsts { mode enabled } 	#Disable for HTTP Virtual Servers (New Child Profile)
+tmsh create /ltm profile http http-hsts hsts { mode enabled } 	#Disable for HTTP Virtual Servers (New Child Profile)
 
 
 # Persistence Profiles
