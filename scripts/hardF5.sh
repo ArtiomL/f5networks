@@ -2,7 +2,7 @@
 # F5 Networks - BIG-IP Hardening Guide
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v2.1.2, 05/11/2017
+# v2.1.3, 07/11/2017
 
 
 # System Account Passwords
@@ -66,7 +66,7 @@ tmsh modify /ltm profile client-ssl clientssl-hard options { dont-insert-empty-f
 
 # HTTP Profiles
 tmsh modify /ltm profile http http server-agent-name aws
-tmsh modify /ltm profile http http hsts { mode enabled } 	#Disable for HTTP Virtual Servers (New Child Profile)
+tmsh create /ltm profile http http-hard insert-xforwarded-for enabled enforcement { known-methods replace-all-with { GET HEAD POST PUT DELETE } unknown-method reject } hsts { mode enabled preload enabled } 	#Disable HSTS for HTTP Virtual Servers (New Child Profiles)
 
 
 # Persistence Profiles
