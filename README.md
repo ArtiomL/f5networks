@@ -4,6 +4,7 @@
 [![Maintenance](https://img.shields.io/maintenance/yes/2017.svg)](https://github.com/ArtiomL/f5networks/graphs/code-frequency)
 [![Issues](https://img.shields.io/github/issues/ArtiomL/f5networks.svg)](https://github.com/ArtiomL/f5networks/issues)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+[![Slack Status](https://f5cloudsolutions.herokuapp.com/badge.svg)](https://f5cloudsolutions.herokuapp.com)
 
 This project is dedicated to developing and sharing useful code for various F5 products and solutions.
 &nbsp;&nbsp;
