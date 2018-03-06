@@ -6,6 +6,7 @@
 
 # Remove IPv6/IPv4 compatibility prefix (LTM passes addresses in IPv6 format)
 IP=`echo ${1} | sed 's/::ffff://'`
+PORT=${2}
 
 PIDFILE="/var/run/`basename ${0}`.${IP}_${PORT}.pid"
 # Kill the last instance of this monitor if hung and log current PID
