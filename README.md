@@ -24,7 +24,7 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 ## Code
 
-| Attribute  | Value           |
+| Path | Content |
 | :--------- |:--------------- |
 | [/azure](/azure) | Code related to Microsoft's cloud computing **IaaS**. |
 | [/iapps](/iapps) | **iApps** is a system framework for deploying services-based, template-driven configurations. |
@@ -36,18 +36,3 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 
 &nbsp;&nbsp;
-
-## [/iruleslx](/iruleslx)
-**iRules LX** is the next generation of iRules extending the functionality with Node.js and npm.
-&nbsp;&nbsp;
-
-&nbsp;&nbsp;
-
-## [/monitors](/monitors)
-The ability to effectively monitor the health of any application by writing custom scripts to interact with the servers.
-&nbsp;&nbsp;
-
-&nbsp;&nbsp;
-
-## [/scripts](/scripts)
-Scripts for various tasks.
