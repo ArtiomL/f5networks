@@ -28,31 +28,13 @@ This project is dedicated to developing and sharing useful code for various F5 p
 | :--------- |:--------------- |
 | [/azure](/azure) | Code related to Microsoft's cloud computing **IaaS**. |
 | [/iapps](/iapps) | **iApps** is a system framework for deploying services-based, template-driven configurations. |
-| pass       | password ([base64-encoded](https://github.com/ArtiomL/tls-scan/issues/17#issuecomment-286020627)) |
-| from       | from-address string ([RFC 822](https://tools.ietf.org/html/rfc822.html)) |
+| [/icontrol](/icontrol) | **iControl** is an open, web services-based API that allows complete, dynamic, and programmatic control. |
+| [/irules](/irules) | **iRules** is a highly customized scripting language allowing complete programmatic access to application traffic in real time. |
 | to         | to-address(es) - delimit with `;` |
 | token      | Slack bot API token (base64-encoded) |
 | channel    | Slack channel ID or name |
 | hosts      | list of hosts to scan |
 
-### [/azure](/azure)
-Code related to Microsoft's cloud computing **IaaS**.
-
-### [/iapps](/iapps)
-**iApps** is a system framework for deploying services-based, template-driven configurations.
-
-
-&nbsp;&nbsp;
-
-## [/icontrol](/icontrol)
-**iControl** is an open, web services-based API that allows complete, dynamic, and programmatic control.
-&nbsp;&nbsp;
-
-&nbsp;&nbsp;
-
-## [/irules](/irules)
-**iRules** is a highly customized scripting language allowing complete programmatic access to application traffic in real time.
-&nbsp;&nbsp;
 
 &nbsp;&nbsp;
 
