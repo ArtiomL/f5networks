@@ -6,18 +6,27 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 [![Slack Status](https://f5cloudsolutions.herokuapp.com/badge.svg)](https://f5cloudsolutions.herokuapp.com)
 
+&nbsp;&nbsp;
+
+## Table of Contents
+- [Description](#description)
+- [Code](#code)
+- [License](LICENSE)
+
+&nbsp;&nbsp;
+
+## Description
+
 This project is dedicated to developing and sharing useful code for various F5 products and solutions.
-&nbsp;&nbsp;
 
 &nbsp;&nbsp;
 
-## [/azure](/azure)
+## Code
+
+### [/azure](/azure)
 Code related to Microsoft's cloud computing **IaaS**.
-&nbsp;&nbsp;
 
-&nbsp;&nbsp;
-
-## [/iapps](/iapps)
+### [/iapps](/iapps)
 **iApps** is a system framework for deploying services-based, template-driven configurations.
 &nbsp;&nbsp;
 
