@@ -24,6 +24,8 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 ## Code
 
+| Attribute  | Value           |
+| :--------- |:--------------- |
 | [/azure](/azure) | Code related to Microsoft's cloud computing **IaaS**. |
 | [/iapps](/iapps) | **iApps** is a system framework for deploying services-based, template-driven configurations. |
 | pass       | password ([base64-encoded](https://github.com/ArtiomL/tls-scan/issues/17#issuecomment-286020627)) |
