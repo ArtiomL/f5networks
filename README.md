@@ -12,6 +12,7 @@
 - [Description](#description)
 - [Code](#code)
 - [Datasheets](#datasheets)
+- [Licensing](#licensing)
 - [License](LICENSE)
 
 &nbsp;&nbsp;
@@ -38,10 +39,13 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 ## Datasheets
  
-BIG-IP System Hardware Datasheet:  
+BIG-IP System Hardware:  
 https://www.f5.com/pdf/products/big-ip-platforms-datasheet.pdf
- 
-Local Traffic Manager (LTM: Intelligent LB, Visibility, Programmability, TLS Orchestration):  
+
+BIG-IP Virtual Editions:  
+http://www.f5.com/pdf/products/big-ip-virtual-editions-datasheet.pdf
+
+Local Traffic Manager  (LTM: Intelligent LB, Visibility, Programmability, TLS Orchestration):  
 https://www.f5.com/pdf/products/big-ip-local-traffic-manager-ds.pdf
  
 Global Traffic Manager (GTM/DNS: DC Global LB, WAN Link LB, DNS Protection):
@@ -64,9 +68,9 @@ https://www.f5.com/pdf/products/silverline-ddos-datasheet.pdf
  
 Silverline WAF (WAF-aa-S):
 https://www.f5.com/pdf/products/f5-silverline-web-application-firewall-datasheet.pdf
- 
-Licensing:
- 
+
+## Licensing
+
 Bundles:
 https://f5.com/products/how-to-buy/simplified-licensing
  
