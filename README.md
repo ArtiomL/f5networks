@@ -38,11 +38,10 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 ## Datasheets
  
-BIG-IP System Hardware Datasheet:
-
+BIG-IP System Hardware Datasheet:  
 https://www.f5.com/pdf/products/big-ip-platforms-datasheet.pdf
  
-Local Traffic Manager (LTM: Intelligent LB, Visibility, Programmability, TLS Orchestration):
+Local Traffic Manager (LTM: Intelligent LB, Visibility, Programmability, TLS Orchestration):  
 https://www.f5.com/pdf/products/big-ip-local-traffic-manager-ds.pdf
  
 Global Traffic Manager (GTM/DNS: DC Global LB, WAN Link LB, DNS Protection):
