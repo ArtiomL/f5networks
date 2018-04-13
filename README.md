@@ -37,11 +37,9 @@ This project is dedicated to developing and sharing useful code for various F5 p
 &nbsp;&nbsp;
 
 ## Datasheets
-
-
-Datasheets:
  
-F5 Hardware Datasheet:
+BIG-IP System Hardware Datasheet:
+
 https://www.f5.com/pdf/products/big-ip-platforms-datasheet.pdf
  
 Local Traffic Manager (LTM: Intelligent LB, Visibility, Programmability, TLS Orchestration):
