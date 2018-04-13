@@ -30,10 +30,9 @@ This project is dedicated to developing and sharing useful code for various F5 p
 | [/iapps](/iapps) | **iApps** is a system framework for deploying services-based, template-driven configurations. |
 | [/icontrol](/icontrol) | **iControl** is an open, web services-based API that allows complete, dynamic, and programmatic control. |
 | [/irules](/irules) | **iRules** is a highly customized scripting language allowing complete programmatic access to application traffic in real time. |
-| to         | to-address(es) - delimit with `;` |
-| token      | Slack bot API token (base64-encoded) |
-| channel    | Slack channel ID or name |
-| hosts      | list of hosts to scan |
+| [/iruleslx](/iruleslx) | **iRules LX** is the next generation of iRules extending the functionality with Node.js and npm. |
+| [/monitors](/monitors) | The ability to effectively monitor the health of any application by writing custom scripts to interact with the servers. |
+| [/scripts](/scripts) | Scripts for various tasks. |
 
 
 &nbsp;&nbsp;
