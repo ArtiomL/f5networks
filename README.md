@@ -69,6 +69,8 @@ https://www.f5.com/pdf/products/silverline-ddos-datasheet.pdf
 Silverline WAF (WAF-aa-S):
 https://www.f5.com/pdf/products/f5-silverline-web-application-firewall-datasheet.pdf
 
+&nbsp;&nbsp;
+
 ## Licensing
 
 Bundles:
@@ -80,7 +82,9 @@ https://support.f5.com/csp/article/K14810
 vCMP:
 https://f5.com/resources/white-papers/virtual-clustered-multiprocessing-vcmp
  
-Demos:
+&nbsp;&nbsp;
+
+## Demos:
  
 API FW:
 https://www.youtube.com/watch?v=04apTamXGeM&t=25s
@@ -88,8 +92,9 @@ https://www.youtube.com/watch?v=04apTamXGeM&t=25s
 L7DoS:
 https://www.youtube.com/watch?v=Ci12-tcyzhg
  
+&nbsp;&nbsp;
  
-Training:
+## Training:
  
 Free online training (you'll need to create an account):
 https://university.f5.com
