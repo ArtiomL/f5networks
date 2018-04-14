@@ -57,7 +57,7 @@ Full-Proxy FW, L3/4 DDoS Protection, Protocol Anomaly Detection, IP Reputation, 
 https://www.f5.com/pdf/products/big-ip-advanced-firewall-manager-datasheet.pdf
 
 **Application Security Manager**  
-sasd
+Advanced WAF, API and WebSocket Security, L7 DDoS and Proactive Bot Protection, Web Scraping and Brute-force Prevention  
 https://www.f5.com/pdf/products/big-ip-application-security-manager-ds.pdf
 
 
