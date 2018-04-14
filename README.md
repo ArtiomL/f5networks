@@ -60,7 +60,7 @@ NAT44, NAT64, 464XLAT, PCP, DNS64, Application Layer Gateway, Tunneling
 https://www.f5.com/pdf/products/big-ip-cgnat-datasheet.pdf
 
 **Policy Enforcement Manager**  
-Intelligent Traffic Classification and Steering, Dynamic Service Chaining, Bandwidth and Congestion Control
+Intelligent Traffic Classification and Steering, Dynamic Service Chaining, Bandwidth and Congestion Control  
 https://www.f5.com/pdf/products/big-ip-policy-enforcement-manager-datasheet.pdf
 
 **Advanced Firewall Manager**  
@@ -72,7 +72,7 @@ Advanced WAF, API and WebSocket Security, L7 DDoS and Bot Protection, Web Scrapi
 https://www.f5.com/pdf/products/big-ip-application-security-manager-ds.pdf
 
 **Access Policy Manager**  
-Context-aware Secure Access Control, Granular MFA, Identity Management and Federation, SSO, SSL VPN  
+Context-aware Secure Access Control, Granular MFA, Identity Management and Federation, SSO, SSL VPN, SWG  
 https://www.f5.com/pdf/products/big-ip-access-policy-manager-ds.pdf
  
 
