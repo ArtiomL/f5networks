@@ -51,8 +51,13 @@ https://www.f5.com/pdf/products/big-ip-local-traffic-manager-ds.pdf
 **Global Traffic Manager**  
 Geographic and DNS LB, WAN Link (ISP) LB, DR Management, DNS Caching and Analytics, DNSSEC, DNS FW  
 https://www.f5.com/pdf/products/big-ip-dns-datasheet.pdf
+
+**Advanced Firewall Manager**  
+Full-Proxy FW, L3/4 DDoS Protection, Protocol Anomaly Detection, IP Reputation, SSH Proxy
+https://www.f5.com/pdf/products/big-ip-advanced-firewall-manager-datasheet.pdf
  
-Access Policy Manager (APM: Secure Access, Identity Management, Federation, SSO):  
+**Access Policy Manager**  
+Secure Access, Identity Management, Federation, SSO  
 https://www.f5.com/pdf/products/big-ip-access-policy-manager-ds.pdf
  
 Application Security Manager (ASM: Advanced WAF, API FW, L7DoS, Anti-Bot):  
