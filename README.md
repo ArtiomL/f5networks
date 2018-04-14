@@ -12,6 +12,11 @@
 - [Description](#description)
 - [Code](#code)
 - [Datasheets](#datasheets)
+	- [Platforms](#platforms)
+	- [Network](#network)
+	- [Service Provider](#service-provider)
+	- [Security](#security)
+	- [Cloud](#cloud)
 - [Licensing](#licensing)
 
 &nbsp;&nbsp;
