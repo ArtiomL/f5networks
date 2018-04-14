@@ -18,6 +18,8 @@
 	- [Security](#security)
 	- [Cloud](#cloud)
 - [Licensing](#licensing)
+- [Training](#training)
+- [Videos](#videos)
 
 &nbsp;&nbsp;
 
@@ -149,20 +151,18 @@ vCMP:
 https://f5.com/resources/white-papers/virtual-clustered-multiprocessing-vcmp
  
 &nbsp;&nbsp;
-
-## Demos
- 
-API FW:  
-https://www.youtube.com/watch?v=04apTamXGeM&t=25s
- 
-L7DoS:  
-https://www.youtube.com/watch?v=Ci12-tcyzhg
- 
-&nbsp;&nbsp;
  
 ## Training
  
 Free online training (you'll need to create an account):  
 https://university.f5.com
+
+&nbsp;&nbsp;
+
+## Videos
  
+API FW:  
+https://www.youtube.com/watch?v=04apTamXGeM
  
+L7DoS:  
+https://www.youtube.com/watch?v=Ci12-tcyzhg
