@@ -38,10 +38,10 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 ## Datasheets
  
-#### BIG-IP System Hardware:  
+**BIG-IP System Hardware:**  
 https://www.f5.com/pdf/products/big-ip-platforms-datasheet.pdf
 
-#### BIG-IP Virtual Editions:  
+**BIG-IP Virtual Editions:**  
 http://www.f5.com/pdf/products/big-ip-virtual-editions-datasheet.pdf
 
 Local Traffic Manager  (LTM: Intelligent LB, Visibility, Programmability, TLS Orchestration):  
