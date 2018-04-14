@@ -40,41 +40,38 @@ This project is dedicated to developing and sharing useful code for various F5 p
  
 **BIG-IP System Hardware**  
 https://www.f5.com/pdf/products/big-ip-platforms-datasheet.pdf
-  
+
 **BIG-IP Virtual Editions**  
 https://www.f5.com/pdf/products/big-ip-virtual-editions-datasheet.pdf
-  
+
 **Local Traffic Manager**  
 Intelligent LB and Optimization, TLS Orchestration, Application Visibility and Analytics, Programmability  
 https://www.f5.com/pdf/products/big-ip-local-traffic-manager-ds.pdf
-  
+
 **Global Traffic Manager**  
 Geographic and DNS LB, WAN Link (ISP) LB, DR Management, DNS Caching and Analytics, DNSSEC, DNS FW  
 https://www.f5.com/pdf/products/big-ip-dns-datasheet.pdf
-  
+
 **Advanced Firewall Manager**  
 Full-Proxy FW, L3/4 DDoS Protection, Protocol Anomaly Detection, IP Reputation, SSH Proxy  
 https://www.f5.com/pdf/products/big-ip-advanced-firewall-manager-datasheet.pdf
-  
+
 **Application Security Manager**  
 Advanced WAF, API and WebSocket Security, L7 DDoS and Bot Protection, Web Scraping and Brute-force Prevention  
 https://www.f5.com/pdf/products/big-ip-application-security-manager-ds.pdf
 
-
-
-
 **Access Policy Manager**  
+Context-aware secure access
+
 Secure Access, Identity Management, Federation, SSO  
 https://www.f5.com/pdf/products/big-ip-access-policy-manager-ds.pdf
  
-Application Security Manager (ASM: Advanced WAF, API FW, L7DoS, Anti-Bot):  
-https://www.f5.com/pdf/products/big-ip-application-security-manager-ds.pdf
+
  
 Fraud Protection Service (FPS/WebSafe/DataSafe: Anti-Fraud, App Layer Encryption):  
 https://www.f5.com/pdf/products/websafe-datasheet.pdf
  
-Advanced Firewall Manager (L3/4 DDoS, IPS):  
-https://www.f5.com/pdf/products/big-ip-advanced-firewall-manager-datasheet.pdf
+
  
 Silverline DDoS (Volumetric DDoS-aaS):  
 https://www.f5.com/pdf/products/silverline-ddos-datasheet.pdf
