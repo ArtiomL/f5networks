@@ -33,13 +33,18 @@ This repository:
 
 | Path | Content |
 | :--------- |:--------------- |
-| [/azure](/azure) | Code related to Microsoft's cloud computing **IaaS**. |
-| [/iapps](/iapps) | **iApps** is a system framework for deploying services-based, template-driven configurations. |
-| [/icontrol](/icontrol) | **iControl** is an open, web services-based API that allows complete, dynamic, and programmatic control. |
-| [/irules](/irules) | **iRules** is a highly customized scripting language allowing complete programmatic access to application traffic in real time. |
-| [/iruleslx](/iruleslx) | **iRules LX** is the next generation of iRules extending the functionality with Node.js and npm. |
-| [/monitors](/monitors) | The ability to effectively monitor the health of any application by writing custom scripts to interact with the servers. |
-| [/scripts](/scripts) | Scripts for various tasks. |
+| [/azure](/azure) | Code related to Microsoft's cloud computing **IaaS** |
+| [/iapps](/iapps) | **iApps** is a system framework for deploying services-based, template-driven configurations |
+| [/icontrol](/icontrol) | **iControl** is an open, web services-based API that allows complete, dynamic, and programmatic control |
+| [/irules](/irules) | **iRules** is a highly customized scripting language allowing complete programmatic access to application traffic in real time |
+| [/iruleslx](/iruleslx) | **iRules LX** is the next generation of iRules extending the functionality with Node.js and npm |
+| [/monitors](/monitors) | The ability to effectively monitor the health of any application by writing custom scripts to interact with the servers |
+| [/scripts](/scripts) | Scripts for various tasks |
+
+
+:gear: Essential Ansible container(s) with F5 modules, extensible playbooks and Slack notifications:  
+https://github.com/ArtiomL/f5-ansible
+
 
 &nbsp;&nbsp;
 
