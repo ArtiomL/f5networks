@@ -38,17 +38,18 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 ## Datasheets
  
-**BIG-IP System Hardware:**  
+**BIG-IP System Hardware**  
 https://www.f5.com/pdf/products/big-ip-platforms-datasheet.pdf
 
-**BIG-IP Virtual Editions:**  
+**BIG-IP Virtual Editions**  
 http://www.f5.com/pdf/products/big-ip-virtual-editions-datasheet.pdf
 
-#### Local Traffic Manager
+**Local Traffic Manager**  
 Intelligent LB and Optimization, TLS Orchestration, Application Visibility and Analytics, Programmability  
 https://www.f5.com/pdf/products/big-ip-local-traffic-manager-ds.pdf
  
-Global Traffic Manager (GTM/DNS: DC Global LB, WAN Link LB, DNS Protection):  
+**Global Traffic Manager**  
+DC Global LB, WAN Link LB, DNS Protection  
 https://www.f5.com/pdf/products/big-ip-dns-datasheet.pdf
  
 Access Policy Manager (APM: Secure Access, Identity Management, Federation, SSO):  
