@@ -29,7 +29,7 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 ## Code
 
-This repository:
+**This repository:**
 
 | Path | Content |
 | :--------- |:--------------- |
@@ -41,7 +41,8 @@ This repository:
 | [/monitors](/monitors) | The ability to effectively monitor the health of any application by writing custom scripts to interact with the servers |
 | [/scripts](/scripts) | Scripts for various tasks |
 
-Additional repositories:
+
+**Additional repositories:**
 
 Essential Ansible container(s) with F5 modules, extensible playbooks and Slack notifications:  
 https://github.com/ArtiomL/f5-ansible
