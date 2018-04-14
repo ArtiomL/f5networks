@@ -44,7 +44,7 @@ https://www.f5.com/pdf/products/big-ip-platforms-datasheet.pdf
 **BIG-IP Virtual Editions:**  
 http://www.f5.com/pdf/products/big-ip-virtual-editions-datasheet.pdf
 
-**Local Traffic Manager:**  
+### Local Traffic Manager
 Intelligent LB and Optimization, TLS Orchestration, Application Visibility and Analytics, Programmability  
 https://www.f5.com/pdf/products/big-ip-local-traffic-manager-ds.pdf
  
