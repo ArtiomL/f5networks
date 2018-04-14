@@ -41,6 +41,9 @@ This project is dedicated to developing and sharing useful code for various F5 p
 **BIG-IP System Hardware**  
 https://www.f5.com/pdf/products/big-ip-platforms-datasheet.pdf
 
+**VIPRION Modular Hardware**  
+https://www.f5.com/pdf/products/viprion-overview-ds.pdf
+
 **BIG-IP Virtual Editions**  
 https://www.f5.com/pdf/products/big-ip-virtual-editions-datasheet.pdf
 
@@ -51,6 +54,14 @@ https://www.f5.com/pdf/products/big-ip-local-traffic-manager-ds.pdf
 **Global Traffic Manager**  
 Geographic and DNS LB, WAN Link (ISP) LB, DR Management, DNS Caching and Analytics, DNSSEC, DNS FW  
 https://www.f5.com/pdf/products/big-ip-dns-datasheet.pdf
+
+**Carrier-Grade NAT**  
+NAT44, NAT64, 464XLAT, PCP, DNS64, Application Layer Gateway, Tunneling  
+https://www.f5.com/pdf/products/big-ip-cgnat-datasheet.pdf
+
+**Policy Enforcement Manager**  
+Intelligent Traffic Classification and Steering, Dynamic Service Chaining, Bandwidth and Congestion Control
+https://www.f5.com/pdf/products/big-ip-policy-enforcement-manager-datasheet.pdf
 
 **Advanced Firewall Manager**  
 Full-Proxy FW, L3/4 DDoS Protection, Protocol Anomaly Detection, IP Reputation, SSH Proxy  
