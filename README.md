@@ -61,9 +61,7 @@ Advanced WAF, API and WebSocket Security, L7 DDoS and Bot Protection, Web Scrapi
 https://www.f5.com/pdf/products/big-ip-application-security-manager-ds.pdf
 
 **Access Policy Manager**  
-Context-aware secure access
-
-Secure Access, Identity Management, Federation, SSO  
+Context-aware Secure Access Control, Granular MFA, Identity Management and Federation, SSO, SSL VPN  
 https://www.f5.com/pdf/products/big-ip-access-policy-manager-ds.pdf
  
 
