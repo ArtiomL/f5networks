@@ -75,15 +75,14 @@ https://www.f5.com/pdf/products/big-ip-application-security-manager-ds.pdf
 Context-aware Secure Access Control, Granular MFA, Identity Management and Federation, SSO, SSL VPN, SWG  
 https://www.f5.com/pdf/products/big-ip-access-policy-manager-ds.pdf
 
+**WebSafe**  
+Clientless Application-level Encryption, Phishing and Pharming Detection, Advanced Fraud and Transaction Protection  
+https://www.f5.com/pdf/products/websafe-datasheet.pdf
+
 **Application Connector**  
 Multi-Cloud Services Insertion, Workload Discovery  
 https://www.f5.com/pdf/products/application-connector-datasheet.pdf
 
-
-
-
-Fraud Protection Service (FPS/WebSafe/DataSafe: Anti-Fraud, App Layer Encryption):  
-https://www.f5.com/pdf/products/websafe-datasheet.pdf
 
 Silverline DDoS (Volumetric DDoS-aaS):  
 https://www.f5.com/pdf/products/silverline-ddos-datasheet.pdf
