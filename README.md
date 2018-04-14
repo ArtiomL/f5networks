@@ -38,7 +38,7 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 ## Datasheets
 
-#### `Platforms`
+### `Platforms`
 
 **BIG-IP System Hardware**  
 https://www.f5.com/pdf/products/big-ip-platforms-datasheet.pdf
@@ -51,7 +51,7 @@ https://www.f5.com/pdf/products/big-ip-virtual-editions-datasheet.pdf
 
 &nbsp;&nbsp;
 
-#### `Network`
+### `Network`
 
 **Local Traffic Manager**  
 Intelligent LB and Optimization, TLS Orchestration, Application Visibility and Analytics, Programmability  
@@ -63,7 +63,7 @@ https://www.f5.com/pdf/products/big-ip-dns-datasheet.pdf
 
 &nbsp;&nbsp;
 
-### Service Provider
+### `Service Provider`
 
 **Carrier-Grade NAT**  
 NAT44, NAT64, 464XLAT, PCP, DNS64, Application Layer Gateway, Tunneling  
@@ -75,7 +75,7 @@ https://www.f5.com/pdf/products/big-ip-policy-enforcement-manager-datasheet.pdf
 
 &nbsp;&nbsp;
 
-### Security
+### `Security`
 
 **Advanced Firewall Manager**  
 Full-Proxy FW, L3/4 DDoS Protection, Protocol Anomaly Detection, IP Reputation, SSH Proxy  
@@ -99,7 +99,7 @@ https://www.f5.com/pdf/products/mobilesafe-datasheet.pdf
 
 &nbsp;&nbsp;
 
-### Cloud
+### `Cloud`
 
 **Application Connector**  
 Multi-Cloud Services Insertion, Workload Discovery  
