@@ -49,7 +49,7 @@ Intelligent LB and Optimization, TLS Orchestration, Application Visibility and A
 https://www.f5.com/pdf/products/big-ip-local-traffic-manager-ds.pdf
  
 **Global Traffic Manager**  
-Geographic and DNS LB, WAN Link (ISP) LB, DR Management, DNS Caching, Resolving and Analytics, DNSSEC, DNS FW  
+Geographic and DNS LB, WAN Link (ISP) LB, DR Management, DNS Caching and Analytics, DNSSEC, DNS FW  
 https://www.f5.com/pdf/products/big-ip-dns-datasheet.pdf
  
 Access Policy Manager (APM: Secure Access, Identity Management, Federation, SSO):  
