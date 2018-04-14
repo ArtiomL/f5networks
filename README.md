@@ -41,10 +41,19 @@ This repository:
 | [/monitors](/monitors) | The ability to effectively monitor the health of any application by writing custom scripts to interact with the servers |
 | [/scripts](/scripts) | Scripts for various tasks |
 
+Additional repositories:
 
-:gear: Essential Ansible container(s) with F5 modules, extensible playbooks and Slack notifications:  
+Essential Ansible container(s) with F5 modules, extensible playbooks and Slack notifications:  
 https://github.com/ArtiomL/f5-ansible
 
+Launch the F5 Application Connector with a Dockerized proxy in AWS:  
+https://github.com/ArtiomL/f5-app-connector
+
+F5 control and logging integration with a Slack bot:  
+https://github.com/ArtiomL/f5-slack-bot
+
+Sublime Text package for F5 iRules syntax highlighting and auto-completion:  
+https://github.com/ArtiomL/sublime-f5-irules
 
 &nbsp;&nbsp;
 
