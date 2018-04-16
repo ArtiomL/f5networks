@@ -127,7 +127,7 @@ https://www.f5.com/pdf/products/mobilesafe-datasheet.pdf
 ### `Cloud`
 
 **Application Connector**  
-> Multi-Cloud Services Insertion, Workload Discovery  
+Multi-Cloud Services Insertion, Workload Discovery  
 https://www.f5.com/pdf/products/application-connector-datasheet.pdf
 
 
@@ -160,9 +160,33 @@ https://university.f5.com
 &nbsp;&nbsp;
 
 ## Videos
- 
+
+F5 Container Integration - Mesos Marathon  
+https://www.youtube.com/watch?v=BPgueckVNEU
+
+WebSocket JSON vs. F5 ASM  
+https://www.youtube.com/watch?v=04apTamXGeM
+
+L7 DDoS vs. F5 ASM  
+https://www.youtube.com/watch?v=Ci12-tcyzhg
+
+F5 HA in Azure - AD App SPN for OAuth2 API Access  
+https://www.youtube.com/watch?v=bImQ6DlrpUM
+
+F5 BIG-IP + Slack - 1. Control  
+https://www.youtube.com/watch?v=-nLz8mNx60E
+
+F5 BIG-IP + Slack - 2. Logging  
+https://www.youtube.com/watch?v=yNNSStlIYX0
+
+F5 BIG-IP + Ansible - 1. Imperative Playbooks  
+https://www.youtube.com/watch?v=5QiNgWZeOw0
+
+F5 BIG-IP + Ansible - 2. Declarative Automation  
+https://www.youtube.com/watch?v=hy7GU2GfsWc
+
+F5 BIG-IP + Ansible - 3. Infrastructure as Code  
+https://www.youtube.com/watch?v=vGxng8h8S5s
+
 API FW:  
 https://www.youtube.com/watch?v=04apTamXGeM
- 
-L7DoS:  
-[test](https://www.youtube.com/watch?v=Ci12-tcyzhg){:target="_blank"}
