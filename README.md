@@ -31,7 +31,7 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 ## Code
 
-**This repository:**
+This repository:
 
 | Path | Content |
 | :--------- |:--------------- |
@@ -45,18 +45,18 @@ This project is dedicated to developing and sharing useful code for various F5 p
 
 &nbsp;&nbsp;
 
-**Additional repositories:**
+Additional repositories:
 
-Essential Ansible container(s) with F5 modules, extensible playbooks and Slack notifications:  
+**Essential Ansible container(s) with F5 modules, extensible playbooks and Slack notifications**  
 https://github.com/ArtiomL/f5-ansible
 
-Launch the F5 Application Connector with a Dockerized proxy in AWS:  
+**Launch the F5 Application Connector with a Dockerized proxy in AWS**  
 https://github.com/ArtiomL/f5-app-connector
 
-F5 control and logging integration with a Slack bot:  
+**F5 control and logging integration with a Slack bot**  
 https://github.com/ArtiomL/f5-slack-bot
 
-Sublime Text package for F5 iRules syntax highlighting and auto-completion:  
+**Sublime Text package for F5 iRules syntax highlighting and auto-completion**  
 https://github.com/ArtiomL/sublime-f5-irules
 
 &nbsp;&nbsp;
@@ -130,11 +130,12 @@ https://www.f5.com/pdf/products/mobilesafe-datasheet.pdf
 Multi-Cloud Services Insertion, Workload Discovery  
 https://www.f5.com/pdf/products/application-connector-datasheet.pdf
 
-
-Silverline DDoS (Volumetric DDoS-aaS):  
+**Silverline DDoS**  
+Cloud-based L3–L7 DDoS Protection, Hybrid Signaling, Volumetric DDoS Mitigation, Security Operations Center (SOC)  
 https://www.f5.com/pdf/products/silverline-ddos-datasheet.pdf
- 
-Silverline WAF (WAF-aa-S):  
+
+**Silverline WAF**  
+Cloud-based Managed WAF-as-a-Service, Hybrid Policy Management and Deployment, Security Operations Center (SOC)  
 https://www.f5.com/pdf/products/f5-silverline-web-application-firewall-datasheet.pdf
 
 &nbsp;&nbsp;
@@ -162,31 +163,4 @@ https://university.f5.com
 ## Videos
 
 F5 Container Integration - Mesos Marathon  
-https://www.youtube.com/watch?v=BPgueckVNEU
-
-WebSocket JSON vs. F5 ASM  
-https://www.youtube.com/watch?v=04apTamXGeM
-
-L7 DDoS vs. F5 ASM  
-https://www.youtube.com/watch?v=Ci12-tcyzhg
-
-F5 HA in Azure - AD App SPN for OAuth2 API Access  
-https://www.youtube.com/watch?v=bImQ6DlrpUM
-
-F5 BIG-IP + Slack - 1. Control  
-https://www.youtube.com/watch?v=-nLz8mNx60E
-
-F5 BIG-IP + Slack - 2. Logging  
-https://www.youtube.com/watch?v=yNNSStlIYX0
-
-F5 BIG-IP + Ansible - 1. Imperative Playbooks  
-https://www.youtube.com/watch?v=5QiNgWZeOw0
-
-F5 BIG-IP + Ansible - 2. Declarative Automation  
-https://www.youtube.com/watch?v=hy7GU2GfsWc
-
-F5 BIG-IP + Ansible - 3. Infrastructure as Code  
-https://www.youtube.com/watch?v=vGxng8h8S5s
-
-API FW:  
-https://www.youtube.com/watch?v=04apTamXGeM
+https://www.youtube.com/playlist?list=UUSa_Fvtiv5i6NZiJAMhIJ9Q
