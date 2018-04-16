@@ -43,8 +43,6 @@ This repository:
 | [/monitors](/monitors) | The ability to effectively monitor the health of any application by writing custom scripts to interact with the servers |
 | [/scripts](/scripts) | Scripts for various tasks |
 
-&nbsp;&nbsp;
-
 Additional repositories:
 
 **Essential Ansible container(s) with F5 modules, extensible playbooks and Slack notifications**  
@@ -142,25 +140,24 @@ https://www.f5.com/pdf/products/f5-silverline-web-application-firewall-datasheet
 
 ## Licensing
 
-Bundles:  
+**Compare Product Bundles**    
 https://f5.com/products/how-to-buy/simplified-licensing
  
-VE license and throughput limits:  
+**BIG-IP VE License and Throughput Limits**    
 https://support.f5.com/csp/article/K14810
  
-vCMP:  
+**vCMP**  
 https://f5.com/resources/white-papers/virtual-clustered-multiprocessing-vcmp
  
 &nbsp;&nbsp;
  
 ## Training
  
-Free online training (you'll need to create an account):  
+Free online training (you'll need to create a free account):  
 https://university.f5.com
 
 &nbsp;&nbsp;
 
 ## Videos
-
-F5 Container Integration - Mesos Marathon  
+ 
 https://www.youtube.com/playlist?list=UUSa_Fvtiv5i6NZiJAMhIJ9Q
