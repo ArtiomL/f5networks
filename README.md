@@ -45,19 +45,7 @@ This repository:
 
 &nbsp;&nbsp;
 
-Additional repositories:
-
-**Essential Ansible container(s) with F5 modules, extensible playbooks and Slack notifications**  
-https://github.com/ArtiomL/f5-ansible
-
-**Launch the F5 Application Connector with a Dockerized proxy in AWS**  
-https://github.com/ArtiomL/f5-app-connector
-
-**F5 control and logging integration with a Slack bot**  
-https://github.com/ArtiomL/f5-slack-bot
-
-**Sublime Text package for F5 iRules syntax highlighting and auto-completion**  
-https://github.com/ArtiomL/sublime-f5-irules
+Additional [repositories](https://github.com/ArtiomL?tab=repositories&q=f5).
 
 &nbsp;&nbsp;
 
