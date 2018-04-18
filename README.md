@@ -126,6 +126,14 @@ https://www.f5.com/pdf/products/application-connector-datasheet.pdf
 
 &nbsp;&nbsp;
 
+### `Management and Automation`
+
+**BIG-IQ Centralized Management**  
+Fine-Grained Management with RBAC, Central Logging, Reporting and Auditing  
+https://www.f5.com/pdf/products/big-iq-datasheet.pdf
+
+&nbsp;&nbsp;
+
 ## Licensing
 
 **Compare Product Bundles**    
