@@ -131,7 +131,7 @@ https://www.f5.com/pdf/products/application-connector-datasheet.pdf
 ## Licensing
 
 **Compare Product Bundles**    
-https://f5.com/products/how-to-buy/simplified-licensing
+https://www.f5.com/pdf/licensing/good-better-best-licensing-overview.pdf
  
 **BIG-IP VE License and Throughput Limits**    
 https://support.f5.com/csp/article/K14810
