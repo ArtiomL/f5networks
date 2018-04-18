@@ -43,8 +43,6 @@ This repository:
 | [/monitors](/monitors) | The ability to effectively monitor the health of any application by writing custom scripts to interact with the servers |
 | [/scripts](/scripts) | Scripts for various tasks |
 
-&nbsp;&nbsp;
-
 Additional [repositories](https://github.com/ArtiomL?tab=repositories&q=f5).
 
 &nbsp;&nbsp;
