@@ -93,8 +93,12 @@ Full-Proxy FW, L3/4 DDoS Protection, Protocol Anomaly Detection, IP Reputation, 
 https://www.f5.com/pdf/products/big-ip-advanced-firewall-manager-datasheet.pdf
 
 **Application Security Manager**  
-Advanced WAF, API and WebSocket Security, L7 DDoS and Bot Protection, Web Scraping and Brute-force Prevention  
+WAF, API and WebSocket Security, L7 DDoS and Bot Protection, Web Scraping and Brute-force Prevention  
 https://www.f5.com/pdf/products/big-ip-application-security-manager-ds.pdf
+
+**Advanced WAF**  
+Behavioral DDoS, Credential Application-level Encryption, Anti-Bot Mobile SDK, Credential Stuffing Protection  
+https://www.f5.com/pdf/products/F5_advanced_WAF_overview.pdf
 
 **Access Policy Manager**  
 Context-aware Secure Access Control, Granular MFA, Identity Management and Federation, SSO, SSL VPN, SWG  
