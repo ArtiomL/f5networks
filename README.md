@@ -17,6 +17,7 @@
 	- [Service Provider](#service-provider)
 	- [Security](#security)
 	- [Cloud](#cloud)
+	- [Management and Automation](#management-and-automation)
 - [Licensing](#licensing)
 - [Training](#training)
 - [Videos](#videos)
@@ -127,6 +128,14 @@ https://www.f5.com/pdf/products/f5-silverline-web-application-firewall-datasheet
 **Application Connector**  
 Multi-Cloud Services Insertion, Workload Discovery  
 https://www.f5.com/pdf/products/application-connector-datasheet.pdf
+
+**Microsoft Azure**  
+Azure Resource Manager Templates  
+https://github.com/F5Networks/f5-azure-arm-templates
+
+**AWS**  
+AWS CloudFormation Templates  
+https://github.com/F5Networks/f5-aws-cloudformation
 
 &nbsp;&nbsp;
 
