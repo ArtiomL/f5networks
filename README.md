@@ -97,7 +97,7 @@ WAF, API and WebSocket Security, L7 DDoS and Bot Protection, Web Scraping and Br
 https://www.f5.com/pdf/products/big-ip-application-security-manager-ds.pdf
 
 **Advanced WAF**  
-Behavioral DDoS, Credential Application-level Encryption, Anti-Bot Mobile SDK, Credential Stuffing Protection  
+ASM, Behavioral DDoS, Credential Application-level Encryption, Anti-Bot Mobile SDK, Credential Stuffing Protection  
 https://www.f5.com/pdf/products/F5_advanced_WAF_overview.pdf
 
 **Access Policy Manager**  
