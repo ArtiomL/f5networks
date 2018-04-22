@@ -65,11 +65,11 @@ https://www.f5.com/pdf/products/big-ip-virtual-editions-datasheet.pdf
 
 ### `Network`
 
-**Local Traffic Manager**  
+**Local Traffic Manager (LTM)**  
 Intelligent LB and Optimization, TLS Orchestration, Application Visibility and Analytics, Programmability  
 https://www.f5.com/pdf/products/big-ip-local-traffic-manager-ds.pdf
 
-**Global Traffic Manager**  
+**Global Traffic Manager (GTM/DNS)**  
 Geographic and DNS LB, WAN Link (ISP) LB, DR Management, DNS Caching and Analytics, DNSSEC, DNS FW  
 https://www.f5.com/pdf/products/big-ip-dns-datasheet.pdf
 
@@ -77,11 +77,11 @@ https://www.f5.com/pdf/products/big-ip-dns-datasheet.pdf
 
 ### `Service Provider`
 
-**Carrier-Grade NAT**  
+**Carrier-Grade NAT (CGNAT)**  
 NAT44, NAT64, 464XLAT, PCP, DNS64, Application Layer Gateway, Tunneling  
 https://www.f5.com/pdf/products/big-ip-cgnat-datasheet.pdf
 
-**Policy Enforcement Manager**  
+**Policy Enforcement Manager (PEM)**  
 Intelligent Traffic Classification and Steering, Dynamic Service Chaining, Bandwidth and Congestion Control  
 https://www.f5.com/pdf/products/big-ip-policy-enforcement-manager-datasheet.pdf
 
@@ -166,7 +166,7 @@ Free online training (you'll need to create a free account):
 https://university.f5.com
 
 **Super-NetOps**  
-A free, on-demand training covering DevOps methodologies and the concepts of automation, orchestration and infrastructure-as-code  
+A free, on-demand training covering DevOps methodologies and the concepts of automation, orchestration and IaC  
 https://f5.com/SuperNetOps
 
 &nbsp;&nbsp;
