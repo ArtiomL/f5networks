@@ -165,6 +165,10 @@ https://f5.com/resources/white-papers/virtual-clustered-multiprocessing-vcmp
 Free online training (you'll need to create a free account):  
 https://university.f5.com
 
+**Super-NetOps**  
+A free, on-demand training covering DevOps methodologies and the concepts of automation, orchestration and infrastructure-as-code  
+https://f5.com/SuperNetOps
+
 &nbsp;&nbsp;
 
 ## Videos
