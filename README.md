@@ -11,7 +11,7 @@
 ## Table of Contents
 - [Description](#description)
 - [Code](#code)
-- [Datasheets](#solutions)
+- [Solutions](#solutions)
 	- [Platforms](#platforms)
 	- [Network](#network)
 	- [Service Provider](#service-provider)
