@@ -11,7 +11,7 @@
 ## Table of Contents
 - [Description](#description)
 - [Code](#code)
-- [Datasheets](#datasheets)
+- [Datasheets](#solutions)
 	- [Platforms](#platforms)
 	- [Network](#network)
 	- [Service Provider](#service-provider)
@@ -48,7 +48,7 @@ Additional [repositories](https://github.com/ArtiomL?tab=repositories&q=f5).
 
 &nbsp;&nbsp;
 
-## Datasheets
+## Solutions
 
 ### `Platforms`
 
@@ -89,19 +89,19 @@ https://www.f5.com/pdf/products/big-ip-policy-enforcement-manager-datasheet.pdf
 
 ### `Security`
 
-**Advanced Firewall Manager**  
+**Advanced Firewall Manager (AFM)**  
 Full-Proxy FW, L3/4 DDoS Protection, Protocol Anomaly Detection, IP Reputation, SSH Proxy  
 https://www.f5.com/pdf/products/big-ip-advanced-firewall-manager-datasheet.pdf
 
-**Application Security Manager**  
+**Application Security Manager (ASM)**  
 WAF, API and WebSocket Security, L7 DDoS and Bot Protection, Web Scraping and Brute-force Prevention  
 https://www.f5.com/pdf/products/big-ip-application-security-manager-ds.pdf
 
-**Advanced WAF**  
+**Advanced WAF (aWAF)**  
 ASM, Behavioral DDoS, Credential Application-level Encryption, Anti-Bot Mobile SDK, Credential Stuffing Protection  
 https://f5.com/products/security/advanced-waf
 
-**Access Policy Manager**  
+**Access Policy Manager (APM)**  
 Context-aware Secure Access Control, Granular MFA, Identity Management and Federation, SSO, SSL VPN, SWG  
 https://www.f5.com/pdf/products/big-ip-access-policy-manager-ds.pdf
 
