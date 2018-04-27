@@ -35,7 +35,7 @@ This project is dedicated to developing and sharing useful code for various F5 p
 This repository:
 
 | Path | Content |
-| :--------- |:--------------- |
+| :--- | :--- |
 | [/azure](/azure) | Code related to Microsoft's cloud computing **IaaS** |
 | [/iapps](/iapps) | **iApps** is a declarative framework for deploying services-based, template-driven configurations |
 | [/icontrol](/icontrol) | **iControl** is an open REST API that allows complete, dynamic and programmatic control |
@@ -170,16 +170,11 @@ A free, on-demand training covering DevOps methodologies and the concepts of aut
 https://f5.com/SuperNetOps
 
 **Training Courses and Classes (Tel Aviv)**  
-| Course | Date | Length |
-| :--------- |:--------------- |:--------------- |
-| Configuring BIG-IP ASM: Application Security Manager | 04/06/18 | 4 days |
 
 | Course | Date | Length |
 | :--- | :--- | :--- |
-| Configuring BIG-IP ASM: Application Security Manager | 04/06/18 | 4 days |
-| col 2 is      | centered      |   $12 |
-
-
+| [Configuring BIG-IP ASM: Application Security Manager](https://f5.com/education/training/courses/configuring-big-ip-asm-application-security-manager) | 04/06/18 | 4 days |
+| [Configuring BIG-IP ASM: Application Security Manager](https://f5.com/education/training/courses/configuring-big-ip-asm-application-security-manager) | 25/06/18 | 4 days |
 
 &nbsp;&nbsp;
 
