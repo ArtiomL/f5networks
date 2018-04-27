@@ -175,6 +175,8 @@ https://f5.com/SuperNetOps
 | :--- | :--- | :--- |
 | [Configuring BIG-IP ASM: Application Security Manager](https://f5.com/education/training/courses/configuring-big-ip-asm-application-security-manager) | 04/06/18 | 4 days |
 | [Configuring BIG-IP ASM: Application Security Manager](https://f5.com/education/training/courses/configuring-big-ip-asm-application-security-manager) | 25/06/18 | 4 days |
+| [Configuring BIG-IP APM: Access Policy Manager](https://f5.com/education/training/courses/configuring-big-ip-apm-access-policy-manager) | 03/07/18 | 3 days |
+| [Configuring BIG-IP LTM: Local Traffic Manager](https://f5.com/education/training/courses/configuring-big-ip-local-traffic-manager-ltm) | 06/11/18 | 3 days |
 
 &nbsp;&nbsp;
 
