@@ -169,6 +169,11 @@ https://university.f5.com
 A free, on-demand training covering DevOps methodologies and the concepts of automation, orchestration and IaC  
 https://f5.com/SuperNetOps
 
+**Training Courses and Classes (Tel Aviv)**  
+| Course | Date | Length |
+| :--------- |:--------------- |
+| Configuring BIG-IP ASM: Application Security Manager | 04/06/18 | 4 days |
+
 &nbsp;&nbsp;
 
 ## Videos
