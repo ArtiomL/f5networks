@@ -171,7 +171,7 @@ https://f5.com/SuperNetOps
 
 **Training Courses and Classes (Tel Aviv)**  
 | Course | Date | Length |
-| :--------- |:--------------- |
+| :--------- |:--------------- |:--------------- |
 | Configuring BIG-IP ASM: Application Security Manager | 04/06/18 | 4 days |
 
 &nbsp;&nbsp;
