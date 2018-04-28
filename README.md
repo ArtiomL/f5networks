@@ -133,9 +133,17 @@ https://www.f5.com/pdf/products/application-connector-datasheet.pdf
 Azure Resource Manager Templates  
 https://github.com/F5Networks/f5-azure-arm-templates
 
-**AWS**  
+**Amazon Web Services**  
 AWS CloudFormation Templates  
 https://github.com/F5Networks/f5-aws-cloudformation
+
+**Google Cloud Platform**  
+Cloud Deployment Manager Templates  
+https://github.com/F5Networks/f5-google-gdm-templates
+
+&nbsp;&nbsp;
+
+### `Containers`
 
 &nbsp;&nbsp;
 
