@@ -17,6 +17,7 @@
 	- [Service Provider](#service-provider)
 	- [Security](#security)
 	- [Cloud](#cloud)
+	- [Containers](#containers)
 	- [Management and Automation](#management-and-automation)
 - [Licensing](#licensing)
 - [Training](#training)
