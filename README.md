@@ -126,10 +126,6 @@ https://www.f5.com/pdf/products/silverline-ddos-datasheet.pdf
 Cloud-based Managed WAF-as-a-Service, Hybrid Policy Management and Deployment, Security Operations Center (SOC)  
 https://www.f5.com/pdf/products/f5-silverline-web-application-firewall-datasheet.pdf
 
-**Application Connector**  
-Multi-Cloud Services Insertion, Workload Discovery  
-https://www.f5.com/pdf/products/application-connector-datasheet.pdf
-
 **Microsoft Azure**  
 Azure Resource Manager Templates  
 https://github.com/F5Networks/f5-azure-arm-templates
