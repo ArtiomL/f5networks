@@ -1821,6 +1821,628 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "RBAC",
+			"description": "",
+			"item": [
+				{
+					"name": "01. Create Token - Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99765541-5c76-4145-a5e1-44c1d39a801d",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"atoken_BIGIP_A\", jsonData.token.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"{{user_BIGIP}}\",\n\t\"password\": \"{{pass_BIGIP}}\",\n\t\"loginProviderName\": \"tmos\"\n}"
+						},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/shared/authn/login",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"shared",
+								"authn",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02. View All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c558aa8-4a13-453b-8c24-c072edc80241",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"oper\",\n\t\"password\": \"oper\",\n\t\"partition-access\": \"all\"\n}"
+						},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/auth/user",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"tm",
+								"auth",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03. Create a New Non-Admin User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c558aa8-4a13-453b-8c24-c072edc80241",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"oper\",\n\t\"password\": \"oper\",\n\t\"partitionAccess\": [\n\t\t{\n\t\t\t\"name\": \"all-partitions\",\n\t\t\t\"role\": \"operator\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/auth/user",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"tm",
+								"auth",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04. Create Token - Operator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99765541-5c76-4145-a5e1-44c1d39a801d",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"atoken_BIGIP_A\", jsonData.token.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"oper\",\n\t\"password\": \"oper\",\n\t\"loginProviderName\": \"tmos\"\n}"
+						},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/shared/authn/login",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"shared",
+								"authn",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05. Test - List Virtual Servers",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/?$select=fullPath",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"tm",
+								"ltm",
+								"virtual",
+								""
+							],
+							"query": [
+								{
+									"key": "$select",
+									"value": "fullPath"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06. Test - List Pools",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/?$select=fullPath",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"tm",
+								"ltm",
+								"pool",
+								""
+							],
+							"query": [
+								{
+									"key": "$select",
+									"value": "fullPath"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07. Test - List Pool Members",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/pool_HTTPS_Debian/members/",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"tm",
+								"ltm",
+								"pool",
+								"pool_HTTPS_Debian",
+								"members",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "08. Pool Member - Disabled",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"session\":\"user-disabled\",\r\n\t\"state\": \"user-up\"\r\n}"
+						},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/pool_HTTPS_Debian/members/~Common~node_ADCT3:443",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"tm",
+								"ltm",
+								"pool",
+								"pool_HTTPS_Debian",
+								"members",
+								"~Common~node_ADCT3:443"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "09. Pool Member - Forced Offline",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"session\":\"user-disabled\",\r\n\t\"state\": \"user-down\"\r\n}"
+						},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/pool_HTTPS_Debian/members/~Common~node_ADCT3:443",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"tm",
+								"ltm",
+								"pool",
+								"pool_HTTPS_Debian",
+								"members",
+								"~Common~node_ADCT3:443"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10. Pool Member - Enabled",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"session\":\"user-enabled\",\r\n\t\"state\": \"user-up\"\r\n}"
+						},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/pool_HTTPS_Debian/members/~Common~node_ADCT3:443",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"tm",
+								"ltm",
+								"pool",
+								"pool_HTTPS_Debian",
+								"members",
+								"~Common~node_ADCT3:443"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11. Create a New Monitor - Fails",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"kind\":\"tm:ltm:monitor:http:httpstate\",\r\n\t\"name\":\"mon_REST_HTTP1\",\r\n\t\"partition\":\"Common\",\r\n\t\"generation\":0,\r\n\t\"defaultsFrom\":\"/Common/http\",\r\n\t\"interval\":5,\r\n\t\"recv\":\"QuickPHP is successfully running\",\r\n\t\"send\":\"GET /monitor.php HTTP/1.1\\\\r\\\\nHost: Debian\\\\r\\\\n\\\\r\\\\n\",\r\n\t\"timeout\":16\r\n}"
+						},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/monitor/http/",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"tm",
+								"ltm",
+								"monitor",
+								"http",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12. Create Token - Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99765541-5c76-4145-a5e1-44c1d39a801d",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"atoken_BIGIP_A\", jsonData.token.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"{{user_BIGIP}}\",\n\t\"password\": \"{{pass_BIGIP}}\",\n\t\"loginProviderName\": \"tmos\"\n}"
+						},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/shared/authn/login",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"shared",
+								"authn",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "13. Delete the Non-Admin User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c558aa8-4a13-453b-8c24-c072edc80241",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/shared/authz/users/oper",
+							"protocol": "https",
+							"host": [
+								"{{mgmtip_BIGIP_A}}"
+							],
+							"path": [
+								"mgmt",
+								"shared",
+								"authz",
+								"users",
+								"oper"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
