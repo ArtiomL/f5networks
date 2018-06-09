@@ -6,1646 +6,1395 @@
 	},
 	"item": [
 		{
-			"name": "01. GET",
+			"name": "Basics",
 			"description": "",
 			"item": [
 				{
-					"name": "Example",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
+					"name": "Authentication",
+					"description": "",
+					"item": [
+						{
+							"name": "Basic Authentication",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{pass_BIGIP}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{user_BIGIP}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"value": true,
+											"type": "boolean"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
 								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/example",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"pool",
+										"example"
+									]
 								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
 							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/pool/example",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
+							"response": []
+						},
+						{
+							"name": "Create Authentication Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "99765541-5c76-4145-a5e1-44c1d39a801d",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"pm.environment.set(\"atoken_BIGIP_A\", jsonData.token.token);"
+										]
+									}
+								}
 							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"pool",
-								"example"
-							]
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\": \"{{user_BIGIP}}\",\n\t\"password\": \"{{pass_BIGIP}}\",\n\t\"loginProviderName\": \"tmos\"\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/shared/authn/login",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"authn",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set Token Timeout",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c52778d2-67cd-46e5-9d75-ceea8fb41803",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"timeout\": \"36000\"\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/shared/authz/tokens/{{atoken_BIGIP_A}}",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"authz",
+										"tokens",
+										"{{atoken_BIGIP_A}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Active Tokens",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c52778d2-67cd-46e5-9d75-ceea8fb41803",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/shared/authz/tokens/",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"authz",
+										"tokens",
+										""
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "/Common/mon_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
+					"name": "01. GET",
+					"description": "",
+					"item": [
+						{
+							"name": "Example",
+							"request": {
+								"auth": {
+									"type": "noauth"
 								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/example",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"pool",
+										"example"
+									]
 								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
 							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/monitor/http/~Common~mon_REST_HTTP1/?expandSubcollections=true",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"monitor",
-								"http",
-								"~Common~mon_REST_HTTP1",
-								""
-							],
-							"query": [
-								{
-									"key": "expandSubcollections",
-									"value": "true"
+							"response": []
+						},
+						{
+							"name": "/Common/mon_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/monitor/http/~Common~mon_REST_HTTP1/?expandSubcollections=true",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"monitor",
+										"http",
+										"~Common~mon_REST_HTTP1",
+										""
+									],
+									"query": [
+										{
+											"key": "expandSubcollections",
+											"value": "true"
+										}
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "/Common/pool_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/~Common~pool_REST_HTTP1/?expandSubcollections=true",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"pool",
+										"~Common~pool_REST_HTTP1",
+										""
+									],
+									"query": [
+										{
+											"key": "expandSubcollections",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/Common/virt_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_REST_HTTP1/?expandSubcollections=true",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"virtual",
+										"~Common~virt_REST_HTTP1",
+										""
+									],
+									"query": [
+										{
+											"key": "expandSubcollections",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/Common/virt_HTTPS",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_HTTPS_Debian/?expandSubcollections=true",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"virtual",
+										"~Common~virt_HTTPS_Debian",
+										""
+									],
+									"query": [
+										{
+											"key": "expandSubcollections",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/Common/virt_HTTPS/profiles",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_HTTPS_Debian/profiles/?$select=fullPath,context",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"virtual",
+										"~Common~virt_HTTPS_Debian",
+										"profiles",
+										""
+									],
+									"query": [
+										{
+											"key": "$select",
+											"value": "fullPath,context"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/Common/virt_PL4",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_OWLLB/?expandSubcollections=true",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"virtual",
+										"~Common~virt_OWLLB",
+										""
+									],
+									"query": [
+										{
+											"key": "expandSubcollections",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Monitors (HTTP)",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/monitor/http/?$select=fullPath",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"monitor",
+										"http",
+										""
+									],
+									"query": [
+										{
+											"key": "$select",
+											"value": "fullPath"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pools",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/?$select=fullPath",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"pool",
+										""
+									],
+									"query": [
+										{
+											"key": "$select",
+											"value": "fullPath"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Virtual Servers",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/?$select=fullPath",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"virtual",
+										""
+									],
+									"query": [
+										{
+											"key": "$select",
+											"value": "fullPath"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Virtual Server Statistics",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/virt_AVR/stats",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"virtual",
+										"virt_AVR",
+										"stats"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pool Member Statistics",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/pool_HTTP_Debian/members/stats",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"pool",
+										"pool_HTTP_Debian",
+										"members",
+										"stats"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "/Common/pool_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
+					"name": "02. POST",
+					"description": "",
+					"item": [
+						{
+							"name": "/Common/mon_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
 								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"kind\":\"tm:ltm:monitor:http:httpstate\",\r\n\t\"name\":\"mon_REST_HTTP1\",\r\n\t\"partition\":\"Common\",\r\n\t\"generation\":0,\r\n\t\"defaultsFrom\":\"/Common/http\",\r\n\t\"interval\":5,\r\n\t\"recv\":\"QuickPHP is successfully running\",\r\n\t\"send\":\"GET /monitor.php HTTP/1.1\\\\r\\\\nHost: Debian\\\\r\\\\n\\\\r\\\\n\",\r\n\t\"timeout\":16\r\n}"
 								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/monitor/http/",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"monitor",
+										"http",
+										""
+									]
 								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
 							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/pool/~Common~pool_REST_HTTP1/?expandSubcollections=true",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"pool",
-								"~Common~pool_REST_HTTP1",
-								""
-							],
-							"query": [
-								{
-									"key": "expandSubcollections",
-									"value": "true"
+							"response": []
+						},
+						{
+							"name": "/Common/emon_TLS_SNI",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"emon_TLS_SNI address 10.100.112.101 port 443\"\r\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/util/test-monitor/",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"util",
+										"test-monitor",
+										""
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "/Common/pool_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\":\"pool_REST_HTTP1\",\r\n\t\"partition\":\"Common\",\r\n\t\"monitor\":\"mon_REST_HTTP1\",\r\n\t\"loadBalancingMode\":\"least-connections-member\",\r\n\t\"members\":[\r\n\t\t{\"name\":\"node_ADCT1:80\",\"description\":\"Pool Member 1\"},\r\n\t\t{\"name\":\"node_ADCT2:80\",\"description\":\"Pool Member 2\"}\r\n\t]\r\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"pool",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/Common/virt_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"kind\":\"tm:ltm:virtual:virtualstate\",\r\n\t\"name\":\"virt_REST_HTTP1\",\r\n\t\"partition\":\"Common\",\r\n\t\"generation\":1,\r\n\t\"destination\":\"/Common/10.100.115.55:80\",\r\n\t\"enabled\":true,\r\n\t\"ipProtocol\":\"tcp\",\r\n\t\"mask\":\"255.255.255.255\",\r\n\t\"mirror\":\"disabled\",\r\n\t\"pool\":\"/Common/pool_REST_HTTP1\",\r\n\t\"source\":\"0.0.0.0/0\",\r\n\t\"sourceAddressTranslation\":{\"type\":\"automap\"},\r\n\t\"sourcePort\":\"preserve\",\r\n\t\"translateAddress\":\"enabled\",\r\n\t\"translatePort\":\"enabled\",\r\n\t\"vlansEnabled\":true,\r\n\t\"vlans\":[\"/Common/vlan_VIRTS_115\"]\r\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"virtual",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "bash",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"-c 'head -n 10 /var/log/ltm; date; ifconfig eth0; tmsh show /sys connection protocol tcp | grep 10.100.115.50'\"\r\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/util/bash",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"util",
+										"bash"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "dig",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"@8.8.8.8 www.f5.com A\"\r\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/util/dig",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"util",
+										"dig"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ping",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"8.8.8.8 -c 1 -i 10\"\r\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/util/ping",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"util",
+										"ping"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tcpdump",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"-nnni vlan_REALS_112 -c 4 -A tcp port 80\"\r\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/util/tcpdump",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"util",
+										"tcpdump"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "/Common/virt_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
+					"name": "03. PATCH",
+					"description": "",
+					"item": [
+						{
+							"name": "/Common/mon_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
 								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"interval\":3,\r\n\t\"timeout\":10\r\n}"
 								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/monitor/http/~Common~mon_REST_HTTP1/",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"monitor",
+										"http",
+										"~Common~mon_REST_HTTP1",
+										""
+									]
 								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
 							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/virtual/~Common~virt_REST_HTTP1/?expandSubcollections=true",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"virtual",
-								"~Common~virt_REST_HTTP1",
-								""
-							],
-							"query": [
-								{
-									"key": "expandSubcollections",
-									"value": "true"
+							"response": []
+						},
+						{
+							"name": "/Common/pool_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"loadBalancingMode\": \"least-connections-node\",\r\n\t\"minActiveMembers\": 2\r\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/~Common~pool_REST_HTTP1/",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"pool",
+										"~Common~pool_REST_HTTP1",
+										""
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "/Common/virt_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"disabled\": true,\r\n\t\"description\":\"RESTful VS\"\r\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_REST_HTTP1/",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"virtual",
+										"~Common~virt_REST_HTTP1",
+										""
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "/Common/virt_HTTPS",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
+					"name": "04. DELETE",
+					"description": "",
+					"item": [
+						{
+							"name": "/Common/mon_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
 								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/monitor/http/~Common~mon_REST_HTTP1",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"monitor",
+										"http",
+										"~Common~mon_REST_HTTP1"
+									]
 								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
 							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/virtual/~Common~virt_HTTPS_Debian/?expandSubcollections=true",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"virtual",
-								"~Common~virt_HTTPS_Debian",
-								""
-							],
-							"query": [
-								{
-									"key": "expandSubcollections",
-									"value": "true"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/Common/virt_HTTPS/profiles",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
+							"response": []
 						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
+						{
+							"name": "/Common/pool_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/~Common~pool_REST_HTTP1",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"pool",
+										"~Common~pool_REST_HTTP1"
+									]
+								}
 							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/virtual/~Common~virt_HTTPS_Debian/profiles/?$select=fullPath,context",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"virtual",
-								"~Common~virt_HTTPS_Debian",
-								"profiles",
-								""
-							],
-							"query": [
-								{
-									"key": "$select",
-									"value": "fullPath,context"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/Common/virt_PL4",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
+							"response": []
 						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
+						{
+							"name": "/Common/virt_REST_HTTP1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_REST_HTTP1",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"virtual",
+										"~Common~virt_REST_HTTP1"
+									]
+								}
 							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/virtual/~Common~virt_OWLLB/?expandSubcollections=true",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"virtual",
-								"~Common~virt_OWLLB",
-								""
-							],
-							"query": [
-								{
-									"key": "expandSubcollections",
-									"value": "true"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Monitors (HTTP)",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
+							"response": []
 						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
+						{
+							"name": "Delete Web Cache Object",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/profile/ramcache/prof_RAM_CACHE?options=uri,/img/tux.png",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"profile",
+										"ramcache",
+										"prof_RAM_CACHE"
+									],
+									"query": [
+										{
+											"key": "options",
+											"value": "uri,/img/tux.png"
+										}
+									]
+								}
 							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/monitor/http/?$select=fullPath",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"monitor",
-								"http",
-								""
-							],
-							"query": [
-								{
-									"key": "$select",
-									"value": "fullPath"
-								}
-							]
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Pools",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/pool/?$select=fullPath",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"pool",
-								""
-							],
-							"query": [
-								{
-									"key": "$select",
-									"value": "fullPath"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Virtual Servers",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/virtual/?$select=fullPath",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"virtual",
-								""
-							],
-							"query": [
-								{
-									"key": "$select",
-									"value": "fullPath"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Virtual Server Statistics",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/virtual/virt_AVR/stats",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"virtual",
-								"virt_AVR",
-								"stats"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Pool Member Statistics",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/pool/pool_HTTP_Debian/members/stats",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"pool",
-								"pool_HTTP_Debian",
-								"members",
-								"stats"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "02. POST",
-			"description": "",
-			"item": [
-				{
-					"name": "/Common/mon_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"kind\":\"tm:ltm:monitor:http:httpstate\",\r\n\t\"name\":\"mon_REST_HTTP1\",\r\n\t\"partition\":\"Common\",\r\n\t\"generation\":0,\r\n\t\"defaultsFrom\":\"/Common/http\",\r\n\t\"interval\":5,\r\n\t\"recv\":\"QuickPHP is successfully running\",\r\n\t\"send\":\"GET /monitor.php HTTP/1.1\\\\r\\\\nHost: Debian\\\\r\\\\n\\\\r\\\\n\",\r\n\t\"timeout\":16\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/monitor/http/",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"monitor",
-								"http",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "emon_CURL",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"emon_CURL address 10.100.112.101 port 443\"\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/util/test-monitor/",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"util",
-								"test-monitor",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/Common/pool_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"name\":\"pool_REST_HTTP1\",\r\n\t\"partition\":\"Common\",\r\n\t\"monitor\":\"mon_REST_HTTP1\",\r\n\t\"loadBalancingMode\":\"least-connections-member\",\r\n\t\"members\":[\r\n\t\t{\"name\":\"node_ADCT1:80\",\"description\":\"Pool Member 1\"},\r\n\t\t{\"name\":\"node_ADCT2:80\",\"description\":\"Pool Member 2\"}\r\n\t]\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/pool/",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"pool",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/Common/virt_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"kind\":\"tm:ltm:virtual:virtualstate\",\r\n\t\"name\":\"virt_REST_HTTP1\",\r\n\t\"partition\":\"Common\",\r\n\t\"generation\":1,\r\n\t\"destination\":\"/Common/10.100.115.55:80\",\r\n\t\"enabled\":true,\r\n\t\"ipProtocol\":\"tcp\",\r\n\t\"mask\":\"255.255.255.255\",\r\n\t\"mirror\":\"disabled\",\r\n\t\"pool\":\"/Common/pool_REST_HTTP1\",\r\n\t\"source\":\"0.0.0.0/0\",\r\n\t\"sourceAddressTranslation\":{\"type\":\"automap\"},\r\n\t\"sourcePort\":\"preserve\",\r\n\t\"translateAddress\":\"enabled\",\r\n\t\"translatePort\":\"enabled\",\r\n\t\"vlansEnabled\":true,\r\n\t\"vlans\":[\"/Common/vlan_VIRTS_115\"]\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/virtual/",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"virtual",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "bash",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"-c 'head -n 10 /var/log/ltm; date; ifconfig eth0; tmsh show /sys connection protocol tcp | grep 10.100.115.50'\"\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/util/bash",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"util",
-								"bash"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "dig",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"@8.8.8.8 www.f5.com A\"\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/util/dig",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"util",
-								"dig"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "ping",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"8.8.8.8 -c 1 -i 10\"\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/util/ping",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"util",
-								"ping"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "tcpdump",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"-nnni vlan_REALS_112 -c 4 -A tcp port 80\"\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/util/tcpdump",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"util",
-								"tcpdump"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "03. PATCH",
-			"description": "",
-			"item": [
-				{
-					"name": "/Common/mon_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"interval\":3,\r\n\t\"timeout\":10\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/monitor/http/~Common~mon_REST_HTTP1/",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"monitor",
-								"http",
-								"~Common~mon_REST_HTTP1",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/Common/pool_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"loadBalancingMode\": \"least-connections-node\",\r\n\t\"minActiveMembers\": 2\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/pool/~Common~pool_REST_HTTP1/",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"pool",
-								"~Common~pool_REST_HTTP1",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/Common/virt_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"disabled\": true,\r\n\t\"description\":\"RESTful VS\"\r\n}"
-						},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/virtual/~Common~virt_REST_HTTP1/",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"virtual",
-								"~Common~virt_REST_HTTP1",
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "04. DELETE",
-			"description": "",
-			"item": [
-				{
-					"name": "/Common/mon_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/monitor/http/~Common~mon_REST_HTTP1",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"monitor",
-								"http",
-								"~Common~mon_REST_HTTP1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/Common/pool_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/pool/~Common~pool_REST_HTTP1",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"pool",
-								"~Common~pool_REST_HTTP1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/Common/virt_REST_HTTP1",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/virtual/~Common~virt_REST_HTTP1",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"virtual",
-								"~Common~virt_REST_HTTP1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Web Cache Object",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/ltm/profile/ramcache/prof_RAM_CACHE?options=uri,/img/tux.png",
-							"protocol": "https",
-							"host": [
-								"{{mgmtip_F5}}"
-							],
-							"path": [
-								"mgmt",
-								"tm",
-								"ltm",
-								"profile",
-								"ramcache",
-								"prof_RAM_CACHE"
-							],
-							"query": [
-								{
-									"key": "options",
-									"value": "uri,/img/tux.png"
-								}
-							]
-						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},
@@ -1692,29 +1441,7 @@
 					"name": "ASM Policies",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [
@@ -1725,14 +1452,18 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
 						"body": {},
 						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/asm/policies/",
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/asm/policies/",
 							"protocol": "https",
 							"host": [
-								"{{mgmtip_F5}}"
+								"{{mgmtip_BIGIP_A}}"
 							],
 							"path": [
 								"mgmt",
@@ -1749,29 +1480,7 @@
 					"name": "ASM Events",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [
@@ -1782,6 +1491,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
 						"body": {
@@ -1789,10 +1502,10 @@
 							"raw": "{ \"virtualServers\": [\"/Common/virt_ASM_DVWA\", \"/Common/virt_AUCTION_ASM\"] }"
 						},
 						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/asm/events/requests",
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/asm/events/requests",
 							"protocol": "https",
 							"host": [
-								"{{mgmtip_F5}}"
+								"{{mgmtip_BIGIP_A}}"
 							],
 							"path": [
 								"mgmt",
@@ -1809,29 +1522,7 @@
 					"name": "ASM Policy to Virts",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "PATCH",
 						"header": [
@@ -1842,24 +1533,29 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"virtualServers\": [\"/Common/virt_ASM_DVWA\", \"/Common/virt_AUCTION_ASM\"] }"
+							"raw": "{ \"virtualServers\": [\"/Common/virt_ASM_DVWA\", \"/Common/asm_sp_WS\"] }"
 						},
 						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/asm/policies/cfML9Vk8yyhnGDAB9aH1vA/",
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/asm/policies/kit-olHrxxv4Nqdp4EFm5Q//",
 							"protocol": "https",
 							"host": [
-								"{{mgmtip_F5}}"
+								"{{mgmtip_BIGIP_A}}"
 							],
 							"path": [
 								"mgmt",
 								"tm",
 								"asm",
 								"policies",
-								"cfML9Vk8yyhnGDAB9aH1vA",
+								"kit-olHrxxv4Nqdp4EFm5Q",
+								"",
 								""
 							]
 						}
@@ -2048,29 +1744,7 @@
 					"name": "iApp Deployments",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [
@@ -2081,14 +1755,18 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
 						"body": {},
 						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/cloud/services/iapp/",
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/cloud/services/iapp/",
 							"protocol": "https",
 							"host": [
-								"{{mgmtip_F5}}"
+								"{{mgmtip_BIGIP_A}}"
 							],
 							"path": [
 								"mgmt",
@@ -2106,29 +1784,7 @@
 					"name": "iApp Deployment Parameters",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{user_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{pass_F5}}",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"value": true,
-									"type": "boolean"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [
@@ -2139,14 +1795,18 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
 						"body": {},
 						"url": {
-							"raw": "https://{{mgmtip_F5}}/mgmt/tm/cloud/services/iapp/iapp_F5.HTTP_ASM",
+							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/cloud/services/iapp/iapp_F5.HTTP_ASM",
 							"protocol": "https",
 							"host": [
-								"{{mgmtip_F5}}"
+								"{{mgmtip_BIGIP_A}}"
 							],
 							"path": [
 								"mgmt",
