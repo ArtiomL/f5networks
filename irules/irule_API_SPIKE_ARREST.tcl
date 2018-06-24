@@ -14,7 +14,7 @@ when HTTP_REQUEST {
 		set cureq [table keys -subtable $token -count]
 		if { $cureq >= $static::maxreq } {
 			set json "\{\"Request\":\"Rejected\",\"Token\":\"$token\",\"Cause\":\"Spike Arrest\"\}"
-			HTTP::respond 200 content $json "Content-Type" "application/json"
+			HTTP::respond 429 content $json "Content-Type" "application/json"
 		}
 		# Use a subtable to store the current request count per API Token value
 		# The subtable name is the API Token value, the key name is random (CPU cycle counter) to prevent overwriting existing keys
