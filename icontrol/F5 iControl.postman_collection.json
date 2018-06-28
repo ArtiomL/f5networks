@@ -1,17 +1,17 @@
 {
 	"info": {
-		"_postman_id": "073ec21e-9d02-cf92-e016-62381147ee54",
+		"_postman_id": "60591c5a-a375-4de7-a256-d77c55e39f34",
 		"name": "F5 iControl",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Basics",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "Authentication",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "Basic Authentication",
@@ -52,7 +52,10 @@
 										"value": "application/json"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/example",
 									"protocol": "https",
@@ -233,7 +236,7 @@
 				},
 				{
 					"name": "01. GET",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "Example",
@@ -256,7 +259,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/example",
 									"protocol": "https",
@@ -295,7 +301,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/monitor/http/~Common~mon_REST_HTTP1/?expandSubcollections=true",
 									"protocol": "https",
@@ -342,7 +351,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/~Common~pool_REST_HTTP1/?expandSubcollections=true",
 									"protocol": "https",
@@ -388,7 +400,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_REST_HTTP1/?expandSubcollections=true",
 									"protocol": "https",
@@ -434,7 +449,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_HTTPS_Debian/?expandSubcollections=true",
 									"protocol": "https",
@@ -480,7 +498,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_HTTPS_Debian/profiles/?$select=fullPath,context",
 									"protocol": "https",
@@ -527,7 +548,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_OWLLB/?expandSubcollections=true",
 									"protocol": "https",
@@ -573,7 +597,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/monitor/http/?$select=fullPath",
 									"protocol": "https",
@@ -619,7 +646,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/?$select=fullPath",
 									"protocol": "https",
@@ -664,7 +694,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/?$select=fullPath",
 									"protocol": "https",
@@ -709,7 +742,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/virt_AVR/stats",
 									"protocol": "https",
@@ -749,7 +785,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/pool_HTTP_Debian/members/stats",
 									"protocol": "https",
@@ -774,7 +813,7 @@
 				},
 				{
 					"name": "02. POST",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "/Common/mon_REST_HTTP1",
@@ -1114,7 +1153,7 @@
 				},
 				{
 					"name": "03. PATCH",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "/Common/mon_REST_HTTP1",
@@ -1251,7 +1290,7 @@
 				},
 				{
 					"name": "04. DELETE",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "/Common/mon_REST_HTTP1",
@@ -1266,7 +1305,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/monitor/http/~Common~mon_REST_HTTP1",
 									"protocol": "https",
@@ -1298,7 +1340,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/~Common~pool_REST_HTTP1",
 									"protocol": "https",
@@ -1329,7 +1374,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/~Common~virt_REST_HTTP1",
 									"protocol": "https",
@@ -1368,7 +1416,10 @@
 										"value": "{{atoken_BIGIP_A}}"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/profile/ramcache/prof_RAM_CACHE?options=uri,/img/tux.png",
 									"protocol": "https",
@@ -1400,14 +1451,17 @@
 		},
 		{
 			"name": "APM",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "REST API - adct",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://10.100.112.101/ws/rest.api?userID=1",
 							"protocol": "http",
@@ -1435,8 +1489,215 @@
 		},
 		{
 			"name": "ASM",
-			"description": "",
+			"description": null,
 			"item": [
+				{
+					"name": "Attacks",
+					"description": "",
+					"item": [
+						{
+							"name": "JSON - Legal Request",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Toaster"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n\t\"firstName\": \"Tyler\",\n\t\"lastName\": \"Durden\"\n}"
+								},
+								"url": {
+									"raw": "https://asm.f5labs.one/ws/rest.api?createNewUser",
+									"protocol": "https",
+									"host": [
+										"asm",
+										"f5labs",
+										"one"
+									],
+									"path": [
+										"ws",
+										"rest.api"
+									],
+									"query": [
+										{
+											"key": "createNewUser",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "JSON - Illegal Parameter Numeric Value",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Toaster"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 0,\n\t\"firstName\": \"Tyler\",\n\t\"lastName\": \"Durden\"\n}"
+								},
+								"url": {
+									"raw": "https://asm.f5labs.one/ws/rest.api?createNewUser",
+									"protocol": "https",
+									"host": [
+										"asm",
+										"f5labs",
+										"one"
+									],
+									"path": [
+										"ws",
+										"rest.api"
+									],
+									"query": [
+										{
+											"key": "createNewUser",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "JSON - Illegal Parameter Value Length",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Fridge"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n\t\"firstName\": \"Narrator\"\n}"
+								},
+								"url": {
+									"raw": "https://asm.f5labs.one/ws/rest.api?createNewUser",
+									"protocol": "https",
+									"host": [
+										"asm",
+										"f5labs",
+										"one"
+									],
+									"path": [
+										"ws",
+										"rest.api"
+									],
+									"query": [
+										{
+											"key": "createNewUser",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "JSON - Attack Signature",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Oven"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n\t\"firstName\": \"Tyler\",\n\t\"lastName\": \"<script>runFunction();</script>\"\n}"
+								},
+								"url": {
+									"raw": "https://asm.f5labs.one/ws/rest.api?createNewUser",
+									"protocol": "https",
+									"host": [
+										"asm",
+										"f5labs",
+										"one"
+									],
+									"path": [
+										"ws",
+										"rest.api"
+									],
+									"query": [
+										{
+											"key": "createNewUser",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "API - Spike Arrest",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Toaster"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer 0b79bab50daca910b000d4f1a2b675d604257e42"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n\t\"firstName\": \"Tyler\",\n\t\"lastName\": \"<script>runFunction();</script>\"\n}"
+								},
+								"url": {
+									"raw": "https://asm.f5labs.one/ws/rest.api?userID=1",
+									"protocol": "https",
+									"host": [
+										"asm",
+										"f5labs",
+										"one"
+									],
+									"path": [
+										"ws",
+										"rest.api"
+									],
+									"query": [
+										{
+											"key": "userID",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
 				{
 					"name": "ASM Policies",
 					"request": {
@@ -1458,7 +1719,10 @@
 								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/asm/policies/",
 							"protocol": "https",
@@ -1711,7 +1975,10 @@
 								"value": "Bearer 0b79bab50daca910b000d4f1a2b675d604257e42"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "https://asm.f5labs.one/ws/rest.api?userID=1",
 							"protocol": "https",
@@ -1738,7 +2005,7 @@
 		},
 		{
 			"name": "iApps",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "iApp Deployments",
@@ -1761,7 +2028,10 @@
 								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/cloud/services/iapp/",
 							"protocol": "https",
@@ -1801,7 +2071,10 @@
 								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/cloud/services/iapp/iapp_F5.HTTP_ASM",
 							"protocol": "https",
@@ -1824,7 +2097,7 @@
 		},
 		{
 			"name": "RBAC",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "01. Create Token - Admin",
@@ -2053,7 +2326,10 @@
 								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/virtual/?$select=fullPath",
 							"protocol": "https",
@@ -2098,7 +2374,10 @@
 								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/?$select=fullPath",
 							"protocol": "https",
@@ -2143,7 +2422,10 @@
 								"value": "{{atoken_BIGIP_A}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/ltm/pool/pool_HTTPS_Debian/members/",
 							"protocol": "https",
