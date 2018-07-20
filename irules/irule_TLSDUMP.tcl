@@ -1,4 +1,9 @@
 #!iRule
+# F5 Networks - iRule: Decrypt TLS Traffic
+# https://github.com/ArtiomL/f5networks
+# Artiom Lichtenstein
+# v1.1, 20/07/2018
+
 when CLIENTSSL_HANDSHAKE {
 	log local0.info "Client Side: RSA Session-ID:[SSL::sessionid] Master-Key:[SSL::sessionsecret]"
 }
