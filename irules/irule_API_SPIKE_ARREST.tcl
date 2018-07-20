@@ -1,4 +1,9 @@
 #!iRule
+# F5 Networks - iRule: API Spike Arrest
+# https://github.com/ArtiomL/f5networks
+# Artiom Lichtenstein
+# v1.2, 20/07/2018
+
 # Limit each API Token to <static::maxreq> requests per <static::pertime> seconds (to a specific entry point)
 when RULE_INIT {
 	# Using static variables to set constants
