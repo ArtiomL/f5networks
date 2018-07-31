@@ -49,7 +49,7 @@ UPLOAD_REQUEST=$(echo -en $UPLOAD_REQUEST | sed "s/ //g")
 
 SIGNATURE=$(HMAC-SHA256h $(HMAC-SHA256h $(HMAC-SHA256h $(HMAC-SHA256h $(HMAC-SHA256s $AWS4SECRET $REQUEST_DATE ) $REQUEST_REGION) $REQUEST_SERVICE) "aws4_request") $UPLOAD_REQUEST)
 
-curl -L -w "%{http_code}" -s -o /dev/null\
+curl -L -s -o /dev/null -w "%{http_code}\n"\
 	-F "key=""$STARTS_WITH" \
 	-F "acl="$ACL"" \
 	-F "Content-Type="application/octet-stream"" \
