@@ -7,7 +7,7 @@
 trap "echo; echo 'Exiting...'; exit" SIGINT
 
 if (( $# < 2 )); then
-	echo; echo "Usage: ./s3put {BUCKET_NAME}[/PATH] {FILE_TO_UPLOAD} [REGION]"; echo
+	echo; echo "Usage: ./s3put {BUCKET_NAME}[/PATH/] {FILE_TO_UPLOAD} [REGION]"; echo
 	exit
 fi
 
@@ -30,8 +30,8 @@ AWS_SECRET_KEY=${AWS_SECRET_ACCESS_KEY?}
 
 FILE_TO_UPLOAD="$2"
 BUCKET=$(echo "$1" | cut -d'/' -f1)
-DPATH=$(echo "$1" | cut -d'/' -f2 -s)
-STARTS_WITH="$DPATH/$FILE_TO_UPLOAD"
+DPATH=$(echo "$1" | cut -d'/' -f2- -s)
+STARTS_WITH="$DPATH$FILE_TO_UPLOAD"
 
 REQUEST_REGION="${3:-eu-central-1}"
 REQUEST_TIME=$(date +"%Y%m%dT%H%M%SZ")
