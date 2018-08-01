@@ -25,8 +25,8 @@ HMAC-SHA256h() {
 	printf "$DATA" | openssl dgst -binary -sha256 -mac HMAC -macopt "hexkey:$KEY" | od -An -vtx1 | sed 's/[ \n]//g' | sed 'N;s/\n//'
 }
 
-AWS_ACCESS_KEY=${AWS_ACCESS_KEY_ID?}
-AWS_SECRET_KEY=${AWS_SECRET_ACCESS_KEY?}
+AWS_ACCESS_KEY=$(tmsh list sys global-settings aws-access-key | sed -n 2p | awk '{ print $2 }')
+AWS_SECRET_KEY=$(tmsh list sys global-settings aws-secret-key | sed -n 2p | awk '{ print $2 }')
 
 FILE_TO_UPLOAD="$2"
 BUCKET=$(echo "$1" | cut -d'/' -f1)
@@ -39,7 +39,7 @@ REQUEST_SERVICE="s3"
 REQUEST_DATE=$(printf "${REQUEST_TIME}" | cut -c 1-8)
 AWS4SECRET="AWS4$AWS_SECRET_KEY"
 ALGORITHM="AWS4-HMAC-SHA256"
-EXPIRE=$(date -u -d "+1 minute" +"%Y-%m-%dT%H:%M:%S.000Z")
+EXPIRE=$(date -u -d "+1 day" +"%Y-%m-%dT%H:%M:%S.000Z")
 ACL="private"
 
 POST_POLICY='{"expiration":"'$EXPIRE'","conditions": [{"bucket":"'$BUCKET'" },{"acl":"'$ACL'" },["starts-with", "$key", "'$STARTS_WITH'"],["eq", "$Content-Type", "application/octet-stream"],{"x-amz-credential":"'$AWS_ACCESS_KEY'/'$REQUEST_DATE'/'$REQUEST_REGION'/'$REQUEST_SERVICE'/aws4_request"},{"x-amz-algorithm":"'$ALGORITHM'"},{"x-amz-date":"'$REQUEST_TIME'"}]}'
