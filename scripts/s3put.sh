@@ -2,7 +2,7 @@
 # F5 Networks - Upload Files to an Amazon S3 Bucket
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v1.0.1, 31/07/2018
+# v1.0.2, 01/08/2018
 
 trap "echo; echo 'Exiting...'; exit" SIGINT
 
