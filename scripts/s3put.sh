@@ -34,12 +34,12 @@ DPATH=$(echo "$1" | cut -d'/' -f2- -s)
 STARTS_WITH="$DPATH$FILE_TO_UPLOAD"
 
 REQUEST_REGION="${3:-eu-central-1}"
-REQUEST_TIME=$(date +"%Y%m%dT%H%M%SZ")
+REQUEST_TIME=$(date -u +"%Y%m%dT%H%M%SZ")
 REQUEST_SERVICE="s3"
 REQUEST_DATE=$(printf "${REQUEST_TIME}" | cut -c 1-8)
 AWS4SECRET="AWS4$AWS_SECRET_KEY"
 ALGORITHM="AWS4-HMAC-SHA256"
-EXPIRE="2019-01-01T00:00:00.000Z"
+EXPIRE=$(date -u -d "+1 minute" +"%Y-%m-%dT%H:%M:%S.000Z")
 ACL="private"
 
 POST_POLICY='{"expiration":"'$EXPIRE'","conditions": [{"bucket":"'$BUCKET'" },{"acl":"'$ACL'" },["starts-with", "$key", "'$STARTS_WITH'"],["eq", "$Content-Type", "application/octet-stream"],{"x-amz-credential":"'$AWS_ACCESS_KEY'/'$REQUEST_DATE'/'$REQUEST_REGION'/'$REQUEST_SERVICE'/aws4_request"},{"x-amz-algorithm":"'$ALGORITHM'"},{"x-amz-date":"'$REQUEST_TIME'"}]}'
