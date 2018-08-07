@@ -1,19 +1,20 @@
 {
 	"info": {
-		"_postman_id": "60591c5a-a375-4de7-a256-d77c55e39f34",
+		"_postman_id": "f39ff562-a8a4-4cde-8f27-db8340b0b22a",
 		"name": "F5 iControl",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
+			"_postman_id": "0311ca4b-bdcc-48fd-9066-aa8ab90475e5",
 			"name": "Basics",
-			"description": null,
 			"item": [
 				{
+					"_postman_id": "2b2f249b-d820-4a9e-8dc8-5fa7ea229167",
 					"name": "Authentication",
-					"description": null,
 					"item": [
 						{
+							"_postman_id": "a57871fd-2026-4637-a669-16faf09d113f",
 							"name": "Basic Authentication",
 							"request": {
 								"auth": {
@@ -74,6 +75,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "ce6a2e4a-b5e7-442a-a01f-2a78e2752aac",
 							"name": "Create Authentication Token",
 							"event": [
 								{
@@ -124,6 +126,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "b545f110-80a4-48cd-be05-fca1eec6bb19",
 							"name": "Set Token Timeout",
 							"event": [
 								{
@@ -178,6 +181,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "81f52dd5-9cb2-4d00-a498-e9ddeb3e76d8",
 							"name": "Active Tokens",
 							"event": [
 								{
@@ -235,10 +239,182 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "01. GET",
-					"description": null,
+					"_postman_id": "8d3e3fc6-4f15-4067-8d08-25adf7a4cc2b",
+					"name": "Licensing",
 					"item": [
 						{
+							"_postman_id": "f8e4c720-1286-46f5-81b6-1384271fa76f",
+							"name": "Install License",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c52778d2-67cd-46e5-9d75-ceea8fb41803",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"command\": \"install\",\n\t\"registrationKey\": \"{{rkey_BIGIP_A}}\"\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/sys/license",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"sys",
+										"license"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"_postman_id": "2e2caf9e-974d-48d0-9588-3d8d362e9649",
+							"name": "View Installed License",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b162907e-aafd-4e53-b977-32a47c8b17c0",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"pm.environment.set(\"rkey_BIGIP_A\", jsonData.registrationKey);"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/shared/licensing/registration",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"shared",
+										"licensing",
+										"registration"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"_postman_id": "1ef35602-1f7a-4f3e-97e6-d2a02648e487",
+							"name": "Revoke License",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c52778d2-67cd-46e5-9d75-ceea8fb41803",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"command\": \"revoke\"\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/sys/license",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"sys",
+										"license"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"_postman_id": "a0492ff4-3ddf-47ff-be75-040201054756",
+					"name": "01. GET",
+					"item": [
+						{
+							"_postman_id": "b4594716-16f2-4c2c-8855-e8990aa5f6ee",
 							"name": "Example",
 							"request": {
 								"auth": {
@@ -281,6 +457,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "858070f0-fe51-492e-819d-60f0ce372897",
 							"name": "/Common/mon_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -331,6 +508,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "2b2f85f8-a903-403a-8e43-9ded18152abb",
 							"name": "/Common/pool_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -380,6 +558,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "5f10927f-625b-4feb-8688-e785d35f5ae7",
 							"name": "/Common/virt_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -429,6 +608,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "2695ffa4-fb6a-4844-91d7-9957208a0a11",
 							"name": "/Common/virt_HTTPS",
 							"request": {
 								"auth": {
@@ -478,6 +658,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "ed8620a3-6697-4c52-a9e2-99a6129c1ec6",
 							"name": "/Common/virt_HTTPS/profiles",
 							"request": {
 								"auth": {
@@ -528,6 +709,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "ab128f90-36a9-4eff-b9b0-8b5f63fcffc9",
 							"name": "/Common/virt_PL4",
 							"request": {
 								"auth": {
@@ -577,6 +759,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "cf2aebed-414e-459b-9fae-36cacab14b23",
 							"name": "Monitors (HTTP)",
 							"request": {
 								"auth": {
@@ -626,6 +809,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "f4bf7e63-10c9-4fc6-b4bd-fb7c4774a17a",
 							"name": "Pools",
 							"request": {
 								"auth": {
@@ -674,6 +858,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "f5807759-5fbb-4e30-ac3f-47292f7b21ac",
 							"name": "Virtual Servers",
 							"request": {
 								"auth": {
@@ -722,6 +907,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "51186e41-aa11-4448-9c26-6a5d7fdb4dc5",
 							"name": "Virtual Server Statistics",
 							"request": {
 								"auth": {
@@ -765,6 +951,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "af6e59d6-8201-4822-b95f-05b550ce9c92",
 							"name": "Pool Member Statistics",
 							"request": {
 								"auth": {
@@ -812,10 +999,11 @@
 					"_postman_isSubFolder": true
 				},
 				{
+					"_postman_id": "825f72bd-9987-4092-bccb-03db174f91cd",
 					"name": "02. POST",
-					"description": null,
 					"item": [
 						{
+							"_postman_id": "bc113cdd-6778-4d8a-bd07-23f18d684fe5",
 							"name": "/Common/mon_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -859,6 +1047,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "1ce3b238-3eb6-45e4-b082-2b5f86eb9aaa",
 							"name": "/Common/emon_TLS_SNI",
 							"request": {
 								"auth": {
@@ -901,6 +1090,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "af905e2f-a305-41a5-a76f-7344232846fa",
 							"name": "/Common/pool_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -943,6 +1133,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "1284e9a1-f2d8-40a9-994b-f5e31d68754e",
 							"name": "/Common/virt_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -985,6 +1176,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "b26285a9-7fda-49ab-9f9e-038fa5e9ae6c",
 							"name": "bash",
 							"request": {
 								"auth": {
@@ -1026,6 +1218,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "24bd67d3-ef4d-42b5-9513-05ae825766ec",
 							"name": "dig",
 							"request": {
 								"auth": {
@@ -1067,6 +1260,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "0d9d18cc-3abc-4f61-b852-3fb6cb7159c4",
 							"name": "ping",
 							"request": {
 								"auth": {
@@ -1108,6 +1302,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "088de5fa-ce2f-44f2-b91e-796d36fd66e6",
 							"name": "tcpdump",
 							"request": {
 								"auth": {
@@ -1152,10 +1347,11 @@
 					"_postman_isSubFolder": true
 				},
 				{
+					"_postman_id": "084cdc87-17ee-45e2-a9b9-122ae066db93",
 					"name": "03. PATCH",
-					"description": null,
 					"item": [
 						{
+							"_postman_id": "4486eb7f-e208-4700-91fc-92e7f4761ea5",
 							"name": "/Common/mon_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -1200,6 +1396,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "a3397431-d9d8-4bda-a147-1b0dc2798ca3",
 							"name": "/Common/pool_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -1243,6 +1440,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "0b199b57-3b77-4731-b3b6-58ad9fa07f4c",
 							"name": "/Common/virt_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -1289,10 +1487,11 @@
 					"_postman_isSubFolder": true
 				},
 				{
+					"_postman_id": "ddb92ee2-8e98-48d7-98df-fe9e2d3b33f2",
 					"name": "04. DELETE",
-					"description": null,
 					"item": [
 						{
+							"_postman_id": "d4176e6e-94c5-4ff4-9ab4-5821271a01db",
 							"name": "/Common/mon_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -1328,6 +1527,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "8159fa13-1f6a-4f46-bfeb-cb1fc5b640e9",
 							"name": "/Common/pool_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -1362,6 +1562,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "f332ac0b-3e4e-4640-9754-b77fc936d963",
 							"name": "/Common/virt_REST_HTTP1",
 							"request": {
 								"auth": {
@@ -1396,6 +1597,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "3217ce0d-e467-4c8c-8716-70170a5cebfe",
 							"name": "Delete Web Cache Object",
 							"request": {
 								"auth": {
@@ -1446,14 +1648,232 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"_postman_id": "d5d865a1-f64c-4acb-bea7-1e0e3f2361ca",
+					"name": "UCS Backup",
+					"item": [
+						{
+							"_postman_id": "fdacbdba-3d78-4ab5-b9c6-f3a90a94e689",
+							"name": "01. Create UCS Archive Task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5cd16283-7eda-4ab1-bb76-6e5bcc23920d",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"pm.environment.set(\"taskID\", jsonData._taskId);"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"command\": \"save\",\n\t\"name\": \"/var/local/ucs/arch_BIGIP_A.ucs\"\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/task/sys/ucs",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"task",
+										"sys",
+										"ucs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"_postman_id": "aad8fc8b-acb5-4fea-bd35-2e631bf6a0b4",
+							"name": "02. Start UCS Archive Task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d76ff792-eed2-46f8-82f6-afaf166d0f5a",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"_taskState\": \"VALIDATING\"\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/task/sys/ucs/{{taskID}}",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"task",
+										"sys",
+										"ucs",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"_postman_id": "0a918ea3-c771-4c72-954e-e8090097c855",
+							"name": "03. Check Task State",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d76ff792-eed2-46f8-82f6-afaf166d0f5a",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/task/sys/ucs/{{taskID}}",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"task",
+										"sys",
+										"ucs",
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"_postman_id": "fe4e9d84-148b-4ea7-a5d3-40c1311502aa",
+							"name": "04. Upload UCS to an Amazon S3 Bucket",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{atoken_BIGIP_A}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"command\":\"run\",\r\n\t\"utilCmdArgs\":\"-c '/var/tmp/scripts/s3put.sh s3-bucket-f5/backups /var/local/ucs/arch_BIGIP_A.ucs us-east-1'\"\r\n}"
+								},
+								"url": {
+									"raw": "https://{{mgmtip_BIGIP_A}}/mgmt/tm/util/bash",
+									"protocol": "https",
+									"host": [
+										"{{mgmtip_BIGIP_A}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"util",
+										"bash"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},
 		{
+			"_postman_id": "4a978feb-a264-42cd-ad91-2f6795362a59",
 			"name": "APM",
-			"description": null,
 			"item": [
 				{
+					"_postman_id": "c6bdbfb8-350c-4ac9-abc9-19bd1534b305",
 					"name": "REST API - adct",
 					"request": {
 						"method": "GET",
@@ -1488,14 +1908,15 @@
 			]
 		},
 		{
+			"_postman_id": "904114f6-480d-4c72-b69f-4531e09b2c1e",
 			"name": "ASM",
-			"description": null,
 			"item": [
 				{
+					"_postman_id": "3df4d266-ae49-4fb8-b0e6-852ec6fb78bd",
 					"name": "Attacks",
-					"description": "",
 					"item": [
 						{
+							"_postman_id": "e8f4d047-177a-430c-b562-4b9617f2bb3c",
 							"name": "JSON - Legal Request",
 							"request": {
 								"method": "POST",
@@ -1536,6 +1957,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "6266bc15-d8b9-411b-ae9b-7447b47dca11",
 							"name": "JSON - Illegal Parameter Numeric Value",
 							"request": {
 								"method": "POST",
@@ -1576,6 +1998,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "8a4c1536-d934-4f8f-9886-ebe867029f9f",
 							"name": "JSON - Illegal Parameter Value Length",
 							"request": {
 								"method": "POST",
@@ -1616,6 +2039,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "abfc840a-8666-430d-9bfc-3c6bdfa682f9",
 							"name": "JSON - Attack Signature",
 							"request": {
 								"method": "POST",
@@ -1656,6 +2080,7 @@
 							"response": []
 						},
 						{
+							"_postman_id": "e7e88fd8-53e7-4e2c-ab71-e11f36123f7b",
 							"name": "API - Spike Arrest",
 							"request": {
 								"method": "GET",
@@ -1699,6 +2124,7 @@
 					"_postman_isSubFolder": true
 				},
 				{
+					"_postman_id": "044dd128-7cdb-403d-a774-1b2c9e666824",
 					"name": "ASM Policies",
 					"request": {
 						"auth": {
@@ -1741,6 +2167,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "3835dfc4-ed12-4552-b4c3-99a6d6feb394",
 					"name": "ASM Events",
 					"request": {
 						"auth": {
@@ -1783,6 +2210,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "de90682e-0663-4a20-970c-6f7310cb09e4",
 					"name": "ASM Policy to Virts",
 					"request": {
 						"auth": {
@@ -1827,6 +2255,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "194d29c4-8e7c-430d-9d19-b2ab961afe0d",
 					"name": "Compressed JSON",
 					"request": {
 						"method": "POST",
@@ -1864,6 +2293,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "7fbc01ac-f2c6-4bb4-9f8b-b7e3f60ca784",
 					"name": "GraphQL - getMonkey(id:1)",
 					"request": {
 						"method": "POST",
@@ -1894,6 +2324,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "9bba21c3-1714-4fc3-9956-e330ea519e2f",
 					"name": "GraphQL - getMonkey(id:2)",
 					"request": {
 						"method": "POST",
@@ -1924,6 +2355,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "24e94c9d-cb4d-4c6c-a421-2b0f361bdd6b",
 					"name": "Illegal JSON + AJAX Response",
 					"request": {
 						"auth": {
@@ -1966,6 +2398,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "e2951a73-485c-4d6d-af82-1c22313f6c5f",
 					"name": "ASM API Spike Arrest",
 					"request": {
 						"method": "GET",
@@ -2004,10 +2437,11 @@
 			]
 		},
 		{
+			"_postman_id": "270e774c-45e0-4877-8fbd-8b92ce826651",
 			"name": "iApps",
-			"description": null,
 			"item": [
 				{
+					"_postman_id": "cb7ecf74-9424-495a-85d4-a60ee2a24111",
 					"name": "iApp Deployments",
 					"request": {
 						"auth": {
@@ -2051,6 +2485,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "8a71850e-c05d-4b09-9566-5204c9126fc2",
 					"name": "iApp Deployment Parameters",
 					"request": {
 						"auth": {
@@ -2096,10 +2531,11 @@
 			]
 		},
 		{
+			"_postman_id": "41959276-8119-4b9f-932c-bed9b32df8c0",
 			"name": "RBAC",
-			"description": null,
 			"item": [
 				{
+					"_postman_id": "084fb8ed-f52e-45d9-9ba1-3eb6a5cbf32c",
 					"name": "01. Create Token - Admin",
 					"event": [
 						{
@@ -2150,6 +2586,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "bfea4f89-d999-45aa-aa96-d1d294777751",
 					"name": "02. View All Users",
 					"event": [
 						{
@@ -2203,6 +2640,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "f07a6fed-eed8-4206-9301-ceecb90e590b",
 					"name": "03. Create a New Non-Admin User",
 					"event": [
 						{
@@ -2256,6 +2694,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "77cd9615-2ab2-400c-b0f2-c8a63d607cd2",
 					"name": "04. Create Token - Operator",
 					"event": [
 						{
@@ -2306,6 +2745,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "e3c937b4-a629-4903-b63a-c9cdafc29f46",
 					"name": "05. Test - List Virtual Servers",
 					"request": {
 						"auth": {
@@ -2354,6 +2794,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "654f2059-c77e-4d2c-8c68-bbf283296d7f",
 					"name": "06. Test - List Pools",
 					"request": {
 						"auth": {
@@ -2402,6 +2843,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "adb88df1-a72a-4534-a6da-388e4f4f6128",
 					"name": "07. Test - List Pool Members",
 					"request": {
 						"auth": {
@@ -2446,6 +2888,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "a43b50c2-19c8-42bf-8994-d6faa0a8e223",
 					"name": "08. Pool Member - Disabled",
 					"request": {
 						"auth": {
@@ -2490,6 +2933,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "4d669ac4-9588-40cb-8aab-685cc9bca4ad",
 					"name": "09. Pool Member - Forced Offline",
 					"request": {
 						"auth": {
@@ -2534,6 +2978,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "87d23f5a-d982-4277-9e1f-c1c5140bf180",
 					"name": "10. Pool Member - Enabled",
 					"request": {
 						"auth": {
@@ -2578,6 +3023,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "97a12f03-eac8-4837-88a1-d1ecc144c209",
 					"name": "11. Create a New Monitor - Fails",
 					"request": {
 						"auth": {
@@ -2621,6 +3067,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "8d14024e-ee09-4fb5-8d21-267411369ac7",
 					"name": "12. Create Token - Admin",
 					"event": [
 						{
@@ -2671,6 +3118,7 @@
 					"response": []
 				},
 				{
+					"_postman_id": "0751782f-2f48-4e03-a5c6-def0d6addf60",
 					"name": "13. Delete the Non-Admin User",
 					"event": [
 						{
