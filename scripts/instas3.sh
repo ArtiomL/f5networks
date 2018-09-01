@@ -5,10 +5,9 @@
 # v1.0.3, 01/09/2018
 
 # Download and unzip
-cd /var/tmp/
+cd /var/config/rest/downloads/
 curl -fLOs https://github.com/F5Networks/f5-appsvcs-extension/archive/master.zip
-unzip -qqo master.zip
-cd f5-appsvcs-extension-master/dist/
+unzip -joq master.zip "f5-appsvcs-extension-master/dist/f5-appsvcs*noarch.rpm*"
 
 # Integrity verification
 sha2Repo=$(cat f5-appsvcs-*.sha256.txt | awk '{print $1}')
@@ -17,11 +16,10 @@ sha2Real=$(sha256sum $strFile | awk '{print $1'})
 
 # RPM install
 if [ "$sha2Real" == "$sha2Repo" ] ; then
-	mv $strFile /var/config/rest/downloads/
+	touch /var/config/rest/iapps/enable
 	strData="{\"operation\":\"INSTALL\",\"packageFilePath\":\"/var/config/rest/downloads/$strFile\"}"
 	restcurl -X POST "shared/iapp/package-management-tasks" -d $strData
 fi
 
 # Cleanup
-rm -rf /var/tmp/f5-appsvcs-extension-master/
-rm -f /var/tmp/master.zip /var/config/rest/downloads/$strFile
+rm -f master.zip f5-appsvcs*noarch.rpm*
