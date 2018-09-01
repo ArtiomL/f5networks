@@ -5,9 +5,10 @@
 # v1.0.3, 01/09/2018
 
 # Download and unzip
-curl -fLs https://github.com/F5Networks/f5-appsvcs-extension/archive/master.zip -o /var/tmp/as3.zip
-unzip -qqo /var/tmp/as3.zip
-cd /var/tmp/f5-appsvcs-extension-master/dist/
+cd /var/tmp/
+curl -fLOs https://github.com/F5Networks/f5-appsvcs-extension/archive/master.zip
+unzip -qqo master.zip
+cd f5-appsvcs-extension-master/dist/
 
 # Integrity verification
 sha2Repo=$(cat f5-appsvcs-*.sha256.txt | awk '{print $1}')
@@ -22,4 +23,4 @@ if [ "$sha2Real" == "$sha2Repo" ] ; then
 fi
 
 # Cleanup
-rm -rf /var/tmp/as3.zip /var/tmp/f5-appsvcs-extension-master/ /var/config/rest/downloads/$strFile
+rm -rf /var/tmp/master.zip /var/tmp/f5-appsvcs-extension-master/ /var/config/rest/downloads/$strFile
