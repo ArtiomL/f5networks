@@ -23,4 +23,5 @@ if [ "$sha2Real" == "$sha2Repo" ] ; then
 fi
 
 # Cleanup
-rm -rf /var/tmp/master.zip /var/tmp/f5-appsvcs-extension-master/ /var/config/rest/downloads/$strFile
+rm -rf /var/tmp/f5-appsvcs-extension-master/
+rm -f /var/tmp/master.zip /var/config/rest/downloads/$strFile
