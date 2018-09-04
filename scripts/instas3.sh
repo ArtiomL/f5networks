@@ -17,10 +17,9 @@ sha2Real=$(sha256sum $strFile | awk '{print $1'})
 # RPM install
 if [ "$sha2Real" == "$sha2Repo" ] ; then
 	touch /var/config/rest/iapps/enable
-	chown :apache $strFile
 	strData="{\"operation\":\"INSTALL\",\"packageFilePath\":\"/var/config/rest/downloads/$strFile\"}"
 	restcurl -X POST "shared/iapp/package-management-tasks" -d $strData
 fi
 
 # Cleanup
-rm -f master.zip f5-appsvcs*noarch.rpm*
+rm -f master.zip
