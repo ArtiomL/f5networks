@@ -10,8 +10,8 @@ curl -fLOs https://github.com/F5Networks/f5-appsvcs-extension/archive/master.zip
 unzip -joq master.zip "f5-appsvcs-extension-master/dist/f5-appsvcs*noarch.rpm*"
 
 # Integrity verification
-sha2Repo=$(cat f5-appsvcs-*.sha256.txt | awk '{print $1}')
-strFile=$(cat f5-appsvcs-*.sha256.txt | awk '{print $2}')
+sha2Repo=$(cat f5-appsvcs-*.sha256 | awk '{print $1}')
+strFile=$(cat f5-appsvcs-*.sha256 | awk '{print $2}')
 sha2Real=$(sha256sum $strFile | awk '{print $1'})
 
 # RPM install
