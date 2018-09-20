@@ -181,10 +181,15 @@ https://f5.com/SuperNetOps
 
 | Course | Date | Length |
 | :--- | :--- | :--- |
-| [Configuring BIG-IP ASM: Application Security Manager](https://f5.com/education/training/courses/configuring-big-ip-asm-application-security-manager) | 04/06/18 | 4 days |
-| [Configuring BIG-IP ASM: Application Security Manager](https://f5.com/education/training/courses/configuring-big-ip-asm-application-security-manager) | 25/06/18 | 4 days |
-| [Configuring BIG-IP APM: Access Policy Manager](https://f5.com/education/training/courses/configuring-big-ip-apm-access-policy-manager) | 03/07/18 | 3 days |
 | [Configuring BIG-IP LTM: Local Traffic Manager](https://f5.com/education/training/courses/configuring-big-ip-local-traffic-manager-ltm) | 06/11/18 | 3 days |
+| [Configuring BIG-IP ASM: Application Security Manager](https://f5.com/education/training/courses/configuring-big-ip-asm-application-security-manager) | 14/01/19 | 4 days |
+| [Configuring BIG-IP APM: Access Policy Manager](https://f5.com/education/training/courses/configuring-big-ip-apm-access-policy-manager) | 04/02/19 | 3 days |
+| [Configuring BIG-IP LTM: Local Traffic Manager](https://f5.com/education/training/courses/configuring-big-ip-local-traffic-manager-ltm) | 11/03/19 | 3 days |
+| [Developing iRules for BIG-IP](https://f5.com/education/training/courses/developing-irules-for-big-ip) | 08/04/19 | 3 days |
+| [Configuring BIG-IP ASM: Application Security Manager](https://f5.com/education/training/courses/configuring-big-ip-asm-application-security-manager) | 03/06/19 | 4 days |
+| [Configuring BIG-IP APM: Access Policy Manager](https://f5.com/education/training/courses/configuring-big-ip-apm-access-policy-manager) | 22/07/19 | 3 days |
+| [Configuring BIG-IP LTM: Local Traffic Manager](https://f5.com/education/training/courses/configuring-big-ip-local-traffic-manager-ltm) | 16/09/19 | 3 days |
+| [Configuring BIG-IP ASM: Application Security Manager](https://f5.com/education/training/courses/configuring-big-ip-asm-application-security-manager) | 11/11/19 | 4 days |
 
 &nbsp;&nbsp;
 
