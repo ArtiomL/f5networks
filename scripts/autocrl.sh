@@ -2,7 +2,7 @@
 # F5 Networks - CRL Auto-Update
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v3.3, 09/11/2016
+# v3.5, 18/10/2018
 
 # Add to cron and /config/failover/active on both systems in DSC
 
@@ -42,7 +42,7 @@ sha1_NEW=$(sha1sum new.crl | cut -d" " -f1)
 
 if [ "$sha1_CUR" != "$sha1_NEW" ] ; then
 	str_CS_STATUS=$(tmsh show /cm sync-status | grep "^Status" | awk '{print $2$3}')
-	tmsh modify /sys file ssl-crl "$str_SSL_CRL.crl" source-path file:new.crl
+	tmsh modify /sys file ssl-crl "$str_SSL_CRL.crl" source-path file:/shared/tmp/scripts/new.crl
 	tmsh save /sys config partitions all >> logs/autocrl.log
 	str_LOG_LINE="autocrl.sh - New CRL version detected. The CRL file was updated."
 	if [ "$str_CS_STATUS" == "InSync" ] ; then
@@ -60,7 +60,4 @@ fi
 logger -p local0.info "$str_LOG_LINE"
 echo -e "$str_LOG_LINE\n" >> logs/autocrl.log
 
-rm -f nget.unk
-rm -f nget.crl
-rm -f new.crl
-rm -f crlist.txt
+rm -f nget.unk nget.crl new.crl crlist.txt
