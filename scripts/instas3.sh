@@ -2,12 +2,12 @@
 # F5 Networks - Install Latest AS3 Package
 # https://github.com/ArtiomL/f5networks
 # Artiom Lichtenstein
-# v1.0.3, 01/09/2018
+# v1.0.4, 14/11/2018
 
 # Download and unzip
 cd /var/config/rest/downloads/
 curl -fLOs https://github.com/F5Networks/f5-appsvcs-extension/archive/master.zip
-unzip -joq master.zip "f5-appsvcs-extension-master/dist/f5-appsvcs*noarch.rpm*"
+unzip -joq master.zip "f5-appsvcs-extension-master/dist/latest/f5-appsvcs*noarch.rpm*"
 
 # Integrity verification
 sha2Repo=$(cat f5-appsvcs-*.sha256 | awk '{print $1}')
